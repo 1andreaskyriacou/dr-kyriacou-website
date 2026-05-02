@@ -595,62 +595,7 @@
       background: var(--dark-2);
     }
 
-    .expertise-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-      margin-top: 56px;
-    }
-
-    .expertise-card {
-      background: var(--dark-3);
-      padding: 36px 32px;
-      transition: background 0.2s;
-    }
-    .expertise-card:hover { background: var(--dark-4); }
-
-    .expertise-icon {
-      width: 44px;
-      height: 44px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--gold);
-      margin-bottom: 20px;
-    }
-
-    .expertise-title {
-      font-family: var(--font-serif);
-      font-size: 1.2rem;
-      font-weight: 500;
-      color: var(--text);
-      margin-bottom: 10px;
-    }
-
-    .expertise-desc {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.75;
-    }
-
-    /* ===== CONDITIONS ===== */
-    #conditions {
-      padding: var(--section-gap) 0;
-    }
-
-    .conditions-layout {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 80px;
-      align-items: start;
-    }
-
+    /* ===== CONDITIONS (in expertise section) ===== */
     .conditions-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -1292,9 +1237,7 @@
       .about-grid,
       .research-layout,
       .contact-layout,
-      .conditions-layout { grid-template-columns: 1fr; gap: 40px; }
 
-      .expertise-grid { grid-template-columns: 1fr; }
       .locations-grid { grid-template-columns: 1fr; }
       .conditions-grid { grid-template-columns: 1fr; }
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1324,7 +1267,6 @@
       <ul class="nav-links" id="nav-menu">
         <li><a href="#about">About</a></li>
         <li><a href="#expertise">Expertise</a></li>
-        <li><a href="#conditions">Conditions</a></li>
         <li><a href="#locations">Locations</a></li>
         <li><a href="#research">Research</a></li>
         <li><a href="#contact" class="nav-cta">Enquire</a></li>
@@ -1465,86 +1407,22 @@
         <p class="section-label">Expertise</p>
         <h2 class="section-title">Specialist Areas of<br /><em>Clinical Practice</em></h2>
         <div class="divider" aria-hidden="true"></div>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.8;">
+          Dr Kyriacou provides specialist assessment and treatment for a comprehensive
+          range of cardiac rhythm disorders and related conditions, for both
+          NHS and private patients.
+        </p>
       </div>
-      <div class="expertise-grid">
-
-        <article class="expertise-card">
-          <div class="expertise-icon" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          </div>
-          <h3 class="expertise-title">Catheter Ablation</h3>
-          <p class="expertise-desc">Expert in complex ablation procedures including pulmonary vein isolation, left atrial flutter ablation, and advanced 3D electroanatomic mapping systems for precise lesion delivery.</p>
-        </article>
-
-        <article class="expertise-card">
-          <div class="expertise-icon" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          </div>
-          <h3 class="expertise-title">Atrial Fibrillation (AF)</h3>
-          <p class="expertise-desc">Comprehensive AF management including pharmacological rhythm control, electrical cardioversion, and catheter-based ablation for persistent, long-standing persistent, and paroxysmal AF.</p>
-        </article>
-
-        <article class="expertise-card">
-          <div class="expertise-icon" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3H8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"/><path d="M12 12v5M9.5 14.5l2.5-2.5 2.5 2.5"/></svg>
-          </div>
-          <h3 class="expertise-title">Cardiac Devices</h3>
-          <p class="expertise-desc">Full range of cardiac device implantation and follow-up: pacemakers, implantable cardioverter-defibrillators (ICD), cardiac resynchronisation therapy (CRT), and subcutaneous ICD systems.</p>
-        </article>
-
-        <article class="expertise-card">
-          <div class="expertise-icon" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
-          </div>
-          <h3 class="expertise-title">EP Studies</h3>
-          <p class="expertise-desc">Diagnostic electrophysiology studies to evaluate arrhythmia mechanisms, assess sinus and AV node function, and guide therapeutic decision-making in complex rhythm disorders.</p>
-        </article>
-
-        <article class="expertise-card">
-          <div class="expertise-icon" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 20h.01M7 20v-4M12 20v-8M17 20V8M22 4v16"/></svg>
-          </div>
-          <h3 class="expertise-title">Ventricular Tachycardia</h3>
-          <p class="expertise-desc">Specialist in VT ablation including ischaemic VT, idiopathic VT, and substrate-based ablation in structural heart disease. Experience with epicardial and endocardial approaches.</p>
-        </article>
-
-        <article class="expertise-card">
-          <div class="expertise-icon" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-          </div>
-          <h3 class="expertise-title">Remote Monitoring</h3>
-          <p class="expertise-desc">Comprehensive remote cardiac monitoring programme for patients with implanted devices, enabling proactive arrhythmia detection and timely clinical intervention without the need for frequent hospital visits.</p>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== CONDITIONS ===== -->
-  <section id="conditions" aria-label="Conditions treated">
-    <div class="container">
-      <div class="conditions-layout">
-        <div>
-          <p class="section-label">Conditions</p>
-          <h2 class="section-title">Conditions<br /><em>Treated</em></h2>
-          <div class="divider" aria-hidden="true"></div>
-          <p style="font-size:14px;color:var(--text-muted);line-height:1.8;">
-            Dr Kyriacou provides specialist assessment and treatment for a comprehensive
-            range of cardiac rhythm disorders and related conditions, for both
-            NHS and private patients.
-          </p>
-        </div>
-        <div class="conditions-grid" role="list" aria-label="List of conditions treated">
-          <div class="condition-tag" role="listitem">Atrial Fibrillation (AF)</div>
-          <div class="condition-tag" role="listitem">Atrial Flutter</div>
-          <div class="condition-tag" role="listitem">Atrial Tachycardia</div>
-          <div class="condition-tag" role="listitem">Supraventricular Tachycardia (SVT) — including WPW/AVRT &amp; AVNRT</div>
-          <div class="condition-tag" role="listitem">Ventricular Tachycardia (VT)</div>
-          <div class="condition-tag" role="listitem">Ventricular Ectopics</div>
-          <div class="condition-tag" role="listitem">Heart Block</div>
-          <div class="condition-tag" role="listitem">Sick Sinus Syndrome</div>
-          <div class="condition-tag" role="listitem">Heart Failure (Arrhythmia-related)</div>
-        </div>
+      <div class="conditions-grid" role="list" aria-label="List of conditions treated" style="margin-top:48px;">
+        <div class="condition-tag" role="listitem">Atrial Fibrillation (AF)</div>
+        <div class="condition-tag" role="listitem">Atrial Flutter</div>
+        <div class="condition-tag" role="listitem">Atrial Tachycardia</div>
+        <div class="condition-tag" role="listitem">Supraventricular Tachycardia (SVT) — including WPW/AVRT &amp; AVNRT</div>
+        <div class="condition-tag" role="listitem">Ventricular Tachycardia (VT)</div>
+        <div class="condition-tag" role="listitem">Ventricular Ectopics</div>
+        <div class="condition-tag" role="listitem">Heart Block</div>
+        <div class="condition-tag" role="listitem">Sick Sinus Syndrome</div>
+        <div class="condition-tag" role="listitem">Heart Failure (Arrhythmia-related)</div>
       </div>
       <div class="patient-resources">
         <h3 class="patient-resources-heading">Learn More About Your Condition</h3>
@@ -2145,7 +2023,6 @@
           <ul>
             <li><a href="#about">About</a></li>
             <li><a href="#expertise">Expertise</a></li>
-            <li><a href="#conditions">Conditions</a></li>
             <li><a href="#locations">Locations</a></li>
             <li><a href="#research">Research</a></li>
             <li><a href="#contact">Contact</a></li>
