@@ -728,6 +728,134 @@
       border-left: 1px solid var(--border);
     }
 
+    /* ===== PATIENT EDUCATION ===== */
+    #patient-education {
+      padding: var(--section-gap) 0;
+    }
+
+    .edu-intro {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 580px;
+      line-height: 1.8;
+      margin-top: 4px;
+    }
+
+    .edu-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .edu-card {
+      background: var(--dark-3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .edu-card:hover {
+      border-color: rgba(201,168,76,0.32);
+      box-shadow: 0 4px 28px rgba(10,35,66,0.07);
+    }
+
+    .ecg-display {
+      position: relative;
+      height: 90px;
+      background: #0A1F3D;
+      overflow: hidden;
+    }
+    .ecg-canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    .ecg-bpm-badge {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: rgba(74,222,128,0.9);
+      background: rgba(10,31,61,0.75);
+      padding: 3px 9px;
+      border-radius: 20px;
+      border: 1px solid rgba(74,222,128,0.22);
+      pointer-events: none;
+      font-family: var(--font-sans);
+    }
+
+    .edu-card-body {
+      padding: 22px 24px 20px;
+    }
+    .edu-card-title {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+    .edu-card-summary {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.75;
+    }
+
+    .edu-expand-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 12px;
+      background: none;
+      border: none;
+      padding: 0;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      cursor: pointer;
+      transition: color 0.2s;
+      font-family: var(--font-sans);
+    }
+    .edu-expand-btn:hover { color: var(--gold); }
+    .edu-expand-btn svg { transition: transform 0.3s ease; flex-shrink: 0; }
+    .edu-card.expanded .edu-expand-btn svg { transform: rotate(180deg); }
+
+    .edu-card-detail {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+    .edu-card.expanded .edu-card-detail { max-height: 280px; }
+
+    .edu-card-detail-inner {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    /* 5th card: centre it in the 2-col grid */
+    .edu-card:last-child:nth-child(odd) {
+      grid-column: 1 / span 2;
+      justify-self: start;
+      width: calc(50% - 12px);
+    }
+
+    @media (max-width: 900px) {
+      .edu-grid { grid-template-columns: 1fr; }
+      .edu-card:last-child:nth-child(odd) {
+        grid-column: 1;
+        width: 100%;
+      }
+    }
+
     /* ===== LOCATIONS ===== */
     #locations {
       padding: var(--section-gap) 0;
@@ -1352,6 +1480,125 @@
     </div>
   </section>
 
+  <!-- ===== PATIENT EDUCATION ===== -->
+  <section id="patient-education" aria-label="Patient education">
+    <div class="container">
+      <p class="section-label">Patient Education</p>
+      <h2 class="section-title">Understanding Your<br /><em>Heart Rhythm</em></h2>
+      <div class="divider" aria-hidden="true"></div>
+      <p class="edu-intro">Each animation below shows the characteristic ECG pattern for common conditions treated by Dr Kyriacou. Click any card to learn more.</p>
+
+      <div class="edu-grid">
+
+        <!-- Normal Sinus Rhythm -->
+        <article class="edu-card" aria-label="Normal Sinus Rhythm">
+          <div class="ecg-display" aria-hidden="true">
+            <canvas class="ecg-canvas" data-ecg-type="normal"></canvas>
+            <span class="ecg-bpm-badge">60–100 bpm</span>
+          </div>
+          <div class="edu-card-body">
+            <h3 class="edu-card-title">Normal Sinus Rhythm</h3>
+            <p class="edu-card-summary">The heart's natural rhythm, driven by the sinus node — the heart's built-in pacemaker. Each beat produces a coordinated P wave, QRS complex, and T wave in regular succession.</p>
+            <button class="edu-expand-btn" aria-expanded="false">
+              <span class="edu-btn-text">Read more</span>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="edu-card-detail" aria-hidden="true">
+              <div class="edu-card-detail-inner">
+                This serves as the baseline for understanding all cardiac arrhythmias. A normal resting heart rate is 60–100 beats per minute with consistent intervals between each beat. Regular PQRST complexes indicate healthy, coordinated electrical conduction through the heart.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- SVT -->
+        <article class="edu-card" aria-label="Supraventricular Tachycardia">
+          <div class="ecg-display" aria-hidden="true">
+            <canvas class="ecg-canvas" data-ecg-type="svt"></canvas>
+            <span class="ecg-bpm-badge">150–250 bpm</span>
+          </div>
+          <div class="edu-card-body">
+            <h3 class="edu-card-title">Supraventricular Tachycardia (SVT)</h3>
+            <p class="edu-card-summary">A common condition mostly affecting younger, otherwise healthy people. An extra electrical connection causes the heart to beat rapidly at 150–250 times per minute.</p>
+            <button class="edu-expand-btn" aria-expanded="false">
+              <span class="edu-btn-text">Read more</span>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="edu-card-detail" aria-hidden="true">
+              <div class="edu-card-detail-inner">
+                Patients experience sudden onset of palpitations which may last minutes to hours. It can be cured with catheter ablation with success rates greater than 90%.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Atrial Flutter -->
+        <article class="edu-card" aria-label="Atrial Flutter">
+          <div class="ecg-display" aria-hidden="true">
+            <canvas class="ecg-canvas" data-ecg-type="flutter"></canvas>
+            <span class="ecg-bpm-badge">250–300 bpm flutter</span>
+          </div>
+          <div class="edu-card-body">
+            <h3 class="edu-card-title">Atrial Flutter</h3>
+            <p class="edu-card-summary">An electrical circuit revolves repeatedly around the right atrium at 250–300 beats per minute. The ventricles respond at a regular fraction of this rate, typically 2:1.</p>
+            <button class="edu-expand-btn" aria-expanded="false">
+              <span class="edu-btn-text">Read more</span>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="edu-card-detail" aria-hidden="true">
+              <div class="edu-card-detail-inner">
+                Especially common in older patients. Patients experience breathlessness, palpitations and fatigue. It can be cured with catheter ablation with success rates greater than 90%.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Atrial Fibrillation -->
+        <article class="edu-card" aria-label="Atrial Fibrillation">
+          <div class="ecg-display" aria-hidden="true">
+            <canvas class="ecg-canvas" data-ecg-type="af"></canvas>
+            <span class="ecg-bpm-badge">Irregular</span>
+          </div>
+          <div class="edu-card-body">
+            <h3 class="edu-card-title">Atrial Fibrillation (AF)</h3>
+            <p class="edu-card-summary">Chaotic electrical activation passes through the upper chambers, causing the atria to fibrillate rather than contract. This results in an irregular pulse and reduced pumping efficiency.</p>
+            <button class="edu-expand-btn" aria-expanded="false">
+              <span class="edu-btn-text">Read more</span>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="edu-card-detail" aria-hidden="true">
+              <div class="edu-card-detail-inner">
+                Symptoms include breathlessness and fatigue. In susceptible patients AF can increase the risk of stroke, which can be significantly reduced with blood thinning medication.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Pacemakers -->
+        <article class="edu-card" aria-label="Cardiac Pacemakers">
+          <div class="ecg-display" aria-hidden="true">
+            <canvas class="ecg-canvas" data-ecg-type="paced"></canvas>
+            <span class="ecg-bpm-badge">Paced</span>
+          </div>
+          <div class="edu-card-body">
+            <h3 class="edu-card-title">Cardiac Pacemakers</h3>
+            <p class="edu-card-summary">Blackouts and dizziness can result from problems with the heart's electrical system causing a very slow or paused heart rhythm. A pacemaker can restore a safe, reliable rhythm.</p>
+            <button class="edu-expand-btn" aria-expanded="false">
+              <span class="edu-btn-text">Read more</span>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="edu-card-detail" aria-hidden="true">
+              <div class="edu-card-detail-inner">
+                A small pulse generator is inserted under the skin, connected to leads placed into the heart through veins in the shoulder. The procedure is performed under local anaesthetic and prevents dangerous pauses in the heart rhythm.
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
   <!-- ===== LOCATIONS ===== -->
   <section id="locations" aria-label="Practice locations">
     <div class="container">
@@ -1688,6 +1935,202 @@
         btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Sent';
       }, 900);
     });
+
+    // ── ECG Patient Education Animations ────────────────────────────────────
+    (function () {
+      'use strict';
+
+      function gauss(x, mu, sig) {
+        return Math.exp(-0.5 * Math.pow((x - mu) / sig, 2));
+      }
+
+      function normalSinus(t) {
+        var p = (t % 110) / 110;
+        return  0.14 * gauss(p, 0.12, 0.040)
+              - 0.07 * gauss(p, 0.27, 0.016)
+              + 0.95 * gauss(p, 0.32, 0.022)
+              - 0.20 * gauss(p, 0.38, 0.016)
+              + 0.24 * gauss(p, 0.58, 0.070);
+      }
+
+      function svtWave(t) {
+        var p = (t % 34) / 34;
+        return  0.08 * gauss(p, 0.72, 0.040)
+              - 0.07 * gauss(p, 0.27, 0.016)
+              + 0.95 * gauss(p, 0.32, 0.020)
+              - 0.20 * gauss(p, 0.38, 0.016)
+              + 0.18 * gauss(p, 0.54, 0.055);
+      }
+
+      function flutterWave(t) {
+        var fp  = (t % 18) / 18;
+        var saw = 0.18 * (1 - 2 * fp);
+        var qp  = (t % 60) / 60;
+        var qrs = -0.10 * gauss(qp, 0.28, 0.016)
+                 + 0.95 * gauss(qp, 0.33, 0.022)
+                 - 0.22 * gauss(qp, 0.39, 0.016)
+                 + 0.10 * gauss(qp, 0.58, 0.055);
+        return saw + qrs;
+      }
+
+      var AF_SEQ = (function () {
+        var iv = [70,45,98,52,115,40,85,62,50,90,78,55,88,42,73];
+        var pos = [], cum = 0;
+        for (var i = 0; i < iv.length; i++) { cum += iv[i]; pos.push(cum); }
+        return { pos: pos, total: cum };
+      }());
+
+      function afibWave(t) {
+        var c = 0.060 * Math.sin(t * 0.28 + 0.5)
+              + 0.050 * Math.sin(t * 0.63 + 1.3)
+              + 0.040 * Math.sin(t * 1.10 + 2.1)
+              + 0.025 * Math.sin(t * 0.41 + 0.9)
+              + 0.020 * Math.sin(t * 1.70 + 3.0);
+        var tm = t % AF_SEQ.total, qrs = 0;
+        for (var i = 0; i < AF_SEQ.pos.length; i++) {
+          var d = tm - AF_SEQ.pos[i];
+          if (d > -18 && d < 18) {
+            var lp = (d + 18) / 36;
+            qrs -= 0.07 * gauss(lp, 0.35, 0.07);
+            qrs += 0.95 * gauss(lp, 0.50, 0.07);
+            qrs -= 0.20 * gauss(lp, 0.65, 0.07);
+            break;
+          }
+        }
+        return c + qrs;
+      }
+
+      function pacedWave(t) {
+        var p = (t % 90) / 90;
+        var spike = p < 0.025 ? (p < 0.012 ? p / 0.012 : (0.025 - p) / 0.013) * 0.95 : 0;
+        return spike
+              + 0.60 * gauss(p, 0.115, 0.042)
+              - 0.25 * gauss(p, 0.220, 0.030)
+              - 0.22 * gauss(p, 0.440, 0.075);
+      }
+
+      var WAVE_FNS = { normal: normalSinus, svt: svtWave, flutter: flutterWave, af: afibWave, paced: pacedWave };
+
+      function ECGRenderer(canvas, type) {
+        this.canvas = canvas;
+        this.ctx    = canvas.getContext('2d');
+        this.fn     = WAVE_FNS[type];
+        this.t      = 0;
+        this.buf    = null;
+        this.w = this.h = this.mid = this.amp = 0;
+        this.rafId  = null;
+        this.running = false;
+      }
+
+      ECGRenderer.prototype.init = function () {
+        var dpr  = window.devicePixelRatio || 1;
+        var rect = this.canvas.getBoundingClientRect();
+        this.w   = Math.max(Math.round(rect.width),  1);
+        this.h   = Math.max(Math.round(rect.height), 1);
+        this.canvas.width  = this.w * dpr;
+        this.canvas.height = this.h * dpr;
+        this.canvas.style.width  = this.w + 'px';
+        this.canvas.style.height = this.h + 'px';
+        this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        this.mid = this.h * 0.50;
+        this.amp = this.h * 0.40;
+        this.buf = new Float32Array(this.w).fill(this.mid);
+      };
+
+      ECGRenderer.prototype.draw = function () {
+        var ctx = this.ctx, w = this.w, h = this.h, buf = this.buf;
+        ctx.fillStyle = '#0A1F3D';
+        ctx.fillRect(0, 0, w, h);
+        // Subtle ECG grid
+        ctx.strokeStyle = 'rgba(201,168,76,0.07)';
+        ctx.lineWidth   = 0.5;
+        for (var gx = 0; gx < w; gx += 24) {
+          ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, h); ctx.stroke();
+        }
+        ctx.beginPath(); ctx.moveTo(0, h * 0.25); ctx.lineTo(w, h * 0.25); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(0, h * 0.75); ctx.lineTo(w, h * 0.75); ctx.stroke();
+        // ECG trace
+        ctx.strokeStyle = '#4ade80';
+        ctx.lineWidth   = 1.5;
+        ctx.lineJoin    = 'round';
+        ctx.shadowBlur  = 5;
+        ctx.shadowColor = 'rgba(74,222,128,0.55)';
+        ctx.beginPath();
+        ctx.moveTo(0, buf[0]);
+        for (var x = 1; x < w; x++) ctx.lineTo(x, buf[x]);
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+      };
+
+      ECGRenderer.prototype.tick = function () {
+        if (!this.running) return;
+        var buf = this.buf;
+        buf.copyWithin(0, 1);
+        buf[buf.length - 1] = this.mid - this.fn(this.t) * this.amp;
+        this.t += 1.5;
+        this.draw();
+        this.rafId = requestAnimationFrame(this.tick.bind(this));
+      };
+
+      ECGRenderer.prototype.start = function () {
+        if (this.running) return;
+        this.running = true;
+        this.tick();
+      };
+
+      ECGRenderer.prototype.stop = function () {
+        this.running = false;
+        if (this.rafId) { cancelAnimationFrame(this.rafId); this.rafId = null; }
+      };
+
+      document.addEventListener('DOMContentLoaded', function () {
+        var items = [];
+
+        document.querySelectorAll('.ecg-canvas[data-ecg-type]').forEach(function (canvas) {
+          var r = new ECGRenderer(canvas, canvas.dataset.ecgType);
+          r.init();
+          r.draw();
+          items.push({ renderer: r, card: canvas.closest('.edu-card') });
+        });
+
+        if ('IntersectionObserver' in window) {
+          items.forEach(function (item) {
+            var io = new IntersectionObserver(function (entries) {
+              entries[0].isIntersecting ? item.renderer.start() : item.renderer.stop();
+            }, { threshold: 0.1 });
+            io.observe(item.card);
+          });
+        } else {
+          items.forEach(function (item) { item.renderer.start(); });
+        }
+
+        document.querySelectorAll('.edu-expand-btn').forEach(function (btn) {
+          btn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            var card     = btn.closest('.edu-card');
+            var expanded = card.classList.toggle('expanded');
+            btn.setAttribute('aria-expanded', String(expanded));
+            btn.querySelector('.edu-btn-text').textContent = expanded ? 'Show less' : 'Read more';
+            var detail = card.querySelector('.edu-card-detail');
+            if (detail) detail.setAttribute('aria-hidden', String(!expanded));
+          });
+        });
+
+        var debounce;
+        window.addEventListener('resize', function () {
+          clearTimeout(debounce);
+          debounce = setTimeout(function () {
+            items.forEach(function (item) {
+              var was = item.renderer.running;
+              item.renderer.stop();
+              item.renderer.init();
+              was ? item.renderer.start() : item.renderer.draw();
+            });
+          }, 200);
+        });
+      });
+    }());
+
   </script>
 
 </body>
