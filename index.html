@@ -856,6 +856,29 @@
       }
     }
 
+    /* ===== HEART SCHEMATICS ===== */
+    .heart-schematic {
+      padding: 14px 20px 0;
+      background: #F5F0E8;
+      border-bottom: 1px solid var(--border);
+    }
+    .heart-schematic svg {
+      display: block;
+      width: 100%;
+      max-width: 200px;
+      height: auto;
+      margin: 0 auto;
+    }
+    .heart-caption {
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-dim);
+      line-height: 1.5;
+      font-style: italic;
+      padding: 6px 0 10px;
+      margin: 0;
+    }
+
     /* ===== LOCATIONS ===== */
     #locations {
       padding: var(--section-gap) 0;
@@ -1473,6 +1496,11 @@
             <span class="patient-resource-source">Arrhythmia Alliance</span>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
           </a>
+          <a href="https://heartrhythmalliance.org/aa/uk/pacemaker" target="_blank" rel="noopener noreferrer" class="patient-resource-link">
+            <span>Pacemaker</span>
+            <span class="patient-resource-source">Arrhythmia Alliance</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
         </div>
       </div>
     </div>
@@ -1515,6 +1543,32 @@
             <canvas class="ecg-canvas" data-ecg-type="svt"></canvas>
             <span class="ecg-bpm-badge">150–250 bpm</span>
           </div>
+          <div class="heart-schematic">
+            <svg viewBox="0 0 200 175" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="200" height="175" fill="#F5F0E8" rx="6"/>
+              <rect x="12" y="15" width="82" height="70" rx="7" fill="rgba(10,35,66,.10)" stroke="#0A2342" stroke-width="1.5"/>
+              <rect x="106" y="15" width="82" height="70" rx="7" fill="rgba(10,35,66,.08)" stroke="#0A2342" stroke-width="1.5"/>
+              <rect x="12" y="90" width="82" height="72" rx="7" fill="rgba(10,35,66,.10)" stroke="#0A2342" stroke-width="1.5"/>
+              <rect x="106" y="85" width="82" height="77" rx="7" fill="rgba(10,35,66,.13)" stroke="#0A2342" stroke-width="2"/>
+              <rect x="94" y="15" width="12" height="150" fill="rgba(10,35,66,.12)"/>
+              <line x1="60" y1="80" x2="94" y2="87" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M50,75 Q76,97 92,88" fill="none" stroke="#e85252" stroke-width="2" stroke-dasharray="3,2"/>
+              <circle cx="100" cy="87" r="11" fill="rgba(201,168,76,.28)" stroke="#C9A84C" stroke-width="2.5"><animate attributeName="r" values="8;13;8" dur="0.8s" repeatCount="indefinite"/></circle>
+              <text x="53" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="#0A2342" font-family="Arial,sans-serif">RA</text>
+              <text x="147" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="#0A2342" font-family="Arial,sans-serif">LA</text>
+              <text x="53" y="132" text-anchor="middle" font-size="12" font-weight="700" fill="#0A2342" font-family="Arial,sans-serif">RV</text>
+              <text x="147" y="130" text-anchor="middle" font-size="12" font-weight="700" fill="#0A2342" font-family="Arial,sans-serif">LV</text>
+              <circle cx="23" cy="25" r="5" fill="#C9A84C"/>
+              <text x="30" y="29" font-size="7" fill="#8B6E2E" font-family="Arial,sans-serif" font-weight="600">SN</text>
+              <text x="48" y="74" font-size="8" fill="#8B6E2E" font-family="Arial,sans-serif" font-weight="700">Fast</text>
+              <text x="36" y="90" font-size="8" fill="#e85252" font-family="Arial,sans-serif" font-weight="700">Slow</text>
+              <text x="100" y="90" text-anchor="middle" font-size="6.5" fill="#0A2342" font-family="Arial,sans-serif" font-weight="700">AVN</text>
+              <line x1="188" y1="27" x2="170" y2="34" stroke="#0A2342" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="188" y1="42" x2="170" y2="46" stroke="#0A2342" stroke-width="1.5" stroke-linecap="round"/>
+              <text x="191" y="30" font-size="6" fill="#0A2342" font-family="Arial,sans-serif">PV</text>
+            </svg>
+            <p class="heart-caption">A re-entrant loop uses fast and slow pathways through the AV node area</p>
+          </div>
           <div class="edu-card-body">
             <h3 class="edu-card-title">Supraventricular Tachycardia (SVT)</h3>
             <p class="edu-card-summary">A common condition mostly affecting younger, otherwise healthy people. An extra electrical connection causes the heart to beat rapidly at 150–250 times per minute.</p>
@@ -1535,6 +1589,31 @@
           <div class="ecg-display" aria-hidden="true">
             <canvas class="ecg-canvas" data-ecg-type="flutter"></canvas>
             <span class="ecg-bpm-badge">250–300 bpm flutter</span>
+          </div>
+          <div class="heart-schematic">
+            <svg viewBox="0 0 200 175" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="200" height="175" fill="#F5F0E8" rx="6"/>
+              <rect x="12" y="15" width="82" height="70" rx="7" fill="rgba(10,35,66,.10)" stroke="#0A2342" stroke-width="1.5"/>
+              <rect x="106" y="15" width="82" height="70" rx="7" fill="rgba(10,35,66,.08)" stroke="#0A2342" stroke-width="1.5"/>
+              <rect x="12" y="90" width="82" height="72" rx="7" fill="rgba(10,35,66,.10)" stroke="#0A2342" stroke-width="1.5"/>
+              <rect x="106" y="85" width="82" height="77" rx="7" fill="rgba(10,35,66,.13)" stroke="#0A2342" stroke-width="2"/>
+              <rect x="94" y="15" width="12" height="150" fill="rgba(10,35,66,.12)"/>
+              <rect x="12" y="15" width="82" height="70" rx="7" fill="rgba(201,168,76,.12)" stroke="#C9A84C" stroke-width="2"/>
+              <circle cx="53" cy="50" r="25" fill="none" stroke="#e85252" stroke-width="2.5" stroke-dasharray="5,3"/>
+              <polygon points="53,25 61,36 45,36" fill="#e85252"/>
+              <text x="53" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="#0A2342" font-family="Arial,sans-serif">RA</text>
+              <text x="147" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="#0A2342" font-family="Arial,sans-serif">LA</text>
+              <text x="53" y="132" text-anchor="middle" font-size="12" font-weight="700" fill="#0A2342" font-family="Arial,sans-serif">RV</text>
+              <text x="147" y="130" text-anchor="middle" font-size="12" font-weight="700" fill="#0A2342" font-family="Arial,sans-serif">LV</text>
+              <circle cx="23" cy="25" r="5" fill="#C9A84C"/>
+              <text x="30" y="29" font-size="7" fill="#8B6E2E" font-family="Arial,sans-serif" font-weight="600">SN</text>
+              <circle cx="100" cy="87" r="5" fill="#C9A84C"/>
+              <text x="84" y="85" font-size="7" fill="#8B6E2E" font-family="Arial,sans-serif" font-weight="600">AVN</text>
+              <line x1="188" y1="27" x2="170" y2="34" stroke="#0A2342" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="188" y1="42" x2="170" y2="46" stroke="#0A2342" stroke-width="1.5" stroke-linecap="round"/>
+              <text x="191" y="30" font-size="6" fill="#0A2342" font-family="Arial,sans-serif">PV</text>
+            </svg>
+            <p class="heart-caption">A self-sustaining electrical circuit loops continuously around the right atrium</p>
           </div>
           <div class="edu-card-body">
             <h3 class="edu-card-title">Atrial Flutter</h3>
@@ -1557,6 +1636,29 @@
             <canvas class="ecg-canvas" data-ecg-type="af"></canvas>
             <span class="ecg-bpm-badge">Irregular</span>
           </div>
+          <div class="heart-schematic">
+            <svg viewBox="0 0 200 175" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="200" height="175" fill="#F5F0E8" rx="6"/>
+              <rect x="12" y="15" width="82" height="70" rx="7" fill="rgba(10,35,66,.10)" stroke="#0A2342" stroke-width="1.5"/>
+              <rect x="106" y="15" width="82" height="70" rx="7" fill="rgba(10,35,66,.08)" stroke="#0A2342" stroke-width="1.5"/>
+              <rect x="12" y="90" width="82" height="72" rx="7" fill="rgba(10,35,66,.10)" stroke="#0A2342" stroke-width="1.5"/>
+              <rect x="106" y="85" width="82" height="77" rx="7" fill="rgba(10,35,66,.13)" stroke="#0A2342" stroke-width="2"/>
+              <rect x="94" y="15" width="12" height="150" fill="rgba(10,35,66,.12)"/>
+              <rect x="106" y="15" width="82" height="70" rx="7" fill="rgba(201,168,76,.22)" stroke="#C9A84C" stroke-width="2.5"><animate attributeName="opacity" values=".5;1;.5" dur="2s" repeatCount="indefinite"/></rect>
+              <text x="53" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="#0A2342" font-family="Arial,sans-serif">RA</text>
+              <text x="147" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="#8B6E2E" font-family="Arial,sans-serif">LA</text>
+              <text x="53" y="132" text-anchor="middle" font-size="12" font-weight="700" fill="#0A2342" font-family="Arial,sans-serif">RV</text>
+              <text x="147" y="130" text-anchor="middle" font-size="12" font-weight="700" fill="#0A2342" font-family="Arial,sans-serif">LV</text>
+              <circle cx="23" cy="25" r="5" fill="#C9A84C"/>
+              <text x="30" y="29" font-size="7" fill="#8B6E2E" font-family="Arial,sans-serif" font-weight="600">SN</text>
+              <circle cx="100" cy="87" r="5" fill="#C9A84C"/>
+              <text x="84" y="85" font-size="7" fill="#8B6E2E" font-family="Arial,sans-serif" font-weight="600">AVN</text>
+              <line x1="188" y1="27" x2="170" y2="34" stroke="#e85252" stroke-width="3" stroke-linecap="round"/>
+              <line x1="188" y1="42" x2="170" y2="46" stroke="#e85252" stroke-width="3" stroke-linecap="round"/>
+              <text x="191" y="30" font-size="6" fill="#e85252" font-family="Arial,sans-serif" font-weight="700">PV</text>
+            </svg>
+            <p class="heart-caption">Chaotic electrical activity originates in the pulmonary veins and spreads through the left atrium</p>
+          </div>
           <div class="edu-card-body">
             <h3 class="edu-card-title">Atrial Fibrillation (AF)</h3>
             <p class="edu-card-summary">Chaotic electrical activation passes through the upper chambers, causing the atria to fibrillate rather than contract. This results in an irregular pulse and reduced pumping efficiency.</p>
@@ -1577,6 +1679,31 @@
           <div class="ecg-display" aria-hidden="true">
             <canvas class="ecg-canvas" data-ecg-type="vt"></canvas>
             <span class="ecg-bpm-badge">150–250 bpm</span>
+          </div>
+          <div class="heart-schematic">
+            <svg viewBox="0 0 200 175" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="200" height="175" fill="#F5F0E8" rx="6"/>
+              <rect x="12" y="15" width="82" height="70" rx="7" fill="rgba(10,35,66,.10)" stroke="#0A2342" stroke-width="1.5"/>
+              <rect x="106" y="15" width="82" height="70" rx="7" fill="rgba(10,35,66,.08)" stroke="#0A2342" stroke-width="1.5"/>
+              <rect x="12" y="90" width="82" height="72" rx="7" fill="rgba(10,35,66,.10)" stroke="#0A2342" stroke-width="1.5"/>
+              <rect x="106" y="85" width="82" height="77" rx="7" fill="rgba(10,35,66,.13)" stroke="#0A2342" stroke-width="2"/>
+              <rect x="94" y="15" width="12" height="150" fill="rgba(10,35,66,.12)"/>
+              <rect x="106" y="85" width="82" height="77" rx="7" fill="rgba(232,82,82,.10)" stroke="#e85252" stroke-width="2.5"/>
+              <circle cx="138" cy="128" r="9" fill="rgba(232,82,82,.25)" stroke="#e85252" stroke-width="2"><animate attributeName="r" values="6;12;6" dur="0.9s" repeatCount="indefinite"/></circle>
+              <circle cx="138" cy="128" r="3.5" fill="#e85252"/>
+              <text x="53" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="#0A2342" font-family="Arial,sans-serif">RA</text>
+              <text x="147" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="#0A2342" font-family="Arial,sans-serif">LA</text>
+              <text x="53" y="132" text-anchor="middle" font-size="12" font-weight="700" fill="#0A2342" font-family="Arial,sans-serif">RV</text>
+              <text x="147" y="115" text-anchor="middle" font-size="12" font-weight="700" fill="#e85252" font-family="Arial,sans-serif">LV</text>
+              <circle cx="23" cy="25" r="5" fill="#C9A84C"/>
+              <text x="30" y="29" font-size="7" fill="#8B6E2E" font-family="Arial,sans-serif" font-weight="600">SN</text>
+              <circle cx="100" cy="87" r="5" fill="#C9A84C"/>
+              <text x="84" y="85" font-size="7" fill="#8B6E2E" font-family="Arial,sans-serif" font-weight="600">AVN</text>
+              <line x1="188" y1="27" x2="170" y2="34" stroke="#0A2342" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="188" y1="42" x2="170" y2="46" stroke="#0A2342" stroke-width="1.5" stroke-linecap="round"/>
+              <text x="191" y="30" font-size="6" fill="#0A2342" font-family="Arial,sans-serif">PV</text>
+            </svg>
+            <p class="heart-caption">Abnormal electrical activity originates within the left ventricular muscle</p>
           </div>
           <div class="edu-card-body">
             <h3 class="edu-card-title">Ventricular Tachycardia (VT)</h3>
@@ -1599,6 +1726,30 @@
             <canvas class="ecg-canvas" data-ecg-type="pvc"></canvas>
             <span class="ecg-bpm-badge">Occasional ectopics</span>
           </div>
+          <div class="heart-schematic">
+            <svg viewBox="0 0 200 175" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="200" height="175" fill="#F5F0E8" rx="6"/>
+              <rect x="12" y="15" width="82" height="70" rx="7" fill="rgba(10,35,66,.10)" stroke="#0A2342" stroke-width="1.5"/>
+              <rect x="106" y="15" width="82" height="70" rx="7" fill="rgba(10,35,66,.08)" stroke="#0A2342" stroke-width="1.5"/>
+              <rect x="12" y="90" width="82" height="72" rx="7" fill="rgba(10,35,66,.10)" stroke="#0A2342" stroke-width="1.5"/>
+              <rect x="106" y="85" width="82" height="77" rx="7" fill="rgba(10,35,66,.13)" stroke="#0A2342" stroke-width="2"/>
+              <rect x="94" y="15" width="12" height="150" fill="rgba(10,35,66,.12)"/>
+              <circle cx="45" cy="108" r="9" fill="rgba(232,82,82,.22)" stroke="#e85252" stroke-width="2"><animate attributeName="r" values="5;12;5" dur="1.4s" repeatCount="indefinite"/></circle>
+              <circle cx="45" cy="108" r="3.5" fill="#e85252"/>
+              <text x="53" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="#0A2342" font-family="Arial,sans-serif">RA</text>
+              <text x="147" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="#0A2342" font-family="Arial,sans-serif">LA</text>
+              <text x="53" y="150" text-anchor="middle" font-size="12" font-weight="700" fill="#e85252" font-family="Arial,sans-serif">RV</text>
+              <text x="147" y="130" text-anchor="middle" font-size="12" font-weight="700" fill="#0A2342" font-family="Arial,sans-serif">LV</text>
+              <circle cx="23" cy="25" r="5" fill="#C9A84C"/>
+              <text x="30" y="29" font-size="7" fill="#8B6E2E" font-family="Arial,sans-serif" font-weight="600">SN</text>
+              <circle cx="100" cy="87" r="5" fill="#C9A84C"/>
+              <text x="84" y="85" font-size="7" fill="#8B6E2E" font-family="Arial,sans-serif" font-weight="600">AVN</text>
+              <line x1="188" y1="27" x2="170" y2="34" stroke="#0A2342" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="188" y1="42" x2="170" y2="46" stroke="#0A2342" stroke-width="1.5" stroke-linecap="round"/>
+              <text x="191" y="30" font-size="6" fill="#0A2342" font-family="Arial,sans-serif">PV</text>
+            </svg>
+            <p class="heart-caption">An occasional early beat fires from a focal point in the right ventricle between normal beats</p>
+          </div>
           <div class="edu-card-body">
             <h3 class="edu-card-title">Ventricular Ectopics (PVCs)</h3>
             <p class="edu-card-summary">Premature beats originating from the ventricles that interrupt an otherwise regular rhythm. Extremely common and usually benign in people with a structurally normal heart.</p>
@@ -1615,21 +1766,101 @@
         </article>
 
         <!-- Conduction System Pacing & CRT -->
-        <article class="edu-card" aria-label="Conduction System Pacing and Cardiac Resynchronisation Therapy">
+        <!-- Conduction System Pacing -->
+        <article class="edu-card" aria-label="Conduction System Physiological Pacing">
           <div class="ecg-display" aria-hidden="true">
             <canvas class="ecg-canvas" data-ecg-type="csp"></canvas>
             <span class="ecg-bpm-badge">Physiological pacing</span>
           </div>
+          <div class="heart-schematic">
+            <svg viewBox="0 0 200 175" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="200" height="175" fill="#F5F0E8" rx="6"/>
+              <rect x="12" y="15" width="82" height="70" rx="7" fill="rgba(10,35,66,.10)" stroke="#0A2342" stroke-width="1.5"/>
+              <rect x="106" y="15" width="82" height="70" rx="7" fill="rgba(10,35,66,.08)" stroke="#0A2342" stroke-width="1.5"/>
+              <rect x="12" y="90" width="82" height="72" rx="7" fill="rgba(10,35,66,.10)" stroke="#0A2342" stroke-width="1.5"/>
+              <rect x="106" y="85" width="82" height="77" rx="7" fill="rgba(10,35,66,.13)" stroke="#0A2342" stroke-width="2"/>
+              <rect x="94" y="15" width="12" height="150" fill="rgba(10,35,66,.12)"/>
+              <rect x="2" y="2" width="30" height="20" rx="4" fill="#C9A84C" stroke="#8B6E2E" stroke-width="1.2"/>
+              <text x="17" y="15" text-anchor="middle" font-size="6.5" fill="white" font-weight="700" font-family="Arial,sans-serif">PM</text>
+              <path d="M32,12 Q53,13 53,42 Q53,68 100,87" fill="none" stroke="#C9A84C" stroke-width="2" stroke-dasharray="3,2" stroke-linecap="round"/>
+              <circle cx="100" cy="87" r="10" fill="rgba(201,168,76,.30)" stroke="#C9A84C" stroke-width="2.5"/>
+              <text x="53" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="#0A2342" font-family="Arial,sans-serif">RA</text>
+              <text x="147" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="#0A2342" font-family="Arial,sans-serif">LA</text>
+              <text x="53" y="132" text-anchor="middle" font-size="12" font-weight="700" fill="#0A2342" font-family="Arial,sans-serif">RV</text>
+              <text x="147" y="130" text-anchor="middle" font-size="12" font-weight="700" fill="#0A2342" font-family="Arial,sans-serif">LV</text>
+              <circle cx="23" cy="25" r="5" fill="#C9A84C"/>
+              <text x="30" y="29" font-size="7" fill="#8B6E2E" font-family="Arial,sans-serif" font-weight="600">SN</text>
+              <text x="100" y="90" text-anchor="middle" font-size="6.5" fill="#0A2342" font-weight="700" font-family="Arial,sans-serif">HB</text>
+              <line x1="188" y1="27" x2="170" y2="34" stroke="#0A2342" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="188" y1="42" x2="170" y2="46" stroke="#0A2342" stroke-width="1.5" stroke-linecap="round"/>
+              <text x="191" y="30" font-size="6" fill="#0A2342" font-family="Arial,sans-serif">PV</text>
+            </svg>
+            <p class="heart-caption">A single lead targets the His bundle, preserving natural electrical conduction through both ventricles</p>
+          </div>
           <div class="edu-card-body">
-            <h3 class="edu-card-title">Conduction System Pacing &amp; CRT</h3>
-            <p class="edu-card-summary">Conduction system pacing delivers impulses directly to the heart's natural wiring, producing a narrow, physiological QRS — unlike traditional right ventricular pacing which causes an abnormally wide complex.</p>
+            <h3 class="edu-card-title">Conduction System Physiological Pacing</h3>
+            <p class="edu-card-summary">His bundle or left bundle branch pacing delivers impulses directly to the heart's natural wiring system, producing a narrow, physiological QRS — preserving coordinated contraction of both ventricles.</p>
             <button class="edu-expand-btn" aria-expanded="false">
               <span class="edu-btn-text">Read more</span>
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
             <div class="edu-card-detail" aria-hidden="true">
               <div class="edu-card-detail-inner">
-                Cardiac Resynchronisation Therapy (CRT) is used in patients with heart failure and electrical conduction delay to resynchronise the pumping of both ventricles, improving heart function and quality of life. Dr Kyriacou has specialist expertise in both conduction system pacing and CRT implantation.
+                Traditional pacemakers pace from the right ventricular apex, which can cause an unnatural contraction pattern over time. Conduction system pacing avoids this by activating the heart's own electrical pathways. Dr Kyriacou has specialist expertise in conduction system pacing.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Cardiac Resynchronisation Therapy -->
+        <article class="edu-card" aria-label="Cardiac Resynchronisation Therapy">
+          <div class="ecg-display" aria-hidden="true">
+            <canvas class="ecg-canvas" data-ecg-type="crt"></canvas>
+            <span class="ecg-bpm-badge">Biventricular pacing</span>
+          </div>
+          <div class="heart-schematic">
+            <svg viewBox="0 0 200 175" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="200" height="175" fill="#F5F0E8" rx="6"/>
+              <rect x="12" y="15" width="82" height="70" rx="7" fill="rgba(10,35,66,.10)" stroke="#0A2342" stroke-width="1.5"/>
+              <rect x="106" y="15" width="82" height="70" rx="7" fill="rgba(10,35,66,.08)" stroke="#0A2342" stroke-width="1.5"/>
+              <rect x="12" y="90" width="82" height="72" rx="7" fill="rgba(10,35,66,.10)" stroke="#0A2342" stroke-width="1.5"/>
+              <rect x="106" y="85" width="82" height="77" rx="7" fill="rgba(10,35,66,.13)" stroke="#0A2342" stroke-width="2"/>
+              <rect x="94" y="15" width="12" height="150" fill="rgba(10,35,66,.12)"/>
+              <rect x="2" y="2" width="30" height="20" rx="4" fill="#C9A84C" stroke="#8B6E2E" stroke-width="1.2"/>
+              <text x="17" y="15" text-anchor="middle" font-size="6.5" fill="white" font-weight="700" font-family="Arial,sans-serif">CRT</text>
+              <path d="M32,8 Q53,10 53,36" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="53" cy="36" r="3.5" fill="#C9A84C"/>
+              <text x="58" y="37" font-size="6" fill="#8B6E2E" font-family="Arial,sans-serif">RA</text>
+              <path d="M32,13 Q55,20 55,150" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="55" cy="150" r="3.5" fill="#C9A84C"/>
+              <text x="60" y="153" font-size="6" fill="#8B6E2E" font-family="Arial,sans-serif">RV</text>
+              <path d="M32,18 Q100,22 147,88 Q153,115 150,148" fill="none" stroke="#e85252" stroke-width="1.5" stroke-dasharray="4,2" stroke-linecap="round"/>
+              <circle cx="150" cy="148" r="3.5" fill="#e85252"/>
+              <text x="154" y="148" font-size="6" fill="#e85252" font-family="Arial,sans-serif">LV</text>
+              <text x="53" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="#0A2342" font-family="Arial,sans-serif">RA</text>
+              <text x="147" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="#0A2342" font-family="Arial,sans-serif">LA</text>
+              <text x="53" y="132" text-anchor="middle" font-size="12" font-weight="700" fill="#0A2342" font-family="Arial,sans-serif">RV</text>
+              <text x="147" y="130" text-anchor="middle" font-size="12" font-weight="700" fill="#0A2342" font-family="Arial,sans-serif">LV</text>
+              <circle cx="23" cy="25" r="5" fill="#C9A84C"/>
+              <text x="30" y="29" font-size="7" fill="#8B6E2E" font-family="Arial,sans-serif" font-weight="600">SN</text>
+              <circle cx="100" cy="87" r="5" fill="#C9A84C"/>
+              <text x="84" y="85" font-size="7" fill="#8B6E2E" font-family="Arial,sans-serif" font-weight="600">AVN</text>
+              <line x1="188" y1="27" x2="170" y2="34" stroke="#0A2342" stroke-width="1.5" stroke-linecap="round"/>
+              <line x1="188" y1="42" x2="170" y2="46" stroke="#0A2342" stroke-width="1.5" stroke-linecap="round"/>
+              <text x="191" y="30" font-size="6" fill="#0A2342" font-family="Arial,sans-serif">PV</text>
+            </svg>
+            <p class="heart-caption">Three leads simultaneously coordinate the right atrium, right ventricle, and left ventricle via the coronary sinus</p>
+          </div>
+          <div class="edu-card-body">
+            <h3 class="edu-card-title">Cardiac Resynchronisation Therapy (CRT)</h3>
+            <p class="edu-card-summary">CRT uses three pacing leads to coordinate the timing of both ventricles in patients with heart failure and electrical conduction delay, improving the heart's pumping efficiency.</p>
+            <button class="edu-expand-btn" aria-expanded="false">
+              <span class="edu-btn-text">Read more</span>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="edu-card-detail" aria-hidden="true">
+              <div class="edu-card-detail-inner">
+                By resynchronising ventricular contraction, CRT can significantly improve symptoms, exercise capacity, and quality of life. It is used alongside optimal medical therapy in selected patients with heart failure. Dr Kyriacou has specialist expertise in CRT implantation.
               </div>
             </div>
           </div>
@@ -2111,7 +2342,18 @@
               + 0.20 * gauss(p, 0.42, 0.062);
       }
 
-      var WAVE_FNS = { normal: normalSinus, svt: svtWave, flutter: flutterWave, af: afibWave, vt: vtWave, pvc: pvcWave, csp: cspWave, paced: pacedWave };
+      function crtWave(t) {
+        // Biventricular pacing: spike + slightly wider QRS than CSP
+        var p = (t % 95) / 95;
+        var spike = p < 0.018 ? (p < 0.009 ? p / 0.009 : (0.018 - p) / 0.009) * 0.58 : 0;
+        return spike
+              - 0.05 * gauss(p, 0.10, 0.016)
+              + 0.85 * gauss(p, 0.16, 0.030)
+              - 0.18 * gauss(p, 0.25, 0.018)
+              + 0.16 * gauss(p, 0.44, 0.068);
+      }
+
+      var WAVE_FNS = { normal: normalSinus, svt: svtWave, flutter: flutterWave, af: afibWave, vt: vtWave, pvc: pvcWave, csp: cspWave, crt: crtWave, paced: pacedWave };
 
       function ECGRenderer(canvas, type) {
         this.canvas = canvas;
