@@ -1814,7 +1814,7 @@
         </nav>
         <!-- Centre heart SVG -->
         <div class="ae-heart-wrap">
-          <div style="cursor:pointer;" onclick="var svg=this.querySelector('svg').cloneNode(true);svg.setAttribute('width','1200');svg.setAttribute('height','1200');document.getElementById('hmodal-content').innerHTML='';document.getElementById('hmodal-content').appendChild(svg);document.getElementById('hmodal').style.display='flex';">
+          <div style="cursor:pointer;" onclick="var orig=this.querySelector('svg');var r=orig.getBoundingClientRect();var w=Math.round(r.width*3);var h=Math.round(r.height*3);var svg=orig.cloneNode(true);svg.setAttribute('width',w+'px');svg.setAttribute('height',h+'px');svg.style.width=w+'px';svg.style.height=h+'px';svg.setAttribute('viewBox',orig.getAttribute('viewBox'));document.getElementById('hmodal-content').innerHTML='';document.getElementById('hmodal-content').appendChild(svg);document.getElementById('hmodal').style.display='flex';">
           <div style="position:relative;">
           <svg id="heart-schematic-main" viewBox="0 0 662.65082 651.49066" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" aria-label="Heart diagram — click to enlarge">
             <image href="heart.svg" xlink:href="heart.svg" x="0" y="0" width="662.65082" height="651.49066" preserveAspectRatio="xMidYMid meet" style="pointer-events:none;"/>
