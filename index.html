@@ -2474,6 +2474,38 @@
       });
     }());
 
+    // ── heart schematic modal ──────────────────────────────────────────────
+    window.openSchematicModal = function (el) {
+      console.log('[schematic-modal] open:', el.querySelector('.heart-caption').textContent.slice(0, 50));
+      var modal   = document.getElementById('schematic-modal');
+      var svgWrap = document.getElementById('schematic-modal-svg');
+      var cap     = document.getElementById('schematic-modal-caption');
+      svgWrap.innerHTML = '';
+      var svg = el.querySelector('svg').cloneNode(true);
+      svg.removeAttribute('aria-hidden');
+      svgWrap.appendChild(svg);
+      cap.textContent = el.querySelector('.heart-caption').textContent;
+      modal.style.display = 'flex';
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      console.log('[schematic-modal] modal display:', modal.style.display, '/ classList:', modal.className);
+    };
+    document.addEventListener('DOMContentLoaded', function () {
+      var modal = document.getElementById('schematic-modal');
+      if (!modal) { console.warn('[schematic-modal] modal element not found'); return; }
+      function closeModal() {
+        modal.classList.remove('active');
+        modal.style.display = '';
+        document.body.style.overflow = '';
+        document.getElementById('schematic-modal-svg').innerHTML = '';
+      }
+      document.getElementById('schematic-modal-close').addEventListener('click', closeModal);
+      modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+      });
+    });
+
   </script>
 
 
