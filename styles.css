@@ -182,7 +182,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 80px;
-      align-items: center;
+      align-items: start;
       position: relative;
       z-index: 1;
     }
@@ -276,6 +276,7 @@
       position: relative;
       display: flex;
       align-items: stretch;
+      align-self: flex-start;
     }
     .hero-photo-frame::before {
       content: '';
