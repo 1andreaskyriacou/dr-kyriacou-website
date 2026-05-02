@@ -1814,7 +1814,7 @@
         </nav>
         <!-- Centre heart SVG -->
         <div class="ae-heart-wrap">
-          <div style="cursor:pointer;position:relative;" onclick="document.getElementById('hmodal').style.display='flex';document.getElementById('hmodal-content').innerHTML=document.getElementById('heart-schematic-main').outerHTML;">
+          <div style="cursor:pointer;position:relative;" onclick="document.getElementById('hmodal').style.display='flex';document.getElementById('hmodal-content').innerHTML=this.querySelector('svg').outerHTML;">
           <svg id="heart-schematic-main" viewBox="0 0 662.65082 651.49066" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" aria-label="Heart diagram — click to enlarge">
             <image href="heart.svg" xlink:href="heart.svg" x="0" y="0" width="662.65082" height="651.49066" preserveAspectRatio="xMidYMid meet" style="pointer-events:none;"/>
             <g class="ae-overlay" data-cond="normal">
