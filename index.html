@@ -395,56 +395,40 @@
     }
     .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
 
-    .hero-card {
-      background: var(--dark-3);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 40px;
+    .hero-photo-frame {
       position: relative;
+      display: flex;
+      align-items: stretch;
     }
-    .hero-card::before {
+    .hero-photo-frame::before {
       content: '';
       position: absolute;
-      top: 0; left: 40px;
-      width: 60px;
-      height: 2px;
-      background: var(--gold);
+      inset: -3px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--gold) 0%, rgba(201,168,76,0.3) 50%, var(--gold) 100%);
+      z-index: 0;
     }
-
-    .hero-credentials {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+    .hero-photo-frame::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 8px;
+      box-shadow:
+        0 0 40px rgba(201,168,76,0.18),
+        0 20px 60px rgba(0,0,0,0.5);
+      z-index: 2;
+      pointer-events: none;
     }
-
-    .credential-badge {
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
-    }
-
-    .credential-icon {
-      width: 40px;
-      height: 40px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      color: var(--gold);
-      font-size: 16px;
-    }
-
-    .credential-text h4 {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 2px;
-    }
-    .credential-text p {
-      font-size: 12px;
-      color: var(--text-muted);
+    .hero-photo {
+      width: 100%;
+      height: 100%;
+      min-height: 480px;
+      object-fit: cover;
+      object-position: center top;
+      border-radius: 8px;
+      display: block;
+      position: relative;
+      z-index: 1;
     }
 
     .hero-locations {
@@ -1043,7 +1027,7 @@
 
       .form-row { grid-template-columns: 1fr; }
 
-      .hero-card { display: none; }
+      .hero-photo-frame { display: none; }
     }
 
     @media (max-width: 480px) {
@@ -1103,52 +1087,8 @@
           </div>
         </div>
 
-        <div class="hero-card" role="complementary" aria-label="Credentials overview">
-          <div class="hero-credentials">
-            <div class="credential-badge">
-              <div class="credential-icon" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-              </div>
-              <div class="credential-text">
-                <h4>Fellow of the Royal College of Physicians</h4>
-                <p>FRCP &mdash; United Kingdom</p>
-              </div>
-            </div>
-            <div class="credential-badge">
-              <div class="credential-icon" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-              </div>
-              <div class="credential-text">
-                <h4>Fellow of the European Society of Cardiology</h4>
-                <p>FESC &mdash; European certification</p>
-              </div>
-            </div>
-            <div class="credential-badge">
-              <div class="credential-icon" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-              </div>
-              <div class="credential-text">
-                <h4>Fellow of the European Heart Rhythm Association</h4>
-                <p>FEHRA &mdash; Electrophysiology specialist</p>
-              </div>
-            </div>
-            <div class="credential-badge">
-              <div class="credential-icon" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-              </div>
-              <div class="credential-text">
-                <h4>Doctor of Philosophy (PhD)</h4>
-                <p>Cardiac electrophysiology research</p>
-              </div>
-            </div>
-          </div>
-          <div class="hero-locations">
-            <h4>Practice Locations</h4>
-            <span class="location-pill">Sheffield Teaching Hospitals NHS Trust</span>
-            <span class="location-pill">Sheffield Arrhythmia Centre</span>
-            <span class="location-pill">South Yorkshire Heart Centre</span>
-            <span class="location-pill">GMI Limassol, Cyprus</span>
-          </div>
+        <div class="hero-photo-frame" role="img" aria-label="Dr Andreas Kyriacou">
+          <img src="a.kyriacou.jpg" alt="Dr Andreas Kyriacou — Consultant Cardiologist &amp; Electrophysiologist" class="hero-photo" />
         </div>
       </div>
     </div>
