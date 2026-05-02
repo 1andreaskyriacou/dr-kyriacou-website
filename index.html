@@ -1940,39 +1940,37 @@
               <text x="260" y="367" font-size="22" font-weight="700" fill="#8B0000" font-family="Arial,sans-serif">Fast</text>
               <text x="192" y="455" font-size="22" font-weight="700" fill="#8B0000" font-family="Arial,sans-serif">Slow</text>
               <text x="290" y="402" font-size="21" font-weight="700" fill="#8B0000" font-family="Arial,sans-serif">AVN</text>
-              <!-- SVT re-entrant circuit: down fast pathway, up slow pathway -->
+              <!-- SVT re-entrant circuit: two arrows looping continuously around the full circuit -->
               <g><polygon points="-7,-4 7,0 -7,4" fill="#E63946"/>
-                <animate attributeName="opacity" values="0;1;0.8;0" keyTimes="0;0.1;0.8;1" dur="0.8s" repeatCount="indefinite"/>
-                <animateMotion path="M255,375 L312,405" dur="0.8s" repeatCount="indefinite" rotate="auto"/>
+                <animateMotion path="M255,375 L312,405 L314,420 Q298,464 258,452 Q215,438 225,408 L255,375" dur="1.2s" repeatCount="indefinite" rotate="auto"/>
               </g>
               <g><polygon points="-7,-4 7,0 -7,4" fill="#E63946"/>
-                <animate attributeName="opacity" values="0;1;0.8;0" keyTimes="0;0.1;0.8;1" dur="0.8s" begin="0.4s" repeatCount="indefinite"/>
-                <animateMotion path="M314,420 Q298,464 258,452 Q215,438 225,408" dur="0.8s" begin="0.4s" repeatCount="indefinite" rotate="auto"/>
+                <animateMotion path="M255,375 L312,405 L314,420 Q298,464 258,452 Q215,438 225,408 L255,375" dur="1.2s" begin="0.6s" repeatCount="indefinite" rotate="auto"/>
               </g>
             </g>
             <g class="ae-overlay" data-cond="vt">
               <circle cx="460" cy="510" r="35" fill="rgba(230,57,70,0.22)" stroke="#E63946" stroke-width="7" filter="url(#red-glow)"><animate attributeName="r" values="16;62;16" dur="0.9s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.4;1;0.4" dur="0.9s" repeatCount="indefinite"/></circle>
               <circle cx="460" cy="510" r="13" fill="#E63946"/>
-              <!-- VT: arrows radiating from LV focal point across both ventricles -->
+              <!-- VT: long arrows radiating from LV focal point across both ventricles (~3x longer) -->
               <g><polygon points="-7,-4 7,0 -7,4" fill="#E63946"/>
                 <animate attributeName="opacity" values="0;1;0" dur="0.9s" repeatCount="indefinite"/>
-                <animateMotion path="M460,510 L460,455" dur="0.9s" repeatCount="indefinite" rotate="auto"/>
+                <animateMotion path="M460,510 L460,345" dur="0.9s" repeatCount="indefinite" rotate="auto"/>
               </g>
               <g><polygon points="-7,-4 7,0 -7,4" fill="#E63946"/>
                 <animate attributeName="opacity" values="0;1;0" dur="0.9s" begin="0.15s" repeatCount="indefinite"/>
-                <animateMotion path="M460,510 L412,480" dur="0.9s" begin="0.15s" repeatCount="indefinite" rotate="auto"/>
+                <animateMotion path="M460,510 L316,420" dur="0.9s" begin="0.15s" repeatCount="indefinite" rotate="auto"/>
               </g>
               <g><polygon points="-7,-4 7,0 -7,4" fill="#E63946"/>
                 <animate attributeName="opacity" values="0;1;0" dur="0.9s" begin="0.30s" repeatCount="indefinite"/>
-                <animateMotion path="M460,510 L405,520" dur="0.9s" begin="0.30s" repeatCount="indefinite" rotate="auto"/>
+                <animateMotion path="M460,510 L295,540" dur="0.9s" begin="0.30s" repeatCount="indefinite" rotate="auto"/>
               </g>
               <g><polygon points="-7,-4 7,0 -7,4" fill="#E63946"/>
                 <animate attributeName="opacity" values="0;1;0" dur="0.9s" begin="0.45s" repeatCount="indefinite"/>
-                <animateMotion path="M460,510 L500,472" dur="0.9s" begin="0.45s" repeatCount="indefinite" rotate="auto"/>
+                <animateMotion path="M460,510 L580,396" dur="0.9s" begin="0.45s" repeatCount="indefinite" rotate="auto"/>
               </g>
               <g><polygon points="-7,-4 7,0 -7,4" fill="#E63946"/>
                 <animate attributeName="opacity" values="0;1;0" dur="0.9s" begin="0.60s" repeatCount="indefinite"/>
-                <animateMotion path="M460,510 L510,522" dur="0.9s" begin="0.60s" repeatCount="indefinite" rotate="auto"/>
+                <animateMotion path="M460,510 L610,546" dur="0.9s" begin="0.60s" repeatCount="indefinite" rotate="auto"/>
               </g>
             </g>
             <g class="ae-overlay" data-cond="pvc">
