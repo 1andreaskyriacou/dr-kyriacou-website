@@ -129,18 +129,18 @@
 
     :root {
       --gold:         #C9A84C;
-      --gold-light:   #E2C47A;
+      --gold-light:   #D4A843;
       --gold-dim:     #8B6E2E;
-      --dark:         #0D0D0D;
-      --dark-2:       #141414;
-      --dark-3:       #1C1C1C;
-      --dark-4:       #252525;
-      --dark-5:       #2E2E2E;
-      --text:         #E8E2D5;
-      --text-muted:   #9A9080;
-      --text-dim:     #6B6458;
-      --border:       rgba(201,168,76,0.18);
-      --border-hover: rgba(201,168,76,0.40);
+      --dark:         #FAFAFA;
+      --dark-2:       #F4F6F9;
+      --dark-3:       #FFFFFF;
+      --dark-4:       #EDF0F5;
+      --dark-5:       #E2E8F0;
+      --text:         #0A2342;
+      --text-muted:   #2D3748;
+      --text-dim:     #4A5568;
+      --border:       rgba(10,35,66,0.12);
+      --border-hover: rgba(201,168,76,0.55);
       --radius:       4px;
       --font-serif:   'Cormorant Garamond', Georgia, serif;
       --font-sans:    'Inter', system-ui, sans-serif;
@@ -210,10 +210,10 @@
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
-      background: rgba(13,13,13,0.92);
+      background: rgba(10,35,66,0.97);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid rgba(201,168,76,0.22);
     }
 
     .nav-inner {
@@ -230,7 +230,7 @@
       font-family: var(--font-serif);
       font-size: 1.15rem;
       font-weight: 500;
-      color: var(--text);
+      color: #FFFFFF;
       text-decoration: none;
       letter-spacing: 0.02em;
     }
@@ -248,7 +248,7 @@
       font-weight: 500;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--text-muted);
+      color: rgba(255,255,255,0.75);
       text-decoration: none;
       transition: color 0.2s;
     }
@@ -264,7 +264,7 @@
     }
     .nav-cta:hover {
       background: var(--gold) !important;
-      color: var(--dark) !important;
+      color: #FFFFFF !important;
     }
 
     .hamburger {
@@ -280,7 +280,7 @@
       display: block;
       width: 22px;
       height: 1.5px;
-      background: var(--text);
+      background: #FFFFFF;
       transition: transform 0.3s, opacity 0.3s;
     }
 
@@ -298,8 +298,8 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse 70% 60% at 80% 50%, rgba(201,168,76,0.06) 0%, transparent 60%),
-        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(201,168,76,0.04) 0%, transparent 50%);
+        radial-gradient(ellipse 70% 60% at 80% 50%, rgba(201,168,76,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 10% 90%, rgba(10,35,66,0.04) 0%, transparent 55%);
     }
 
     .hero-grid {
@@ -337,7 +337,7 @@
       font-family: var(--font-serif);
       font-size: clamp(1.1rem, 2vw, 1.35rem);
       font-weight: 300;
-      color: var(--gold-light);
+      color: var(--gold-dim);
       letter-spacing: 0.03em;
       margin-bottom: 28px;
       font-style: italic;
@@ -414,8 +414,8 @@
       inset: 0;
       border-radius: 8px;
       box-shadow:
-        0 0 40px rgba(201,168,76,0.18),
-        0 20px 60px rgba(0,0,0,0.5);
+        0 0 40px rgba(201,168,76,0.15),
+        0 20px 60px rgba(10,35,66,0.18);
       z-index: 2;
       pointer-events: none;
     }
@@ -597,11 +597,11 @@
     }
 
     .expertise-card {
-      background: var(--dark-2);
+      background: var(--dark-3);
       padding: 36px 32px;
       transition: background 0.2s;
     }
-    .expertise-card:hover { background: var(--dark-3); }
+    .expertise-card:hover { background: var(--dark-4); }
 
     .expertise-icon {
       width: 44px;
@@ -913,7 +913,7 @@
 
     .form-group select {
       appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239A9080' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234A5568' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
       background-position: right 14px center;
       padding-right: 36px;
@@ -936,8 +936,8 @@
 
     /* ===== FOOTER ===== */
     footer {
-      background: var(--dark);
-      border-top: 1px solid var(--border);
+      background: #0A2342;
+      border-top: 1px solid rgba(201,168,76,0.22);
       padding: 48px 0 32px;
     }
 
@@ -952,14 +952,14 @@
       font-family: var(--font-serif);
       font-size: 1.3rem;
       font-weight: 500;
-      color: var(--text);
+      color: #FFFFFF;
       margin-bottom: 12px;
     }
     .footer-brand span { color: var(--gold); }
 
     .footer-tagline {
       font-size: 13px;
-      color: var(--text-muted);
+      color: rgba(255,255,255,0.65);
       max-width: 280px;
       line-height: 1.7;
     }
@@ -969,7 +969,7 @@
       font-weight: 600;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--text-dim);
+      color: rgba(255,255,255,0.40);
       margin-bottom: 16px;
     }
 
@@ -977,7 +977,7 @@
 
     .footer-col a {
       font-size: 13px;
-      color: var(--text-muted);
+      color: rgba(255,255,255,0.65);
       text-decoration: none;
       transition: color 0.2s;
     }
@@ -988,9 +988,9 @@
       justify-content: space-between;
       align-items: center;
       padding-top: 24px;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid rgba(255,255,255,0.10);
       font-size: 12px;
-      color: var(--text-dim);
+      color: rgba(255,255,255,0.40);
     }
 
     /* ===== RESPONSIVE ===== */
@@ -1005,8 +1005,8 @@
         flex-direction: column;
         position: fixed;
         top: 64px; left: 0; right: 0;
-        background: var(--dark-2);
-        border-bottom: 1px solid var(--border);
+        background: #0A2342;
+        border-bottom: 1px solid rgba(201,168,76,0.22);
         padding: 24px;
         gap: 20px;
       }
@@ -1590,9 +1590,9 @@
     var navbar = document.getElementById('navbar');
     window.addEventListener('scroll', function() {
       if (window.scrollY > 40) {
-        navbar.style.background = 'rgba(13,13,13,0.98)';
+        navbar.style.background = 'rgba(10,35,66,1)';
       } else {
-        navbar.style.background = 'rgba(13,13,13,0.92)';
+        navbar.style.background = 'rgba(10,35,66,0.97)';
       }
     });
 
