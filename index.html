@@ -1449,11 +1449,9 @@
           <div class="condition-tag" role="listitem">Atrial Tachycardia</div>
           <div class="condition-tag" role="listitem">Supraventricular Tachycardia (SVT) — including WPW/AVRT &amp; AVNRT</div>
           <div class="condition-tag" role="listitem">Ventricular Tachycardia (VT)</div>
+          <div class="condition-tag" role="listitem">Ventricular Ectopics</div>
           <div class="condition-tag" role="listitem">Heart Block</div>
           <div class="condition-tag" role="listitem">Sick Sinus Syndrome</div>
-          <div class="condition-tag" role="listitem">Palpitations</div>
-          <div class="condition-tag" role="listitem">Syncope &amp; Pre-syncope</div>
-          <div class="condition-tag" role="listitem">Ventricular Ectopics</div>
           <div class="condition-tag" role="listitem">Heart Failure (Arrhythmia-related)</div>
         </div>
       </div>
@@ -1590,6 +1588,48 @@
             <div class="edu-card-detail" aria-hidden="true">
               <div class="edu-card-detail-inner">
                 In patients with underlying heart disease VT can be life-threatening and may require an implantable defibrillator (ICD). Catheter ablation can be highly effective in reducing VT episodes and ICD shocks, and is performed in specialist centres.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Ventricular Ectopics -->
+        <article class="edu-card" aria-label="Ventricular Ectopics">
+          <div class="ecg-display" aria-hidden="true">
+            <canvas class="ecg-canvas" data-ecg-type="pvc"></canvas>
+            <span class="ecg-bpm-badge">Occasional ectopics</span>
+          </div>
+          <div class="edu-card-body">
+            <h3 class="edu-card-title">Ventricular Ectopics (PVCs)</h3>
+            <p class="edu-card-summary">Premature beats originating from the ventricles that interrupt an otherwise regular rhythm. Extremely common and usually benign in people with a structurally normal heart.</p>
+            <button class="edu-expand-btn" aria-expanded="false">
+              <span class="edu-btn-text">Read more</span>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="edu-card-detail" aria-hidden="true">
+              <div class="edu-card-detail-inner">
+                Patients often describe a missed beat, thud or flip in the chest. In some patients with very frequent ectopics, they can cause fatigue or breathlessness, and in rare cases may affect heart function. Treatment options include reassurance, medication, or catheter ablation which has excellent success rates.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Conduction System Pacing & CRT -->
+        <article class="edu-card" aria-label="Conduction System Pacing and Cardiac Resynchronisation Therapy">
+          <div class="ecg-display" aria-hidden="true">
+            <canvas class="ecg-canvas" data-ecg-type="csp"></canvas>
+            <span class="ecg-bpm-badge">Physiological pacing</span>
+          </div>
+          <div class="edu-card-body">
+            <h3 class="edu-card-title">Conduction System Pacing &amp; CRT</h3>
+            <p class="edu-card-summary">Conduction system pacing delivers impulses directly to the heart's natural wiring, producing a narrow, physiological QRS — unlike traditional right ventricular pacing which causes an abnormally wide complex.</p>
+            <button class="edu-expand-btn" aria-expanded="false">
+              <span class="edu-btn-text">Read more</span>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="edu-card-detail" aria-hidden="true">
+              <div class="edu-card-detail-inner">
+                Cardiac Resynchronisation Therapy (CRT) is used in patients with heart failure and electrical conduction delay to resynchronise the pumping of both ventricles, improving heart function and quality of life. Dr Kyriacou has specialist expertise in both conduction system pacing and CRT implantation.
               </div>
             </div>
           </div>
@@ -2038,7 +2078,40 @@
               - 0.22 * gauss(p, 0.440, 0.075);
       }
 
-      var WAVE_FNS = { normal: normalSinus, svt: svtWave, flutter: flutterWave, af: afibWave, vt: vtWave, paced: pacedWave };
+      function pqrstPhase(p) {
+        return  0.14 * gauss(p, 0.12, 0.040)
+              - 0.07 * gauss(p, 0.27, 0.016)
+              + 0.95 * gauss(p, 0.32, 0.022)
+              - 0.20 * gauss(p, 0.38, 0.016)
+              + 0.24 * gauss(p, 0.58, 0.070);
+      }
+
+      function pvcWave(t) {
+        // Normal, normal, PVC, compensatory pause — total 420px cycle
+        var tm = t % 420;
+        if (tm < 105) return pqrstPhase(tm / 105);
+        if (tm < 210) return pqrstPhase((tm - 105) / 105);
+        if (tm < 290) {
+          var p = (tm - 210) / 80;
+          return  0.85 * gauss(p, 0.28, 0.080)
+                - 0.45 * gauss(p, 0.52, 0.062)
+                + 0.18 * gauss(p, 0.73, 0.045);
+        }
+        return 0; // compensatory pause
+      }
+
+      function cspWave(t) {
+        // Conduction system pacing: spike + narrow QRS (near-normal complex)
+        var p = (t % 92) / 92;
+        var spike = p < 0.018 ? (p < 0.009 ? p / 0.009 : (0.018 - p) / 0.009) * 0.65 : 0;
+        return spike
+              - 0.06 * gauss(p, 0.10, 0.014)
+              + 0.90 * gauss(p, 0.15, 0.020)
+              - 0.18 * gauss(p, 0.21, 0.014)
+              + 0.20 * gauss(p, 0.42, 0.062);
+      }
+
+      var WAVE_FNS = { normal: normalSinus, svt: svtWave, flutter: flutterWave, af: afibWave, vt: vtWave, pvc: pvcWave, csp: cspWave, paced: pacedWave };
 
       function ECGRenderer(canvas, type) {
         this.canvas = canvas;
