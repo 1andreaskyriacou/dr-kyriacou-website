@@ -892,6 +892,100 @@
       margin-bottom: 0;
     }
 
+    /* ===== BIO MODAL ===== */
+    .bio-modal-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 24px;
+      padding: 11px 20px;
+      background: var(--text);
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-family: var(--font-sans);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .bio-modal-btn:hover { background: var(--gold); color: #0A2342; }
+
+    .bio-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(8,18,40,0.88);
+      z-index: 9999;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px 20px;
+      overflow-y: auto;
+    }
+    .bio-modal-overlay.active { display: flex; }
+
+    .bio-modal-box {
+      position: relative;
+      background: #FDFAF5;
+      border-radius: 14px;
+      padding: 52px 40px 40px;
+      max-width: 720px;
+      width: 100%;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+      margin: auto;
+    }
+
+    .bio-modal-close {
+      position: absolute;
+      top: 14px; right: 16px;
+      width: 38px; height: 38px;
+      background: none;
+      border: 2px solid #ccc;
+      border-radius: 50%;
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+      color: #444;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .bio-modal-close:hover { background: #0A2342; border-color: #0A2342; color: #fff; }
+
+    .bio-modal-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.15rem, 3vw, 1.45rem);
+      font-weight: 500;
+      color: #0A2342;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    .bio-modal-subtitle {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 28px;
+    }
+    .bio-modal-divider {
+      height: 1px;
+      background: #ddd;
+      margin-bottom: 24px;
+    }
+    .bio-modal-body p {
+      font-size: 14px;
+      color: #333;
+      line-height: 1.85;
+      margin-bottom: 16px;
+    }
+    .bio-modal-body p:last-child { margin-bottom: 0; }
+
+    @media (max-width: 600px) {
+      .bio-modal-box { padding: 52px 20px 28px; }
+    }
+
     /* ===== LOCATIONS ===== */
     #locations {
       padding: var(--section-gap) 0;
@@ -1339,6 +1433,9 @@
               <strong>ventricular tachycardia ablation</strong>, and the management of patients
               with <strong>advanced implantable electronic cardiac devices</strong>.
             </p>
+            <button class="bio-modal-btn" onclick="openBioModal()" aria-haspopup="dialog">
+              📋 Dr Andreas Kyriacou — Full Clinical Profile
+            </button>
           </div>
 
           <div class="profile-links" role="list" aria-label="Professional profiles">
@@ -1410,7 +1507,7 @@
         <p style="font-size:14px;color:var(--text-muted);line-height:1.8;">
           Dr Kyriacou provides specialist assessment and treatment for a comprehensive
           range of cardiac rhythm disorders and related conditions, for both
-          NHS and private patients.
+          NHS, GESY and private patients.
         </p>
       </div>
       <div class="conditions-grid" role="list" aria-label="List of conditions treated" style="margin-top:48px;">
@@ -2383,6 +2480,28 @@
       });
     });
 
+    // ── bio modal ──────────────────────────────────────────────────────────────
+    window.openBioModal = function () {
+      var overlay = document.getElementById('bio-modal');
+      overlay.style.display = 'flex';
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    };
+    document.addEventListener('DOMContentLoaded', function () {
+      var overlay = document.getElementById('bio-modal');
+      if (!overlay) return;
+      function closeBio() {
+        overlay.classList.remove('active');
+        overlay.style.display = '';
+        document.body.style.overflow = '';
+      }
+      document.getElementById('bio-modal-close').addEventListener('click', closeBio);
+      overlay.addEventListener('click', function (e) { if (e.target === overlay) closeBio(); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('active')) closeBio();
+      });
+    });
+
   </script>
 
 
@@ -2394,5 +2513,25 @@
       <p id="schematic-modal-caption" class="schematic-modal-caption"></p>
     </div>
   </div>
+
+  <!-- Bio modal -->
+  <div id="bio-modal" class="bio-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="bio-modal-title">
+    <div class="bio-modal-box">
+      <button class="bio-modal-close" id="bio-modal-close" aria-label="Close biography">&#215;</button>
+      <h2 class="bio-modal-title" id="bio-modal-title">Dr Andreas Kyriacou</h2>
+      <p class="bio-modal-subtitle">Consultant Cardiologist &amp; Electrophysiologist</p>
+      <div class="bio-modal-divider"></div>
+      <div class="bio-modal-body">
+        <p>Dr Andreas Kyriacou is a Consultant Cardiologist who specialises in Interventional Arrhythmia and Cardiac Devices. He was appointed as a Consultant Cardiologist and Electrophysiologist at Sheffield Teaching Hospitals NHS Foundation Trust in 2015 and has held the position of Head of Arrhythmia within the Cardiothoracic Centre.</p>
+        <p>Dr Kyriacou has collaborated with the German Medical Institute since 2023 where he offers arrhythmia services. He regularly offers consultations to patients with arrhythmias and undertakes interventional procedures such as ablations to treat a variety of arrhythmias.</p>
+        <p>Dr Kyriacou is a Fellow of the European Society of Cardiology (FESC) and is the first Cypriot Cardiologist to be awarded the highly competitive Fellowship of the European Heart Rhythm Association (FEHRA), recognition of his exceptional contributions to cardiovascular medicine and cardiac rhythm management in clinical care, research, and education.</p>
+        <p>Dr Kyriacou graduated from the University of Edinburgh in 2001 and subsequently gained clinical experience in Edinburgh and London. In 2007, he was awarded the prestigious Walport Academic Clinical Fellowship in Cardiology by the National Institute for Health Research (NIHR). He trained in Cardiology at St Mary's and Hammersmith Hospitals of Imperial College Healthcare NHS Trust and subspecialized in cardiac arrhythmias at the Royal Brompton and Harefield Hospitals where he completed his advanced training in cardiac arrhythmias, specializing in the ablation of complex arrhythmias, including atrial fibrillation and ventricular tachycardias and implantation of complex cardiac pacemakers.</p>
+        <p>During his training, Dr Kyriacou was awarded the competitive three-year British Heart Foundation (BHF) Clinical Research Training Fellowship at the International Centre for Circulatory Health, where he was awarded his PhD from Imperial College London. His research focused on complex cardiac pacemakers, exploring the physiological effects of complex pacing on heart function and developing methods to improve patient outcomes. His innovative work earned him the prestigious European Society of Cardiology Heart Failure Association Young Investigator in Clinical Research Award (2012) and he was runner-up in the British Heart Rhythm Society Young Investigator Competition (2012). His research findings were selected for presentation at the SET for Britain ceremonies at the House of Parliament in Westminster London in 2011 and 2012. Dr Kyriacou's research has been published extensively in highly impactful Cardiology journals internationally.</p>
+        <p>In his clinical practice, Dr Kyriacou specialises in the medical treatment and ablation of all heart rhythm disorders, including complex arrhythmias such as atrial fibrillation and ventricular tachycardia, as well as the implantation of complex cardiac pacemakers and defibrillators. He has been instrumental in developing arrhythmia services in Sheffield and South Yorkshire UK. With his leadership his team has received distinguished recognitions, including the Atrial Fibrillation Pioneers Award from the AF Association UK and Arrhythmia Alliance, and the Team of the Year award from the British Heart Rhythm Society and Arrhythmia Alliance.</p>
+        <p>Dr Kyriacou continues to contribute to research on cardiac devices and the holistic management of patients with arrhythmias. He also serves on the Faculty of national and international cardiology meetings.</p>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>
