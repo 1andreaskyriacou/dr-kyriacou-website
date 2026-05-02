@@ -627,53 +627,17 @@
       flex-shrink: 0;
     }
 
-    .patient-resources {
-      margin-top: 48px;
-      padding-top: 40px;
-      border-top: 1px solid var(--border);
-    }
-
-    .patient-resources-heading {
-      font-family: var(--font-serif);
-      font-size: 1.1rem;
-      font-weight: 500;
-      color: var(--text);
-      margin-bottom: 20px;
-    }
-
-    .patient-resource-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .patient-resource-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 20px;
-      border: 1px solid rgba(201,168,76,0.35);
-      border-radius: var(--radius);
-      text-decoration: none;
-      color: var(--gold-dim);
-      font-size: 13px;
-      font-weight: 500;
-      transition: border-color 0.2s, color 0.2s, background 0.2s;
-    }
-    .patient-resource-link:hover {
-      border-color: var(--gold);
-      color: var(--gold);
-      background: rgba(201,168,76,0.05);
-    }
-    .patient-resource-link svg { flex-shrink: 0; opacity: 0.7; }
-
-    .patient-resource-source {
+    .condition-learn-more {
+      display: block;
+      margin-top: 6px;
       font-size: 11px;
-      font-weight: 400;
-      color: var(--text-dim);
-      padding-left: 6px;
-      border-left: 1px solid var(--border);
+      font-style: italic;
+      color: var(--gold);
+      text-decoration: none;
+      opacity: 0.85;
+      transition: opacity 0.2s;
     }
+    .condition-learn-more:hover { opacity: 1; }
 
     /* ===== PATIENT EDUCATION ===== */
     #patient-education {
@@ -1734,50 +1698,26 @@
         </p>
       </div>
       <div class="conditions-grid" role="list" aria-label="List of conditions treated" style="margin-top:48px;">
-        <div class="condition-tag" role="listitem">Atrial Fibrillation (AF)</div>
-        <div class="condition-tag" role="listitem">Atrial Flutter</div>
-        <div class="condition-tag" role="listitem">Atrial Tachycardia</div>
-        <div class="condition-tag" role="listitem">Supraventricular Tachycardia (SVT) — including WPW/AVRT &amp; AVNRT</div>
-        <div class="condition-tag" role="listitem">Ventricular Tachycardia (VT)</div>
-        <div class="condition-tag" role="listitem">Ventricular Ectopics</div>
-        <div class="condition-tag" role="listitem">Heart Block</div>
-        <div class="condition-tag" role="listitem">Sick Sinus Syndrome</div>
-        <div class="condition-tag" role="listitem">Heart Failure (Arrhythmia-related)</div>
-      </div>
-      <div class="patient-resources">
-        <h3 class="patient-resources-heading">Learn More About Your Condition</h3>
-        <div class="patient-resource-links">
-          <a href="https://heartrhythmalliance.org/aa/uk/atrial-fibrillation-af" target="_blank" rel="noopener noreferrer" class="patient-resource-link">
-            <span>Atrial Fibrillation (AF)</span>
-            <span class="patient-resource-source">Arrhythmia Alliance</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          </a>
-          <a href="https://heartrhythmalliance.org/aa/uk/conditions/supraventricular-tachycardia-svt" target="_blank" rel="noopener noreferrer" class="patient-resource-link">
-            <span>Supraventricular Tachycardia (SVT)</span>
-            <span class="patient-resource-source">Arrhythmia Alliance</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          </a>
-          <a href="https://heartrhythmalliance.org/aa/uk/ventricular-tachycardia-vt" target="_blank" rel="noopener noreferrer" class="patient-resource-link">
-            <span>Ventricular Tachycardia (VT)</span>
-            <span class="patient-resource-source">Arrhythmia Alliance</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          </a>
-          <a href="https://heartrhythmalliance.org/aa/uk/pacemaker" target="_blank" rel="noopener noreferrer" class="patient-resource-link">
-            <span>Pacemaker</span>
-            <span class="patient-resource-source">Arrhythmia Alliance</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          </a>
-          <a href="https://heartrhythmalliance.org/aa/uk/atrial-flutter" target="_blank" rel="noopener noreferrer" class="patient-resource-link">
-            <span>Atrial Flutter</span>
-            <span class="patient-resource-source">Arrhythmia Alliance</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          </a>
-          <a href="https://heartrhythmalliance.org/aa/uk/ectopic-beats" target="_blank" rel="noopener noreferrer" class="patient-resource-link">
-            <span>Ectopic Beats</span>
-            <span class="patient-resource-source">Arrhythmia Alliance</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          </a>
+        <div class="condition-tag" role="listitem">Atrial Fibrillation (AF)
+          <a class="condition-learn-more" href="https://heartrhythmalliance.org/aa/uk/atrial-fibrillation-af" target="_blank" rel="noopener noreferrer">Learn more →</a>
         </div>
+        <div class="condition-tag" role="listitem">Atrial Flutter
+          <a class="condition-learn-more" href="https://heartrhythmalliance.org/aa/uk/atrial-flutter" target="_blank" rel="noopener noreferrer">Learn more →</a>
+        </div>
+        <div class="condition-tag" role="listitem">Atrial Tachycardia</div>
+        <div class="condition-tag" role="listitem">Supraventricular Tachycardia (SVT) — including WPW/AVRT &amp; AVNRT
+          <a class="condition-learn-more" href="https://heartrhythmalliance.org/aa/uk/conditions/supraventricular-tachycardia-svt" target="_blank" rel="noopener noreferrer">Learn more →</a>
+        </div>
+        <div class="condition-tag" role="listitem">Ventricular Tachycardia (VT)
+          <a class="condition-learn-more" href="https://heartrhythmalliance.org/aa/uk/ventricular-tachycardia-vt" target="_blank" rel="noopener noreferrer">Learn more →</a>
+        </div>
+        <div class="condition-tag" role="listitem">Ventricular Ectopics
+          <a class="condition-learn-more" href="https://heartrhythmalliance.org/aa/uk/ectopic-beats" target="_blank" rel="noopener noreferrer">Learn more →</a>
+        </div>
+        <div class="condition-tag" role="listitem">Heart Block / Sick Sinus Syndrome / Pacemaker related
+          <a class="condition-learn-more" href="https://heartrhythmalliance.org/aa/uk/pacemaker" target="_blank" rel="noopener noreferrer">Learn more →</a>
+        </div>
+        <div class="condition-tag" role="listitem">Heart Failure (Arrhythmia-related)</div>
       </div>
     </div>
   </section>
