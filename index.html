@@ -1035,6 +1035,90 @@
       .ae-info-wrap { min-height: unset; }
     }
 
+    /* ===== AE HEART ENLARGE MODAL ===== */
+    .ae-heart-clickable {
+      cursor: zoom-in;
+      display: block;
+      width: 100%;
+      position: relative;
+    }
+    .ae-heart-clickable:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 4px;
+      border-radius: 8px;
+    }
+    .ae-enlarge-hint {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      font-size: 11px;
+      color: var(--text-dim, #94a3b8);
+      padding: 6px 0 10px;
+      user-select: none;
+      pointer-events: none;
+    }
+    .ae-enlarge-hint svg { opacity: 0.65; flex-shrink: 0; }
+    .ae-heart-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      background: rgba(8,22,48,0.82);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+    .ae-heart-modal.ae-modal-active { display: flex; }
+    .ae-heart-modal-box {
+      position: relative;
+      background: #f9f6f1;
+      border-radius: 16px;
+      padding: 52px 28px 24px;
+      max-width: min(700px, 94vw);
+      width: 100%;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.55);
+      max-height: 94vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+    .ae-heart-modal-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      text-align: center;
+      margin: 0;
+      letter-spacing: 0.01em;
+    }
+    .ae-heart-modal-svg {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      display: block;
+    }
+    .ae-heart-modal-close {
+      position: absolute;
+      top: 14px; right: 16px;
+      width: 38px; height: 38px;
+      background: none;
+      border: 2px solid #bbb;
+      border-radius: 50%;
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+      color: #555;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .ae-heart-modal-close:hover { background: var(--text); border-color: var(--text); color: #fff; }
+
     /* ===== BIO MODAL ===== */
     .bio-modal-btn {
       display: block !important;
@@ -1736,7 +1820,8 @@
         </nav>
         <!-- Centre heart SVG -->
         <div class="ae-heart-wrap">
-          <svg viewBox="0 0 662.65082 651.49066" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-label="Anatomical heart diagram with condition overlay">
+          <button class="ae-heart-clickable" id="ae-heart-btn" onclick="openAeModal()" aria-label="Click to enlarge heart diagram">
+          <svg viewBox="0 0 662.65082 651.49066" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true">
             <image href="heart.svg" xlink:href="heart.svg" x="0" y="0" width="662.65082" height="651.49066" preserveAspectRatio="xMidYMid meet"/>
             <g class="ae-overlay" data-cond="normal">
               <!-- Dim background guide paths showing the conduction route -->
@@ -1869,7 +1954,11 @@
               <text x="445" y="420" font-size="18" fill="#9E7A2A" font-style="italic" font-family="Arial,sans-serif">CS</text>
             </g>
           </svg>
-
+          </button>
+          <p class="ae-enlarge-hint">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            Click to enlarge
+          </p>
         </div>
         <!-- Right info panel -->
         <div class="ae-info-wrap">
@@ -2795,6 +2884,67 @@
       });
     }());
 
+    // ── AE heart enlarge modal ─────────────────────────────────────────────
+    (function () {
+      var COND_NAMES = {
+        normal: 'Normal Sinus Rhythm', af: 'Atrial Fibrillation (AF)',
+        flutter: 'Atrial Flutter', at: 'Atrial Tachycardia',
+        svt: 'Supraventricular Tachycardia (SVT)', vt: 'Ventricular Tachycardia (VT)',
+        pvc: 'Ventricular Ectopics (PVCs)', csp: 'Conduction System Pacing',
+        crt: 'Cardiac Resynchronisation Therapy (CRT)'
+      };
+
+      function activeCond() {
+        var btn = document.querySelector('.ae-btn.ae-active');
+        return btn ? btn.dataset.cond : 'normal';
+      }
+
+      window.openAeModal = function () {
+        var modal   = document.getElementById('ae-heart-modal');
+        var modalSvg = document.getElementById('ae-heart-modal-svg');
+        var title   = document.getElementById('ae-modal-title');
+        var srcSvg  = document.querySelector('#ae-heart-btn svg');
+        if (!modal || !modalSvg || !srcSvg) return;
+
+        var cond = activeCond();
+        title.textContent = COND_NAMES[cond] || cond;
+
+        // Clone the full source SVG (with all overlays) into the modal
+        var clone = srcSvg.cloneNode(true);
+        clone.removeAttribute('aria-hidden');
+        // Replace inner content (keep image + all overlay groups)
+        while (modalSvg.firstChild) modalSvg.removeChild(modalSvg.firstChild);
+        Array.from(clone.childNodes).forEach(function (n) {
+          modalSvg.appendChild(n.cloneNode(true));
+        });
+
+        modal.classList.add('ae-modal-active');
+        document.body.style.overflow = 'hidden';
+        document.getElementById('ae-heart-modal-close').focus();
+      };
+
+      document.addEventListener('DOMContentLoaded', function () {
+        var modal = document.getElementById('ae-heart-modal');
+        var box   = document.getElementById('ae-heart-modal-box');
+        if (!modal) return;
+
+        function closeModal() {
+          modal.classList.remove('ae-modal-active');
+          document.body.style.overflow = '';
+          var btn = document.getElementById('ae-heart-btn');
+          if (btn) btn.focus();
+        }
+
+        document.getElementById('ae-heart-modal-close').addEventListener('click', closeModal);
+        modal.addEventListener('click', function (e) {
+          if (!box.contains(e.target)) closeModal();
+        });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && modal.classList.contains('ae-modal-active')) closeModal();
+        });
+      });
+    }());
+
   </script>
 
 
@@ -2823,6 +2973,21 @@
         <p>In his clinical practice, Dr Kyriacou specialises in the medical treatment and ablation of all heart rhythm disorders, including complex arrhythmias such as atrial fibrillation and ventricular tachycardia, as well as the implantation of complex cardiac pacemakers and defibrillators. He has been instrumental in developing arrhythmia services in Sheffield and South Yorkshire UK. With his leadership his team has received distinguished recognitions, including the Atrial Fibrillation Pioneers Award from the AF Association UK and Arrhythmia Alliance, and the Team of the Year award from the British Heart Rhythm Society and Arrhythmia Alliance.</p>
         <p>Dr Kyriacou continues to contribute to research on cardiac devices and the holistic management of patients with arrhythmias. He also serves on the Faculty of national and international cardiology meetings.</p>
       </div>
+    </div>
+  </div>
+
+  <!-- AE heart enlarge modal -->
+  <div id="ae-heart-modal" class="ae-heart-modal" role="dialog" aria-modal="true" aria-labelledby="ae-modal-title">
+    <div class="ae-heart-modal-box" id="ae-heart-modal-box">
+      <button class="ae-heart-modal-close" id="ae-heart-modal-close" aria-label="Close enlarged view">&#215;</button>
+      <h2 class="ae-heart-modal-title" id="ae-modal-title"></h2>
+      <svg id="ae-heart-modal-svg" class="ae-heart-modal-svg"
+           viewBox="0 0 662.65082 651.49066"
+           xmlns="http://www.w3.org/2000/svg"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           aria-hidden="true">
+        <!-- populated by JS -->
+      </svg>
     </div>
   </div>
 
