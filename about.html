@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="About Dr Andreas Kyriacou — Consultant Cardiologist and Electrophysiologist. Qualifications, credentials, and practice locations in Sheffield, UK and Limassol, Cyprus." />
+  <meta name="author" content="Dr Andreas Kyriacou" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css">
+  <title>About | Dr Andreas Kyriacou</title>
+</head>
+
+<body>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">Dr. Andreas <span>Kyriacou</span></a>
+      <ul class="nav-links" id="nav-menu">
+        <li><a href="about.html" class="nav-active">About</a></li>
+        <li><a href="expertise.html">Expertise</a></li>
+        <li><a href="patient-education.html">Patient Education</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="contact.html" class="nav-cta">Enquire</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <!-- ===== ABOUT ===== -->
+    <section id="about" aria-label="About Dr Kyriacou" style="padding-top: calc(var(--section-gap) + 64px);">
+      <div class="container">
+        <div class="about-grid">
+          <div>
+            <p class="section-label">About</p>
+            <h2 class="section-title">A Career Built on<br /><em>Clinical Excellence</em></h2>
+            <div class="divider" aria-hidden="true"></div>
+            <div class="about-body">
+              <p>
+                Dr Andreas Kyriacou is a <strong>Consultant Cardiologist and Cardiac Electrophysiologist</strong>
+                at Sheffield Teaching Hospitals NHS Trust — one of the UK's leading tertiary cardiac centres.
+                He holds dual appointments at the <strong><a href="https://sacentre.co.uk/about-us/#AndreasRow" target="_blank" rel="noopener noreferrer" class="text-link">Sheffield Arrhythmia Centre</a></strong> and <strong><a href="https://www.syhc.co.uk/team/dr-andreas-kyriacou" target="_blank" rel="noopener noreferrer" class="text-link">South Yorkshire Heart Centre</a></strong>.
+                He provides both NHS and private cardiac care across the region.
+              </p>
+              <p>
+                Internationally, Dr Kyriacou practises at the <strong><a href="https://www.gmi.com.cy/doctors/andreas-loizos-kyriacou" target="_blank" rel="noopener noreferrer" class="text-link">German Medical Institute (GMI)</a></strong>
+                in Limassol, Cyprus, bringing world-class electrophysiology expertise to patients across
+                Cyprus and the wider Eastern Mediterranean region.
+              </p>
+              <p>
+                His clinical focus encompasses the full spectrum of cardiac arrhythmia management, from
+                complex catheter ablation procedures to advanced cardiac device implantation. He is
+                recognised for his expertise in <strong>atrial fibrillation ablation</strong>,
+                <strong>ventricular tachycardia ablation</strong>, and the management of patients
+                with <strong>advanced implantable electronic cardiac devices</strong>.
+              </p>
+            </div>
+
+            <button class="bio-modal-btn" id="bio-profile-btn" onclick="openBioModal()" aria-haspopup="dialog">
+              📋 Dr Andreas Kyriacou — Full Clinical Profile
+            </button>
+
+            <div class="profile-links" role="list" aria-label="Professional profiles">
+              <a href="https://www.linkedin.com/in/andreas-kyriacou-mbchb-phd-frcp-fesc-fehra-18178561" target="_blank" rel="noopener noreferrer" class="profile-link" role="listitem">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+                LinkedIn
+              </a>
+              <a href="https://scholar.google.com/citations?user=kQGyZRAAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" class="profile-link" role="listitem">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                Google Scholar
+              </a>
+              <a href="https://www.researchgate.net/profile/Andreas-Kyriacou-4" target="_blank" rel="noopener noreferrer" class="profile-link" role="listitem">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                ResearchGate
+              </a>
+              <a href="https://www.syhc.co.uk/team/dr-andreas-kyriacou" target="_blank" rel="noopener noreferrer" class="profile-link" role="listitem">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                SYHC Profile
+              </a>
+              <a href="https://sacentre.co.uk/about-us/#AndreasRow" target="_blank" rel="noopener noreferrer" class="profile-link" role="listitem">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                SA Centre
+              </a>
+              <a href="https://www.gmi.com.cy/doctors/andreas-loizos-kyriacou" target="_blank" rel="noopener noreferrer" class="profile-link" role="listitem">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
+                GMI Cyprus
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <p class="section-label">Qualifications</p>
+            <h3 class="section-title" style="font-size:clamp(1.5rem,3vw,2rem);">Credentials &amp;<br /><em>Fellowships</em></h3>
+            <div class="divider" aria-hidden="true"></div>
+            <ul class="qualifications-list" aria-label="Professional qualifications">
+              <li class="qual-item">
+                <span class="qual-badge">MBChB</span>
+                <span class="qual-desc">Bachelor of Medicine and Bachelor of Surgery, University of Edinburgh 1996–2001</span>
+              </li>
+              <li class="qual-item">
+                <span class="qual-badge">PhD</span>
+                <span class="qual-desc">Doctor of Philosophy, National Heart and Lung Institute, Imperial College London</span>
+              </li>
+              <li class="qual-item">
+                <span class="qual-badge">FRCP</span>
+                <span class="qual-desc">Fellow of the Royal College of Physicians (London)</span>
+              </li>
+              <li class="qual-item">
+                <span class="qual-badge">FESC</span>
+                <span class="qual-desc">Fellow of the European Society of Cardiology</span>
+              </li>
+              <li class="qual-item">
+                <span class="qual-badge">FEHRA</span>
+                <span class="qual-desc">Fellow of the European Heart Rhythm Association</span>
+              </li>
+            </ul>
+
+            <!-- Practice locations embedded inline -->
+            <div id="locations" style="margin-top:48px;">
+              <p class="section-label">Locations</p>
+              <h3 class="section-title" style="font-size:clamp(1.3rem,2.5vw,1.7rem);">Practice<br /><em>Locations</em></h3>
+              <div class="divider" aria-hidden="true"></div>
+              <div class="locations-grid" style="grid-template-columns:1fr; margin-top:28px; gap:20px;">
+
+                <article class="location-card" itemscope itemtype="https://schema.org/MedicalOrganization">
+                  <span class="location-flag" aria-label="United Kingdom flag">🇬🇧</span>
+                  <p class="location-country">United Kingdom</p>
+                  <h3 class="location-name" itemprop="name">Sheffield, South Yorkshire</h3>
+                  <p class="location-desc" itemprop="description">
+                    Dr Kyriacou's primary NHS and private practice is based at Sheffield Teaching
+                    Hospitals NHS Trust, one of the largest NHS Foundation Trusts in England and a
+                    nationally recognised centre for cardiac electrophysiology. He also holds
+                    positions at the Sheffield Arrhythmia Centre and South Yorkshire Heart Centre.
+                  </p>
+                  <ul class="location-orgs" aria-label="Sheffield organisations">
+                    <li class="location-org">Sheffield Teaching Hospitals NHS Trust</li>
+                    <li class="location-org">Sheffield Arrhythmia Centre</li>
+                    <li class="location-org">South Yorkshire Heart Centre (SYHC)</li>
+                  </ul>
+                  <a href="https://www.syhc.co.uk/team/dr-andreas-kyriacou" target="_blank" rel="noopener noreferrer" class="location-link">
+                    View SYHC Profile
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+                  </a>
+                </article>
+
+                <article class="location-card" itemscope itemtype="https://schema.org/MedicalOrganization">
+                  <span class="location-flag" aria-label="Cyprus flag">🇨🇾</span>
+                  <p class="location-country">Cyprus</p>
+                  <h3 class="location-name" itemprop="name">Limassol, Cyprus</h3>
+                  <p class="location-desc" itemprop="description">
+                    Internationally, Dr Kyriacou consults at the German Medical Institute (GMI)
+                    in Limassol — one of Cyprus's leading private medical institutions. Patients
+                    in Cyprus benefit from the same high-quality electrophysiology consultation
+                    and procedural expertise available in Sheffield.
+                  </p>
+                  <ul class="location-orgs" aria-label="Cyprus organisations">
+                    <li class="location-org">German Medical Institute (GMI)</li>
+                    <li class="location-org">Limassol, Republic of Cyprus</li>
+                  </ul>
+                  <a href="https://www.gmi.com.cy/doctors/andreas-loizos-kyriacou" target="_blank" rel="noopener noreferrer" class="location-link">
+                    View GMI Profile
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+                  </a>
+                </article>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <div class="footer-brand">Dr. <span>Andreas Kyriacou</span></div>
+          <p class="footer-tagline">
+            Consultant Cardiologist &amp; Electrophysiologist<br />
+            MBChB PhD FRCP FESC FEHRA<br />
+            Sheffield, UK &amp; Limassol, Cyprus
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="expertise.html">Expertise</a></li>
+            <li><a href="about.html#locations">Locations</a></li>
+            <li><a href="research.html">Research</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>External Profiles</h4>
+          <ul>
+            <li><a href="https://www.linkedin.com/in/andreas-kyriacou-mbchb-phd-frcp-fesc-fehra-18178561" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a href="https://scholar.google.com/citations?user=kQGyZRAAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Google Scholar</a></li>
+            <li><a href="https://www.syhc.co.uk/team/dr-andreas-kyriacou" target="_blank" rel="noopener noreferrer">SYHC</a></li>
+            <li><a href="https://sacentre.co.uk/about-us/#AndreasRow" target="_blank" rel="noopener noreferrer">Sheffield Arrhythmia Centre</a></li>
+            <li><a href="https://www.gmi.com.cy/doctors/andreas-loizos-kyriacou" target="_blank" rel="noopener noreferrer">GMI Cyprus</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; <span id="year"></span> Dr Andreas Kyriacou. All rights reserved.</span>
+        <span>The information on this site is for general purposes only and does not constitute medical advice.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Heart schematic enlarge modal -->
+  <div id="schematic-modal" class="schematic-modal" role="dialog" aria-modal="true" aria-label="Heart schematic enlarged view">
+    <div class="schematic-modal-box">
+      <button class="schematic-modal-close" id="schematic-modal-close" aria-label="Close enlarged view">&#215;</button>
+      <div id="schematic-modal-svg"></div>
+      <p id="schematic-modal-caption" class="schematic-modal-caption"></p>
+    </div>
+  </div>
+
+  <!-- Bio modal -->
+  <div id="bio-modal" class="bio-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="bio-modal-title">
+    <div class="bio-modal-box">
+      <button class="bio-modal-close" id="bio-modal-close" aria-label="Close biography">&#215;</button>
+      <h2 class="bio-modal-title" id="bio-modal-title">Dr Andreas Kyriacou</h2>
+      <p class="bio-modal-subtitle">Consultant Cardiologist &amp; Electrophysiologist</p>
+      <div class="bio-modal-divider"></div>
+      <div class="bio-modal-body">
+        <p>Dr Andreas Kyriacou is a Consultant Cardiologist who specialises in Interventional Arrhythmia and Cardiac Devices. He was appointed as a Consultant Cardiologist and Electrophysiologist at Sheffield Teaching Hospitals NHS Foundation Trust in 2015 and has held the position of Head of Arrhythmia within the Cardiothoracic Centre.</p>
+        <p>Dr Kyriacou has collaborated with the German Medical Institute since 2023 where he offers arrhythmia services. He regularly offers consultations to patients with arrhythmias and undertakes interventional procedures such as ablations to treat a variety of arrhythmias.</p>
+        <p>Dr Kyriacou is a Fellow of the European Society of Cardiology (FESC) and is the first Cypriot Cardiologist to be awarded the highly competitive Fellowship of the European Heart Rhythm Association (FEHRA), recognition of his exceptional contributions to cardiovascular medicine and cardiac rhythm management in clinical care, research, and education.</p>
+        <p>Dr Kyriacou graduated from the University of Edinburgh in 2001 and subsequently gained clinical experience in Edinburgh and London. In 2007, he was awarded the prestigious Walport Academic Clinical Fellowship in Cardiology by the National Institute for Health Research (NIHR). He trained in Cardiology at St Mary's and Hammersmith Hospitals of Imperial College Healthcare NHS Trust and subspecialized in cardiac arrhythmias at the Royal Brompton and Harefield Hospitals where he completed his advanced training in cardiac arrhythmias, specializing in the ablation of complex arrhythmias, including atrial fibrillation and ventricular tachycardias and implantation of complex cardiac pacemakers.</p>
+        <p>During his training, Dr Kyriacou was awarded the competitive three-year British Heart Foundation (BHF) Clinical Research Training Fellowship at the International Centre for Circulatory Health, where he was awarded his PhD from Imperial College London. His research focused on complex cardiac pacemakers, exploring the physiological effects of complex pacing on heart function and developing methods to improve patient outcomes. His innovative work earned him the prestigious European Society of Cardiology Heart Failure Association Young Investigator in Clinical Research Award (2012) and he was runner-up in the British Heart Rhythm Society Young Investigator Competition (2012). His research findings were selected for presentation at the SET for Britain ceremonies at the House of Parliament in Westminster London in 2011 and 2012. Dr Kyriacou's research has been published extensively in highly impactful Cardiology journals internationally.</p>
+        <p>In his clinical practice, Dr Kyriacou specialises in the medical treatment and ablation of all heart rhythm disorders, including complex arrhythmias such as atrial fibrillation and ventricular tachycardia, as well as the implantation of complex cardiac pacemakers and defibrillators. He has been instrumental in developing arrhythmia services in Sheffield and South Yorkshire UK. With his leadership his team has received distinguished recognitions, including the Atrial Fibrillation Pioneers Award from the AF Association UK and Arrhythmia Alliance, and the Team of the Year award from the British Heart Rhythm Society and Arrhythmia Alliance.</p>
+        <p>Dr Kyriacou continues to contribute to research on cardiac devices and the holistic management of patients with arrhythmias. He also serves on the Faculty of national and international cardiology meetings.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Heart schematic enlarge modal (hmodal) -->
+  <div id="hmodal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,35,66,0.92);z-index:9999;justify-content:center;align-items:center;cursor:default;" onclick="if(event.target===this)this.style.display='none'">
+    <div style="position:relative;background:#FDFAF6;padding:2rem;border-radius:4px;display:flex;justify-content:center;align-items:center;">
+      <button onclick="document.getElementById('hmodal').style.display='none'" style="position:absolute;top:1rem;right:1rem;font-size:1.5rem;background:none;border:none;cursor:pointer;color:#0A2342;">&#10005;</button>
+      <div id="hmodal-content"></div>
+    </div>
+  </div>
+  <script>document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.getElementById('hmodal').style.display='none';}});</script>
+
+  <script src="scripts.js"></script>
+</body>
+</html>
