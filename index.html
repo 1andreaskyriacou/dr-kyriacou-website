@@ -1814,7 +1814,7 @@
         </nav>
         <!-- Centre heart SVG -->
         <div class="ae-heart-wrap">
-          <div style="cursor:pointer;position:relative;" onclick="alert('clicked')">
+          <div style="cursor:pointer;position:relative;" onclick="document.getElementById('hmodal').style.display='flex';document.getElementById('hmodal-content').innerHTML=document.getElementById('heart-schematic-main').outerHTML;">
           <svg id="heart-schematic-main" viewBox="0 0 662.65082 651.49066" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" aria-label="Heart diagram — click to enlarge">
             <image href="heart.svg" xlink:href="heart.svg" x="0" y="0" width="662.65082" height="651.49066" preserveAspectRatio="xMidYMid meet" style="pointer-events:none;"/>
             <g class="ae-overlay" data-cond="normal">
@@ -2910,15 +2910,14 @@
     </div>
   </div>
 
-  <script>document.addEventListener('keydown',function(e){if(e.key==='Escape'){var m=document.getElementById('hmodal');if(m)m.style.display='none';}});</script>
-
   <!-- Heart schematic enlarge modal -->
-  <div id="hmodal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,35,66,0.92);z-index:9999;justify-content:center;align-items:center;" onclick="if(event.target===this)this.style.display='none';">
-    <div style="position:relative;background:#fff;padding:2rem;max-width:90vw;max-height:90vh;overflow-y:auto;border-radius:14px;box-shadow:0 24px 64px rgba(0,0,0,0.55);">
-      <button onclick="document.getElementById('hmodal').style.display='none'" style="position:absolute;top:1rem;right:1rem;font-size:1.5rem;background:none;border:none;cursor:pointer;line-height:1;color:#555;">&#215;</button>
-      <div id="hmodal-content" style="width:min(600px,80vw);height:auto;"></div>
+  <div id="hmodal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,35,66,0.92);z-index:9999;justify-content:center;align-items:center;cursor:default;" onclick="if(event.target===this)this.style.display='none'">
+    <div style="position:relative;background:#FDFAF6;padding:2rem;border-radius:4px;max-width:90vw;max-height:90vh;overflow:auto;">
+      <button onclick="document.getElementById('hmodal').style.display='none'" style="position:absolute;top:1rem;right:1rem;font-size:1.5rem;background:none;border:none;cursor:pointer;color:#0A2342;">&#10005;</button>
+      <div id="hmodal-content"></div>
     </div>
   </div>
+  <script>document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.getElementById('hmodal').style.display='none';}});</script>
 
 </body>
 </html>
