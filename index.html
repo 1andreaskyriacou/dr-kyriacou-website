@@ -1568,7 +1568,28 @@
             </button>
             <div class="edu-card-detail" aria-hidden="true">
               <div class="edu-card-detail-inner">
-                Symptoms include breathlessness and fatigue. In susceptible patients AF can increase the risk of stroke, which can be significantly reduced with blood thinning medication.
+                Symptoms include breathlessness and fatigue. In susceptible patients AF can increase the risk of stroke, which can be significantly reduced with blood thinning medication. Catheter ablation for AF is successful in reducing the burden of episodes significantly. Catheter ablation in paroxysmal AF the success is 70–85% and in persistent AF the success is 55–65%. Early treatment is important to secure the best outcomes.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Ventricular Tachycardia -->
+        <article class="edu-card" aria-label="Ventricular Tachycardia">
+          <div class="ecg-display" aria-hidden="true">
+            <canvas class="ecg-canvas" data-ecg-type="vt"></canvas>
+            <span class="ecg-bpm-badge">150–250 bpm</span>
+          </div>
+          <div class="edu-card-body">
+            <h3 class="edu-card-title">Ventricular Tachycardia (VT)</h3>
+            <p class="edu-card-summary">A fast rhythm originating from the lower chambers of the heart. It produces wide, abnormal beats on the ECG and can cause palpitations, dizziness, breathlessness or blackouts.</p>
+            <button class="edu-expand-btn" aria-expanded="false">
+              <span class="edu-btn-text">Read more</span>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="edu-card-detail" aria-hidden="true">
+              <div class="edu-card-detail-inner">
+                In patients with underlying heart disease VT can be life-threatening and may require an implantable defibrillator (ICD). Catheter ablation can be highly effective in reducing VT episodes and ICD shocks, and is performed in specialist centres.
               </div>
             </div>
           </div>
@@ -2000,6 +2021,14 @@
         return c + qrs;
       }
 
+      function vtWave(t) {
+        // Wide bizarre QRS at ~180 bpm, no P waves
+        var p = (t % 40) / 40;
+        return  0.88 * gauss(p, 0.24, 0.062)   // broad positive peak
+              - 0.42 * gauss(p, 0.44, 0.050)   // negative component
+              + 0.16 * gauss(p, 0.62, 0.038);  // small terminal positive
+      }
+
       function pacedWave(t) {
         var p = (t % 90) / 90;
         var spike = p < 0.025 ? (p < 0.012 ? p / 0.012 : (0.025 - p) / 0.013) * 0.95 : 0;
@@ -2009,7 +2038,7 @@
               - 0.22 * gauss(p, 0.440, 0.075);
       }
 
-      var WAVE_FNS = { normal: normalSinus, svt: svtWave, flutter: flutterWave, af: afibWave, paced: pacedWave };
+      var WAVE_FNS = { normal: normalSinus, svt: svtWave, flutter: flutterWave, af: afibWave, vt: vtWave, paced: pacedWave };
 
       function ECGRenderer(canvas, type) {
         this.canvas = canvas;
