@@ -1814,8 +1814,9 @@
         </nav>
         <!-- Centre heart SVG -->
         <div class="ae-heart-wrap">
-          <svg id="heart-schematic-main" viewBox="0 0 662.65082 651.49066" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="cursor:pointer" tabindex="0" role="img" aria-label="Heart diagram — click to enlarge" onclick="document.getElementById('hmodal').style.display='flex';document.getElementById('hmodal-content').innerHTML=this.outerHTML;">
-            <image href="heart.svg" xlink:href="heart.svg" x="0" y="0" width="662.65082" height="651.49066" preserveAspectRatio="xMidYMid meet"/>
+          <div style="cursor:pointer;position:relative;" onclick="document.getElementById('hmodal').style.display='flex';document.getElementById('hmodal-content').innerHTML=document.getElementById('heart-schematic-main').outerHTML;">
+          <svg id="heart-schematic-main" viewBox="0 0 662.65082 651.49066" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" aria-label="Heart diagram — click to enlarge">
+            <image href="heart.svg" xlink:href="heart.svg" x="0" y="0" width="662.65082" height="651.49066" preserveAspectRatio="xMidYMid meet" style="pointer-events:none;"/>
             <g class="ae-overlay" data-cond="normal">
               <!-- Dim background guide paths showing the conduction route -->
               <path d="M258,252 C228,288 205,335 212,378 C220,402 268,412 318,410" fill="none" stroke="#C9A84C" stroke-width="2" opacity="0.22" stroke-linecap="round"/>
@@ -1947,6 +1948,7 @@
               <text x="445" y="420" font-size="18" fill="#9E7A2A" font-style="italic" font-family="Arial,sans-serif">CS</text>
             </g>
           </svg>
+          </div>
           <p class="ae-enlarge-hint">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
             Click to enlarge
