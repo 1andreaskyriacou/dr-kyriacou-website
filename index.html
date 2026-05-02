@@ -894,23 +894,24 @@
 
     /* ===== BIO MODAL ===== */
     .bio-modal-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 24px;
+      display: block !important;
+      width: fit-content;
+      margin-top: 20px;
+      margin-bottom: 4px;
       padding: 11px 20px;
-      background: var(--text);
-      color: var(--gold);
-      border: 1px solid var(--gold);
+      background: #0A2342 !important;
+      color: #C9A84C !important;
+      border: 1px solid #C9A84C;
       border-radius: var(--radius);
       font-size: 13px;
       font-family: var(--font-sans);
       font-weight: 500;
       letter-spacing: 0.02em;
       cursor: pointer;
+      text-decoration: none;
       transition: background 0.2s, color 0.2s;
     }
-    .bio-modal-btn:hover { background: var(--gold); color: #0A2342; }
+    .bio-modal-btn:hover { background: #C9A84C !important; color: #0A2342 !important; }
 
     .bio-modal-overlay {
       display: none;
@@ -1433,10 +1434,11 @@
               <strong>ventricular tachycardia ablation</strong>, and the management of patients
               with <strong>advanced implantable electronic cardiac devices</strong>.
             </p>
-            <button class="bio-modal-btn" onclick="openBioModal()" aria-haspopup="dialog">
-              📋 Dr Andreas Kyriacou — Full Clinical Profile
-            </button>
           </div>
+
+          <button class="bio-modal-btn" id="bio-profile-btn" onclick="openBioModal()" aria-haspopup="dialog">
+            📋 Dr Andreas Kyriacou — Full Clinical Profile
+          </button>
 
           <div class="profile-links" role="list" aria-label="Professional profiles">
             <a href="https://www.linkedin.com/in/andreas-kyriacou-mbchb-phd-frcp-fesc-fehra-18178561" target="_blank" rel="noopener noreferrer" class="profile-link" role="listitem">
