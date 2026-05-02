@@ -37,7 +37,7 @@
 
   <main>
     <!-- ===== ABOUT ===== -->
-    <section id="about" aria-label="About Dr Kyriacou" style="padding-top: calc(var(--section-gap) + 64px);">
+    <section id="about" aria-label="About Dr Kyriacou" style="padding-top: calc(var(--section-gap) + 64px); padding-bottom: 2rem;">
       <div class="container">
         <div class="about-grid">
           <div>
@@ -64,10 +64,6 @@
                 with <strong>advanced implantable electronic cardiac devices</strong>.
               </p>
             </div>
-
-            <button class="bio-modal-btn" id="bio-profile-btn" onclick="openBioModal()" aria-haspopup="dialog">
-              📋 Dr Andreas Kyriacou — Full Clinical Profile
-            </button>
 
             <div class="profile-links" role="list" aria-label="Professional profiles">
               <a href="https://www.linkedin.com/in/andreas-kyriacou-mbchb-phd-frcp-fesc-fehra-18178561" target="_blank" rel="noopener noreferrer" class="profile-link" role="listitem">
@@ -124,11 +120,15 @@
               </li>
             </ul>
 
+            <button class="bio-modal-btn" id="bio-profile-btn" onclick="openBioModal()" aria-haspopup="dialog" style="margin-top:20px;">
+              📋 Dr Andreas Kyriacou — Clinical Profile
+            </button>
+
           </div>
         </div>
 
         <!-- Locations: two cards side by side, below the bio/qualifications grid -->
-        <div id="locations" style="margin-top:32px;padding-top:1rem;padding-bottom:1rem;">
+        <div id="locations" style="margin-top:16px;padding-top:1rem;padding-bottom:1rem;">
           <h3 class="section-title" style="font-size:clamp(2.2rem,4vw,3.2rem);margin-bottom:8px;">Practice <em>Locations</em></h3>
           <div class="divider" aria-hidden="true"></div>
           <div class="locations-grid" style="grid-template-columns:1fr 1fr; margin-top:16px; gap:32px; align-items:stretch;">
