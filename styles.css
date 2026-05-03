@@ -67,10 +67,6 @@
       color: var(--text);
       margin-bottom: 20px;
     }
-    .section-title em {
-      font-style: italic;
-      color: var(--gold-light);
-    }
 
     .divider {
       width: 48px;
