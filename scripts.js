@@ -207,7 +207,11 @@
         this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         this.mid = this.h * 0.50;
         this.amp = this.h * 0.40;
-        this.buf = new Float32Array(this.w).fill(this.mid);
+        this.buf = new Float32Array(this.w);
+        for (var i = 0; i < this.w; i++) {
+          this.buf[i] = this.mid - this.fn(this.t) * this.amp;
+          this.t += 1.5;
+        }
       };
 
       ECGRenderer.prototype.draw = function () {
