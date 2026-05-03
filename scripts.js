@@ -363,6 +363,29 @@
       });
     });
 
+    // ── research modal ─────────────────────────────────────────────────────
+    window.openResearchModal = function () {
+      var overlay = document.getElementById('research-modal');
+      if (!overlay) return;
+      overlay.style.display = 'flex';
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    };
+    document.addEventListener('DOMContentLoaded', function () {
+      var overlay = document.getElementById('research-modal');
+      if (!overlay) return;
+      function closeResearch() {
+        overlay.classList.remove('active');
+        overlay.style.display = '';
+        document.body.style.overflow = '';
+      }
+      document.getElementById('research-modal-close').addEventListener('click', closeResearch);
+      overlay.addEventListener('click', function (e) { if (e.target === overlay) closeResearch(); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('active')) closeResearch();
+      });
+    });
+
     // ── arrhythmia explorer ────────────────────────────────────────────────
     (function () {
       var ECG_MAP = {
