@@ -256,9 +256,19 @@
                 </g>
               </g>
               <g class="ae-overlay" data-cond="vt">
-                <circle cx="460" cy="510" r="35" fill="rgba(230,57,70,0.22)" stroke="#E63946" stroke-width="7" filter="url(#red-glow)"><animate attributeName="r" values="16;62;16" dur="0.9s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.4;1;0.4" dur="0.9s" repeatCount="indefinite"/></circle>
-                <circle cx="460" cy="510" r="13" fill="#E63946"/>
-                <!-- VT: long arrows radiating from LV focal point across both ventricles (~3x longer) -->
+                <!-- VT re-entrant circuit ring in LV -->
+                <circle cx="460" cy="495" r="52" fill="rgba(230,57,70,0.12)" stroke="#E63946" stroke-width="6" stroke-dasharray="20,10" filter="url(#red-glow)">
+                  <animate attributeName="stroke-dashoffset" values="0;-90" dur="0.9s" repeatCount="indefinite"/>
+                  <animate attributeName="opacity" values="0.5;1;0.5" dur="0.9s" repeatCount="indefinite"/>
+                </circle>
+                <!-- Two arrows travelling clockwise around the VT circuit -->
+                <g><polygon points="-7,-4 7,0 -7,4" fill="#E63946" filter="url(#red-glow)"/>
+                  <animateMotion path="M408,495 A52,52 0 0,1 460,443 A52,52 0 0,1 512,495 A52,52 0 0,1 460,547 A52,52 0 0,1 408,495" dur="0.9s" repeatCount="indefinite" rotate="auto"/>
+                </g>
+                <g><polygon points="-7,-4 7,0 -7,4" fill="#E63946" filter="url(#red-glow)"/>
+                  <animateMotion path="M408,495 A52,52 0 0,1 460,443 A52,52 0 0,1 512,495 A52,52 0 0,1 460,547 A52,52 0 0,1 408,495" dur="0.9s" begin="0.45s" repeatCount="indefinite" rotate="auto"/>
+                </g>
+                <!-- VT: long arrows radiating from LV circuit across both ventricles -->
                 <g><polygon points="-7,-4 7,0 -7,4" fill="#E63946"/>
                   <animate attributeName="opacity" values="0;1;0" dur="0.9s" repeatCount="indefinite"/>
                   <animateMotion path="M460,510 L460,345" dur="0.9s" repeatCount="indefinite" rotate="auto"/>
