@@ -469,6 +469,7 @@
     /* ===== EXPERTISE ===== */
     #expertise {
       padding: var(--section-gap) 0;
+      padding-top: 10rem;
       background: var(--dark-2);
     }
 
