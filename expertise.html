@@ -45,8 +45,13 @@
           <p style="font-size:14px;color:var(--text-muted);line-height:1.8;">
             Arrhythmias can cause symptoms including:
           </p>
+        </div>
 
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px;margin-bottom:18px;">
+        <!-- Two-column symptoms layout -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;margin-top:22px;">
+
+          <!-- LEFT: 2x3 symptoms grid -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
 
             <!-- Heart Palpitations -->
             <div style="display:flex;align-items:flex-start;gap:14px;background:#faf8f4;border:1px solid #e8e0d0;border-radius:10px;padding:16px;">
@@ -64,15 +69,11 @@
             <div style="display:flex;align-items:flex-start;gap:14px;background:#faf8f4;border:1px solid #e8e0d0;border-radius:10px;padding:16px;">
               <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60" fill="none" aria-hidden="true" style="flex-shrink:0;">
                 <rect width="60" height="60" rx="8" fill="#f0ebe0"/>
-                <!-- bed -->
                 <rect x="8" y="34" width="44" height="8" rx="2" fill="#8fa8c8"/>
                 <rect x="8" y="40" width="44" height="4" rx="1" fill="#6b8aab"/>
-                <!-- pillow -->
                 <rect x="10" y="28" width="14" height="8" rx="3" fill="#d4c9b0"/>
-                <!-- person lying -->
                 <ellipse cx="24" cy="27" rx="4" ry="4" fill="#c8a882"/>
                 <path d="M28 29 Q36 26 44 28" stroke="#c8a882" stroke-width="3.5" stroke-linecap="round" fill="none"/>
-                <!-- zzz -->
                 <text x="36" y="22" font-size="9" fill="#8fa8c8" font-family="sans-serif" font-weight="bold">z z</text>
               </svg>
               <div>
@@ -85,13 +86,9 @@
             <div style="display:flex;align-items:flex-start;gap:14px;background:#faf8f4;border:1px solid #e8e0d0;border-radius:10px;padding:16px;">
               <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60" fill="none" aria-hidden="true" style="flex-shrink:0;">
                 <rect width="60" height="60" rx="8" fill="#f0ebe0"/>
-                <!-- trachea -->
                 <rect x="27" y="8" width="6" height="10" rx="2" fill="#8fa8c8"/>
-                <!-- left lung -->
                 <path d="M26 18 C14 18 8 26 8 36 C8 44 12 50 20 50 C24 50 26 46 26 42 L26 18Z" fill="#8fa8c8" opacity="0.85"/>
-                <!-- right lung -->
                 <path d="M34 18 C46 18 52 26 52 36 C52 44 48 50 40 50 C36 50 34 46 34 42 L34 18Z" fill="#8fa8c8" opacity="0.85"/>
-                <!-- breath lines -->
                 <path d="M16 32 Q20 28 24 32" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none"/>
                 <path d="M36 32 Q40 28 44 32" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none"/>
               </svg>
@@ -105,11 +102,8 @@
             <div style="display:flex;align-items:flex-start;gap:14px;background:#faf8f4;border:1px solid #e8e0d0;border-radius:10px;padding:16px;">
               <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60" fill="none" aria-hidden="true" style="flex-shrink:0;">
                 <rect width="60" height="60" rx="8" fill="#f0ebe0"/>
-                <!-- torso outline -->
-                <path d="M18 10 L14 52 L46 52 L42 10 Z" rx="4" fill="#c8d8e8" stroke="#8fa8c8" stroke-width="1.5"/>
-                <!-- heart shape -->
+                <path d="M18 10 L14 52 L46 52 L42 10 Z" fill="#c8d8e8" stroke="#8fa8c8" stroke-width="1.5"/>
                 <path d="M30 38 C30 38 20 30 20 24 C20 20 24 18 27 20 C28.5 21 30 23 30 23 C30 23 31.5 21 33 20 C36 18 40 20 40 24 C40 30 30 38 30 38Z" fill="#b35c5c" opacity="0.6"/>
-                <!-- lightning bolt -->
                 <polygon points="32,20 27,30 31,30 28,40 35,27 31,27" fill="#f5c842" stroke="#d4a010" stroke-width="0.8"/>
               </svg>
               <div>
@@ -122,18 +116,12 @@
             <div style="display:flex;align-items:flex-start;gap:14px;background:#faf8f4;border:1px solid #e8e0d0;border-radius:10px;padding:16px;">
               <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60" fill="none" aria-hidden="true" style="flex-shrink:0;">
                 <rect width="60" height="60" rx="8" fill="#f0ebe0"/>
-                <!-- tilting person -->
-                <!-- head -->
                 <ellipse cx="36" cy="11" rx="5" ry="5" fill="#c8a882"/>
-                <!-- body leaning -->
                 <line x1="36" y1="16" x2="30" y2="34" stroke="#c8a882" stroke-width="3.5" stroke-linecap="round"/>
-                <!-- arms spread (off-balance) -->
                 <line x1="34" y1="22" x2="44" y2="18" stroke="#c8a882" stroke-width="2.5" stroke-linecap="round"/>
                 <line x1="33" y1="24" x2="22" y2="28" stroke="#c8a882" stroke-width="2.5" stroke-linecap="round"/>
-                <!-- legs -->
                 <line x1="30" y1="34" x2="24" y2="48" stroke="#c8a882" stroke-width="2.5" stroke-linecap="round"/>
                 <line x1="30" y1="34" x2="36" y2="46" stroke="#c8a882" stroke-width="2.5" stroke-linecap="round"/>
-                <!-- dizziness arcs -->
                 <path d="M14 14 Q10 10 14 6" stroke="#8fa8c8" stroke-width="1.8" stroke-linecap="round" fill="none"/>
                 <path d="M12 17 Q6 12 10 5" stroke="#8fa8c8" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.6"/>
               </svg>
@@ -147,19 +135,12 @@
             <div style="display:flex;align-items:flex-start;gap:14px;background:#faf8f4;border:1px solid #e8e0d0;border-radius:10px;padding:16px;">
               <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60" fill="none" aria-hidden="true" style="flex-shrink:0;">
                 <rect width="60" height="60" rx="8" fill="#f0ebe0"/>
-                <!-- ground line -->
                 <line x1="6" y1="50" x2="54" y2="50" stroke="#c8b898" stroke-width="1.5"/>
-                <!-- collapsed person -->
-                <!-- head -->
                 <ellipse cx="46" cy="42" rx="5" ry="5" fill="#c8a882"/>
-                <!-- body horizontal -->
                 <line x1="41" y1="44" x2="18" y2="46" stroke="#c8a882" stroke-width="3.5" stroke-linecap="round"/>
-                <!-- arm -->
                 <line x1="32" y1="44" x2="28" y2="38" stroke="#c8a882" stroke-width="2.5" stroke-linecap="round"/>
-                <!-- legs -->
                 <line x1="18" y1="46" x2="10" y2="42" stroke="#c8a882" stroke-width="2.5" stroke-linecap="round"/>
                 <line x1="18" y1="46" x2="12" y2="50" stroke="#c8a882" stroke-width="2.5" stroke-linecap="round"/>
-                <!-- stars/flash above head -->
                 <text x="34" y="34" font-size="10" fill="#8fa8c8" font-family="sans-serif">✦</text>
                 <text x="42" y="30" font-size="8" fill="#8fa8c8" font-family="sans-serif" opacity="0.7">✦</text>
               </svg>
@@ -169,12 +150,297 @@
               </div>
             </div>
 
-          </div>
+          </div><!-- end left symptoms grid -->
 
-          <p style="font-size:14px;color:var(--text-muted);line-height:1.8;">
-            Most arrhythmias can affect quality of life substantially and some serious arrhythmias can lead to cardiac arrest. Dr Andreas Kyriacou provides specialist assessment and treatment for a comprehensive range of cardiac rhythm disorders and related conditions for the NHS, GESY and privately funded/insured patients.
-          </p>
-        </div>
+          <!-- RIGHT: Cath-lab illustration + text -->
+          <div style="display:flex;flex-direction:column;gap:18px;">
+
+            <!-- Cath-lab / Electroanatomic mapping SVG illustration -->
+            <div>
+              <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 400 280" aria-label="Cardiac catheterisation laboratory with electroanatomic mapping" role="img" style="display:block;border-radius:12px;border:1px solid #2a3a5c;max-width:100%;">
+                <defs>
+                  <!-- Room background gradient -->
+                  <linearGradient id="roomBg" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#1a2035"/>
+                    <stop offset="100%" stop-color="#0d1525"/>
+                  </linearGradient>
+                  <!-- Monitor screen gradient -->
+                  <linearGradient id="screenBg" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#050e1f"/>
+                    <stop offset="100%" stop-color="#0a1830"/>
+                  </linearGradient>
+                  <!-- Heart voltage map: CARTO-style colour gradient (blue→green→yellow→orange→red) -->
+                  <radialGradient id="heartCore" cx="50%" cy="48%" r="46%">
+                    <stop offset="0%"   stop-color="#e8001a"/>
+                    <stop offset="18%"  stop-color="#ff4500"/>
+                    <stop offset="35%"  stop-color="#ff8c00"/>
+                    <stop offset="52%"  stop-color="#ffd700"/>
+                    <stop offset="68%"  stop-color="#7ec850"/>
+                    <stop offset="82%"  stop-color="#00bfff"/>
+                    <stop offset="100%" stop-color="#1a3acc"/>
+                  </radialGradient>
+                  <!-- Secondary voltage patch (ablation scar / low voltage zone) -->
+                  <radialGradient id="scarZone" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%"   stop-color="#3a2080" stop-opacity="0.9"/>
+                    <stop offset="100%" stop-color="#1a3acc" stop-opacity="0"/>
+                  </radialGradient>
+                  <!-- Glow for ablation point -->
+                  <radialGradient id="ablGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%"   stop-color="#ff4500" stop-opacity="0.9"/>
+                    <stop offset="100%" stop-color="#ff4500" stop-opacity="0"/>
+                  </radialGradient>
+                  <!-- ECG baseline gradient -->
+                  <linearGradient id="ecgFade" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%"   stop-color="#00ff88" stop-opacity="0"/>
+                    <stop offset="8%"   stop-color="#00ff88" stop-opacity="1"/>
+                    <stop offset="92%"  stop-color="#00ff88" stop-opacity="1"/>
+                    <stop offset="100%" stop-color="#00ff88" stop-opacity="0"/>
+                  </linearGradient>
+                  <linearGradient id="ecgFade2" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%"   stop-color="#00cfff" stop-opacity="0"/>
+                    <stop offset="8%"   stop-color="#00cfff" stop-opacity="1"/>
+                    <stop offset="92%"  stop-color="#00cfff" stop-opacity="1"/>
+                    <stop offset="100%" stop-color="#00cfff" stop-opacity="0"/>
+                  </linearGradient>
+                  <!-- Catheter gradient -->
+                  <linearGradient id="cathGrad" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="#a0b8d0"/>
+                    <stop offset="100%" stop-color="#d0e4f4"/>
+                  </linearGradient>
+                  <filter id="glowFilter" x="-30%" y="-30%" width="160%" height="160%">
+                    <feGaussianBlur stdDeviation="2.5" result="blur"/>
+                    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                  </filter>
+                  <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="4" result="blur"/>
+                    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                  </filter>
+                  <clipPath id="screenClip">
+                    <rect x="38" y="18" width="220" height="185" rx="4"/>
+                  </clipPath>
+                  <clipPath id="ecgClip">
+                    <rect x="38" y="178" width="220" height="25"/>
+                  </clipPath>
+                </defs>
+
+                <!-- Room background -->
+                <rect width="400" height="280" fill="url(#roomBg)"/>
+
+                <!-- Subtle grid lines (cath lab floor) -->
+                <g stroke="#1e2d45" stroke-width="0.4" opacity="0.5">
+                  <line x1="0" y1="230" x2="400" y2="230"/>
+                  <line x1="0" y1="255" x2="400" y2="255"/>
+                  <line x1="80" y1="225" x2="80" y2="280"/>
+                  <line x1="160" y1="225" x2="160" y2="280"/>
+                  <line x1="240" y1="225" x2="240" y2="280"/>
+                  <line x1="320" y1="225" x2="320" y2="280"/>
+                </g>
+
+                <!-- === MAIN MONITOR === -->
+                <!-- Monitor outer casing -->
+                <rect x="30" y="10" width="236" height="210" rx="8" fill="#1c2840" stroke="#2e4068" stroke-width="1.5"/>
+                <!-- Monitor bezel -->
+                <rect x="34" y="14" width="228" height="196" rx="6" fill="#111e35" stroke="#243352" stroke-width="1"/>
+                <!-- Screen area -->
+                <rect x="38" y="18" width="220" height="185" rx="4" fill="url(#screenBg)"/>
+
+                <!-- Screen subtle scanline overlay -->
+                <rect x="38" y="18" width="220" height="185" rx="4" fill="none" stroke="#0a2040" stroke-width="0.3" opacity="0.4"/>
+
+                <!-- == ELECTROANATOMIC MAP == -->
+                <!-- Map background glow -->
+                <ellipse cx="148" cy="108" rx="75" ry="70" fill="#0d1e3a" filter="url(#softGlow)"/>
+
+                <!-- Left atrium 3-D body — main voltage map shape -->
+                <!-- Posterior LA wall (outermost, low voltage — blue) -->
+                <ellipse cx="148" cy="108" rx="72" ry="66" fill="#1a3acc" opacity="0.25"/>
+
+                <!-- Main LA body with CARTO voltage gradient -->
+                <ellipse cx="148" cy="108" rx="62" ry="57" fill="url(#heartCore)"/>
+
+                <!-- 3-D shading: top highlight -->
+                <ellipse cx="134" cy="84" rx="28" ry="18" fill="white" opacity="0.08"/>
+
+                <!-- Pulmonary veins — right superior (RSPV) -->
+                <ellipse cx="192" cy="75" rx="13" ry="10" fill="#1a3acc" stroke="#3a5aee" stroke-width="1.2" opacity="0.9"/>
+                <ellipse cx="192" cy="75" rx="7" ry="5" fill="#0a1870" opacity="0.85"/>
+                <text x="193" y="71" font-size="5.5" fill="#7090ff" font-family="monospace" text-anchor="middle">RSPV</text>
+
+                <!-- Pulmonary veins — right inferior (RIPV) -->
+                <ellipse cx="196" cy="135" rx="12" ry="9" fill="#1a3acc" stroke="#3a5aee" stroke-width="1.2" opacity="0.9"/>
+                <ellipse cx="196" cy="135" rx="6" ry="4.5" fill="#0a1870" opacity="0.85"/>
+                <text x="197" y="131" font-size="5.5" fill="#7090ff" font-family="monospace" text-anchor="middle">RIPV</text>
+
+                <!-- Pulmonary veins — left superior (LSPV) -->
+                <ellipse cx="104" cy="73" rx="13" ry="10" fill="#1a3acc" stroke="#3a5aee" stroke-width="1.2" opacity="0.9"/>
+                <ellipse cx="104" cy="73" rx="7" ry="5" fill="#0a1870" opacity="0.85"/>
+                <text x="104" y="69" font-size="5.5" fill="#7090ff" font-family="monospace" text-anchor="middle">LSPV</text>
+
+                <!-- Pulmonary veins — left inferior (LIPV) -->
+                <ellipse cx="100" cy="138" rx="12" ry="9" fill="#1a3acc" stroke="#3a5aee" stroke-width="1.2" opacity="0.9"/>
+                <ellipse cx="100" cy="138" rx="6" ry="4.5" fill="#0a1870" opacity="0.85"/>
+                <text x="100" y="134" font-size="5.5" fill="#7090ff" font-family="monospace" text-anchor="middle">LIPV</text>
+
+                <!-- Low-voltage scar patches (post-ablation) -->
+                <ellipse cx="148" cy="78" rx="22" ry="12" fill="url(#scarZone)" opacity="0.7"/>
+                <ellipse cx="148" cy="138" rx="18" ry="10" fill="url(#scarZone)" opacity="0.6"/>
+
+                <!-- Ablation lesion dots (encircling PVs) -->
+                <g fill="#ff6a00" filter="url(#glowFilter)" opacity="0.9">
+                  <!-- RSPV ring -->
+                  <circle cx="178" cy="68" r="2.5"/>
+                  <circle cx="184" cy="74" r="2.5"/>
+                  <circle cx="183" cy="83" r="2.5"/>
+                  <circle cx="176" cy="88" r="2.5"/>
+                  <!-- RIPV ring -->
+                  <circle cx="182" cy="127" r="2.5"/>
+                  <circle cx="187" cy="134" r="2.5"/>
+                  <circle cx="184" cy="143" r="2.5"/>
+                  <circle cx="176" cy="148" r="2.5"/>
+                  <!-- LSPV ring -->
+                  <circle cx="118" cy="67" r="2.5"/>
+                  <circle cx="112" cy="73" r="2.5"/>
+                  <circle cx="113" cy="82" r="2.5"/>
+                  <circle cx="120" cy="87" r="2.5"/>
+                  <!-- LIPV ring -->
+                  <circle cx="114" cy="130" r="2.5"/>
+                  <circle cx="108" cy="136" r="2.5"/>
+                  <circle cx="110" cy="145" r="2.5"/>
+                  <circle cx="118" cy="149" r="2.5"/>
+                  <!-- Active ablation point (bright) -->
+                  <circle cx="185" cy="79" r="4" fill="#ff2200" filter="url(#softGlow)"/>
+                </g>
+
+                <!-- Mapping catheter points (white dots = contact points) -->
+                <g fill="#e0eeff" opacity="0.7">
+                  <circle cx="148" cy="95"  r="1.8"/>
+                  <circle cx="158" cy="100" r="1.8"/>
+                  <circle cx="162" cy="112" r="1.8"/>
+                  <circle cx="155" cy="122" r="1.8"/>
+                  <circle cx="143" cy="125" r="1.8"/>
+                  <circle cx="133" cy="120" r="1.8"/>
+                  <circle cx="128" cy="108" r="1.8"/>
+                  <circle cx="133" cy="97"  r="1.8"/>
+                  <circle cx="148" cy="108" r="1.8"/>
+                </g>
+
+                <!-- Voltage colour scale bar (right side of map) -->
+                <defs>
+                  <linearGradient id="scaleBar" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%"   stop-color="#e8001a"/>
+                    <stop offset="25%"  stop-color="#ffd700"/>
+                    <stop offset="50%"  stop-color="#7ec850"/>
+                    <stop offset="75%"  stop-color="#00bfff"/>
+                    <stop offset="100%" stop-color="#1a3acc"/>
+                  </linearGradient>
+                </defs>
+                <rect x="222" y="68" width="8" height="80" rx="2" fill="url(#scaleBar)" stroke="#2a4070" stroke-width="0.5"/>
+                <text x="232" y="72"  font-size="5" fill="#a0b8d8" font-family="monospace">4.0 mV</text>
+                <text x="232" y="108" font-size="5" fill="#a0b8d8" font-family="monospace">2.0 mV</text>
+                <text x="232" y="150" font-size="5" fill="#a0b8d8" font-family="monospace">0.5 mV</text>
+
+                <!-- Map label -->
+                <text x="148" y="168" font-size="6.5" fill="#4a90d9" font-family="monospace" text-anchor="middle" letter-spacing="0.5">LEFT ATRIUM — VOLTAGE MAP</text>
+                <text x="148" y="178" font-size="5.5" fill="#3a7abf" font-family="monospace" text-anchor="middle">CARTO · AF ABLATION</text>
+
+                <!-- === ECG TRACES at bottom of screen === -->
+                <!-- ECG channel 1 (green — surface lead) -->
+                <g clip-path="url(#ecgClip)">
+                  <polyline points="40,194 52,194 56,194 58,188 60,200 62,183 64,196 68,194 76,194 80,188 82,200 84,183 86,196 90,194 98,194 102,188 104,200 106,183 108,196 112,194 120,194 124,188 126,200 128,183 130,196 134,194 142,194 146,188 148,200 150,183 152,196 156,194 164,194 168,188 170,200 172,183 174,196 178,194 186,194 190,188 192,200 194,183 196,196 200,194 208,194 212,188 214,200 216,183 218,196 222,194 230,194 234,188 236,200 238,183 240,196 244,194 252,194 256,194"
+                        stroke="url(#ecgFade)" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+                </g>
+
+                <!-- ECG channel 2 (cyan — intracardiac) -->
+                <polyline points="40,202 50,202 54,198 56,206 58,196 60,208 62,200 66,202 74,202 78,198 80,206 82,196 84,208 86,200 90,202 98,202 102,198 104,206 106,196 108,208 110,200 114,202 122,202 126,198 128,206 130,196 132,208 134,200 138,202 146,202 150,198 152,206 154,196 156,208 158,200 162,202 170,202 174,198 176,206 178,196 180,208 182,200 186,202 194,202 198,198 200,206 202,196 204,208 206,200 210,202 218,202 222,198 224,206 226,196 228,208 230,200 234,202 242,202 246,202 250,202 256,202"
+                      stroke="url(#ecgFade2)" stroke-width="1" fill="none" stroke-linecap="round" opacity="0.75"/>
+
+                <!-- Screen corner UI elements -->
+                <rect x="40" y="20" width="38" height="10" rx="2" fill="#0d2040" stroke="#1e3a60" stroke-width="0.5"/>
+                <text x="59" y="27" font-size="5.5" fill="#4a90d9" font-family="monospace" text-anchor="middle">CARTO 3</text>
+                <rect x="198" y="20" width="58" height="10" rx="2" fill="#0d2040" stroke="#1e3a60" stroke-width="0.5"/>
+                <text x="227" y="27" font-size="5.5" fill="#00d080" font-family="monospace" text-anchor="middle">● REC  14:32:07</text>
+
+                <!-- Monitor stand -->
+                <rect x="130" y="220" width="36" height="6" rx="2" fill="#1c2840" stroke="#2e4068" stroke-width="1"/>
+                <rect x="120" y="225" width="56" height="4" rx="2" fill="#16203a" stroke="#2e4068" stroke-width="1"/>
+
+                <!-- === PROCEDURE SETUP SILHOUETTES === -->
+                <!-- Cath lab table -->
+                <rect x="270" y="185" width="118" height="8" rx="3" fill="#2a3a5c" stroke="#3a5080" stroke-width="1"/>
+                <!-- Table leg left -->
+                <rect x="278" y="193" width="6" height="36" rx="2" fill="#1e2e4a"/>
+                <!-- Table leg right -->
+                <rect x="374" y="193" width="6" height="36" rx="2" fill="#1e2e4a"/>
+                <!-- Table base -->
+                <rect x="270" y="228" width="118" height="4" rx="2" fill="#1a2840"/>
+
+                <!-- Patient silhouette on table -->
+                <!-- body -->
+                <rect x="276" y="174" width="106" height="13" rx="6" fill="#1e3055" opacity="0.9"/>
+                <!-- head -->
+                <ellipse cx="372" cy="178" rx="10" ry="8" fill="#1e3055" opacity="0.9"/>
+                <!-- drape -->
+                <rect x="278" y="175" width="86" height="11" rx="4" fill="#243a6a" opacity="0.7"/>
+
+                <!-- C-arm fluoroscopy unit (right side) -->
+                <!-- C-arm outer arc -->
+                <path d="M345 140 Q398 155 392 210" stroke="#2e4a70" stroke-width="7" fill="none" stroke-linecap="round"/>
+                <!-- C-arm inner arc highlight -->
+                <path d="M345 140 Q398 155 392 210" stroke="#3a6090" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.5"/>
+                <!-- X-ray source (top of C-arm) -->
+                <rect x="338" y="132" width="18" height="12" rx="3" fill="#2a4060" stroke="#3a6090" stroke-width="1"/>
+                <!-- X-ray detector (bottom of C-arm) -->
+                <rect x="383" y="204" width="18" height="12" rx="3" fill="#2a4060" stroke="#3a6090" stroke-width="1"/>
+                <!-- C-arm pillar -->
+                <rect x="384" y="135" width="10" height="90" rx="3" fill="#1e3050" stroke="#2e4268" stroke-width="1"/>
+                <!-- C-arm base wheels -->
+                <ellipse cx="382" cy="228" rx="8" ry="4" fill="#182840"/>
+                <ellipse cx="396" cy="228" rx="8" ry="4" fill="#182840"/>
+
+                <!-- Ablation catheter line (entering from right, heading toward heart/map) -->
+                <path d="M355 180 Q320 178 300 176 Q270 174 240 160 Q215 148 200 130" stroke="url(#cathGrad)" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.8"/>
+                <!-- Catheter tip glow -->
+                <circle cx="200" cy="130" r="3.5" fill="#ff6a00" filter="url(#glowFilter)" opacity="0.85"/>
+
+                <!-- EP recording system (left side box) -->
+                <rect x="4" y="215" width="24" height="55" rx="4" fill="#192035" stroke="#2a3a58" stroke-width="1"/>
+                <!-- Screen lines on EP box -->
+                <rect x="7" y="218" width="18" height="12" rx="1" fill="#0a1828" stroke="#1e3050" stroke-width="0.5"/>
+                <line x1="7" y1="223" x2="25" y2="223" stroke="#00ff88" stroke-width="0.6" opacity="0.6"/>
+                <line x1="7" y1="226" x2="25" y2="226" stroke="#00cfff" stroke-width="0.6" opacity="0.5"/>
+                <!-- EP box buttons -->
+                <circle cx="10" cy="236" r="2" fill="#2a5090"/>
+                <circle cx="18" cy="236" r="2" fill="#2a5090"/>
+                <circle cx="10" cy="244" r="2" fill="#1a4070"/>
+                <circle cx="18" cy="244" r="2" fill="#ff4500" opacity="0.7"/>
+                <rect x="6" y="250" width="20" height="5" rx="1" fill="#0f1c30" stroke="#1e3050" stroke-width="0.5"/>
+                <text x="16" y="254.5" font-size="4" fill="#4a90d9" font-family="monospace" text-anchor="middle">EP SYS</text>
+
+                <!-- Ceiling lights (overhead surgical) -->
+                <ellipse cx="148" cy="4" rx="30" ry="5" fill="#1e3055" stroke="#2a4070" stroke-width="0.8"/>
+                <ellipse cx="148" cy="5" rx="22" ry="3.5" fill="#243060" opacity="0.6"/>
+                <!-- light beam -->
+                <polygon points="130,5 166,5 180,185 116,185" fill="#e8f4ff" opacity="0.025"/>
+
+                <!-- Overhead light right -->
+                <ellipse cx="310" cy="8" rx="24" ry="4" fill="#1e3055" stroke="#2a4070" stroke-width="0.8"/>
+                <ellipse cx="310" cy="9" rx="17" ry="2.8" fill="#243060" opacity="0.6"/>
+                <polygon points="296,8 326,8 338,185 282,185" fill="#e8f4ff" opacity="0.02"/>
+
+              </svg>
+              <p style="font-size:11.5px;font-style:italic;color:#c8a84a;text-align:center;margin-top:8px;margin-bottom:0;letter-spacing:0.02em;">
+                Electroanatomic Mapping — AF Ablation Procedure
+              </p>
+            </div>
+
+            <!-- Dr K specialist text -->
+            <p style="font-size:0.95rem;color:#1a2e4a;line-height:1.75;margin:0;">
+              Dr Andreas Kyriacou provides specialist assessment and treatment for a comprehensive range of cardiac rhythm disorders and related conditions for the NHS, GESY and privately funded/insured patients.
+            </p>
+
+          </div><!-- end right column -->
+
+        </div><!-- end two-column layout -->
         <div class="conditions-grid" role="list" aria-label="List of conditions treated" style="margin-top:48px;">
           <div class="condition-tag" role="listitem">Atrial Fibrillation (AF)
             <a class="condition-learn-more" href="https://heartrhythmalliance.org/aa/uk/atrial-fibrillation-af" target="_blank" rel="noopener noreferrer">Learn more →</a>
