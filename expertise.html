@@ -158,7 +158,7 @@
 
           </div><!-- end left column -->
 
-          <!-- RIGHT: arrhythmia conditions + Cath-lab illustration + Dr K text -->
+          <!-- RIGHT: arrhythmia conditions + investigations + Cath-lab -->
           <div style="display:flex;flex-direction:column;gap:18px;">
 
             <p style="font-size:14px;color:var(--text-muted);line-height:1.8;margin-top:0;margin-bottom:0;">
@@ -194,18 +194,38 @@
               <div class="condition-tag" role="listitem">Heart Failure (Arrhythmia-related)</div>
             </div>
 
-            <div>
-              <img src="cathlab.jpg"
-                   alt="Cardiac catheterisation laboratory — electrophysiology procedure in progress"
-                   style="display:block;width:100%;max-height:350px;object-fit:cover;border-radius:10px;border:2px solid #c8a84a;"/>
-              <p style="font-size:11.5px;font-style:italic;color:#c8a84a;text-align:center;margin-top:8px;margin-bottom:2px;letter-spacing:0.02em;">
-                Cardiac Catheterisation Laboratory — EP Procedure
-              </p>
-            </div>
-
             <p style="font-size:14px;color:var(--text-muted);line-height:1.8;margin-top:0;margin-bottom:0;">
-              Dr Andreas Kyriacou provides specialist assessment and treatment such as EP procedures and ablations, for a comprehensive range of cardiac rhythm disorders and related conditions for the NHS, GESY and privately funded/insured patients.
+              Dr Andreas Kyriacou provides specialist assessment and treatment such as EP procedures and ablations, for a comprehensive range of cardiac rhythm disorders and related conditions.
             </p>
+
+            <!-- Investigations list + cathlab photo -->
+            <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:16px;align-items:start;">
+
+              <!-- Diagnostic investigation buttons -->
+              <div>
+                <p style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.09em;margin-bottom:10px;">Diagnostic Investigations</p>
+                <div style="display:flex;flex-direction:column;gap:6px;">
+                  <button class="inv-btn" onclick="openInvModal('ecg')">ECG</button>
+                  <button class="inv-btn" onclick="openInvModal('holter')">Holter Monitor</button>
+                  <button class="inv-btn" onclick="openInvModal('abpm')">ABPM</button>
+                  <button class="inv-btn" onclick="openInvModal('echo')">Echocardiogram (ECHO)</button>
+                  <button class="inv-btn" onclick="openInvModal('ett')">Exercise Tolerance Test (ETT)</button>
+                  <button class="inv-btn" onclick="openInvModal('ct')">CT Scan</button>
+                  <button class="inv-btn" onclick="openInvModal('mri')">Cardiac MRI</button>
+                </div>
+              </div>
+
+              <!-- Cathlab photo -->
+              <div>
+                <img src="cathlab.jpg"
+                     alt="Cardiac catheterisation laboratory — electrophysiology procedure in progress"
+                     style="display:block;width:100%;max-height:350px;object-fit:cover;border-radius:10px;border:2px solid #c8a84a;"/>
+                <p style="font-size:11.5px;font-style:italic;color:#c8a84a;text-align:center;margin-top:8px;margin-bottom:0;letter-spacing:0.02em;">
+                  Cardiac Catheterisation Laboratory — EP Procedure
+                </p>
+              </div>
+
+            </div><!-- end investigations + cathlab row -->
 
           </div><!-- end right column -->
 
@@ -262,6 +282,15 @@
     </div>
   </div>
 
+  <!-- Diagnostic investigations modal -->
+  <div id="inv-modal" class="inv-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="inv-modal-title" onclick="if(event.target===this)closeInvModal()">
+    <div class="inv-modal-box">
+      <button class="inv-modal-close" onclick="closeInvModal()" aria-label="Close">&#215;</button>
+      <h3 class="inv-modal-title" id="inv-modal-title"></h3>
+      <p class="inv-modal-body" id="inv-modal-body"></p>
+    </div>
+  </div>
+
   <!-- Bio modal -->
   <div id="bio-modal" class="bio-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="bio-modal-title">
     <div class="bio-modal-box">
@@ -288,7 +317,29 @@
       <div id="hmodal-content"></div>
     </div>
   </div>
-  <script>document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.getElementById('hmodal').style.display='none';}});</script>
+  <script>
+  var invData = {
+    ecg:    { title: 'ECG (Electrocardiogram)',                    body: 'An Electrocardiogram (ECG) is a quick, painless test that records the electrical activity of the heart. Sticky electrodes are placed on the chest, arms and legs. It takes around 5 minutes and can detect abnormal heart rhythms, heart attacks and other cardiac conditions.' },
+    holter: { title: 'Holter Monitor',                            body: 'A Holter monitor is a small wearable device that continuously records your heart rhythm over 24-48 hours or longer while you go about your normal daily activities. It helps detect intermittent arrhythmias that may not show on a standard ECG.' },
+    abpm:   { title: 'ABPM (Ambulatory Blood Pressure Monitoring)',body: 'Ambulatory Blood Pressure Monitoring (ABPM) involves wearing a blood pressure cuff for 24 hours that automatically inflates at regular intervals to record your blood pressure throughout the day and night. It gives a more accurate picture of your blood pressure than a single clinic reading.' },
+    echo:   { title: 'Echocardiogram (ECHO)',                     body: "An echocardiogram uses ultrasound waves to create detailed images of the heart's structure and function. It shows the heart chambers, valves, and pumping function. It is painless, takes around 30-45 minutes, and requires no radiation." },
+    ett:    { title: 'Exercise Tolerance Test (ETT)',              body: 'An Exercise Tolerance Test (ETT) or stress test involves walking on a treadmill while your heart rate, blood pressure and ECG are monitored. It assesses how your heart responds to physical exertion and helps detect coronary artery disease and exercise-induced arrhythmias.' },
+    ct:     { title: 'CT Scan',                                   body: 'A Cardiac CT scan uses X-rays to create detailed cross-sectional images of the heart and blood vessels. It can assess the coronary arteries for blockages, evaluate heart structure, and is often used before ablation procedures to map the heart anatomy.' },
+    mri:    { title: 'Cardiac MRI',                               body: 'Cardiac MRI uses magnetic fields and radio waves to produce detailed images of the heart without radiation. It provides excellent assessment of heart muscle, function, scarring and structure. It is particularly useful in evaluating cardiomyopathies and conditions affecting heart muscle.' }
+  };
+  function openInvModal(key) {
+    var d = invData[key];
+    document.getElementById('inv-modal-title').textContent = d.title;
+    document.getElementById('inv-modal-body').textContent = d.body;
+    document.getElementById('inv-modal').classList.add('active');
+  }
+  function closeInvModal() {
+    document.getElementById('inv-modal').classList.remove('active');
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') { closeInvModal(); document.getElementById('hmodal').style.display='none'; }
+  });
+  </script>
 
   <script src="scripts.js"></script>
 </body>
