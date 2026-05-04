@@ -194,41 +194,41 @@
               <div class="condition-tag" role="listitem">Heart Failure (Arrhythmia-related)</div>
             </div>
 
-            <!-- Investigations (left) + cathlab photo (right) -->
-            <div style="display:grid;grid-template-columns:55fr 45fr;gap:24px;align-items:start;">
-
-              <!-- Left: Dr K text + investigation buttons -->
-              <div>
-                <p style="font-size:14px;color:var(--text-muted);line-height:1.8;margin-top:0;margin-bottom:16px;">
-                  Dr Andreas Kyriacou provides specialist assessment and treatment such as EP procedures and ablations, for a comprehensive range of cardiac rhythm disorders and related conditions.
-                </p>
-                <p style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.09em;margin-bottom:10px;">Diagnostic Investigations</p>
-                <div style="display:flex;flex-direction:column;gap:6px;">
-                  <button class="inv-btn" onclick="openInvModal('ecg')">ECG</button>
-                  <button class="inv-btn" onclick="openInvModal('holter')">Holter Monitor</button>
-                  <button class="inv-btn" onclick="openInvModal('abpm')">ABPM</button>
-                  <button class="inv-btn" onclick="openInvModal('echo')">Echocardiogram (ECHO)</button>
-                  <button class="inv-btn" onclick="openInvModal('ett')">Exercise Tolerance Test (ETT)</button>
-                  <button class="inv-btn" onclick="openInvModal('ct')">CT Scan</button>
-                  <button class="inv-btn" onclick="openInvModal('mri')">Cardiac MRI</button>
-                </div>
-              </div>
-
-              <!-- Right: cathlab photo + caption -->
-              <div>
-                <img src="cathlab.jpg"
-                     alt="Cardiac catheterisation laboratory — electrophysiology procedure in progress"
-                     style="display:block;width:100%;max-height:400px;object-fit:cover;border-radius:10px;border:2px solid #c8a84a;"/>
-                <p style="font-size:11.5px;font-style:italic;color:#c8a84a;text-align:center;margin-top:8px;margin-bottom:0;letter-spacing:0.02em;">
-                  Cardiac Catheterisation Laboratory — EP Procedure
-                </p>
-              </div>
-
-            </div><!-- end investigations + cathlab grid -->
-
           </div><!-- end right column -->
 
         </div><!-- end two-column layout -->
+
+        <!-- Standalone investigations + cathlab section -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;margin-top:48px;">
+
+          <!-- Left: Dr K text + investigation buttons -->
+          <div>
+            <p style="font-size:14px;color:var(--text-muted);line-height:1.8;margin-top:0;margin-bottom:20px;">
+              Dr Andreas Kyriacou provides specialist assessment and treatment such as EP procedures and ablations, for a comprehensive range of cardiac rhythm disorders and related conditions.
+            </p>
+            <p style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.09em;margin-bottom:10px;">Diagnostic Investigations</p>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <button class="inv-btn" onclick="openInvModal('ecg')">ECG</button>
+              <button class="inv-btn" onclick="openInvModal('holter')">Holter Monitor</button>
+              <button class="inv-btn" onclick="openInvModal('abpm')">ABPM</button>
+              <button class="inv-btn" onclick="openInvModal('echo')">Echocardiogram (ECHO)</button>
+              <button class="inv-btn" onclick="openInvModal('ett')">Exercise Tolerance Test (ETT)</button>
+              <button class="inv-btn" onclick="openInvModal('ct')">CT Scan</button>
+              <button class="inv-btn" onclick="openInvModal('mri')">Cardiac MRI</button>
+            </div>
+          </div>
+
+          <!-- Right: cathlab photo + caption -->
+          <div>
+            <img src="cathlab.jpg"
+                 alt="Cardiac catheterisation laboratory — electrophysiology procedure in progress"
+                 style="display:block;width:100%;max-height:400px;object-fit:cover;border-radius:10px;border:2px solid #c8a84a;"/>
+            <p style="font-size:11.5px;font-style:italic;color:#c8a84a;text-align:center;margin-top:8px;margin-bottom:0;letter-spacing:0.02em;">
+              Cardiac Catheterisation Laboratory — EP Procedure
+            </p>
+          </div>
+
+        </div><!-- end investigations + cathlab section -->
       </div>
     </section>
   </main>
