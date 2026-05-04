@@ -284,7 +284,9 @@
     <div class="inv-modal-box">
       <button class="inv-modal-close" onclick="closeInvModal()" aria-label="Close">&#215;</button>
       <h3 class="inv-modal-title" id="inv-modal-title"></h3>
+      <div class="inv-modal-svg" id="inv-modal-svg" aria-hidden="true"></div>
       <p class="inv-modal-body" id="inv-modal-body"></p>
+      <a class="inv-modal-link" id="inv-modal-link" target="_blank" rel="noopener noreferrer">Learn More →</a>
     </div>
   </div>
 
@@ -316,18 +318,202 @@
   </div>
   <script>
   var invData = {
-    ecg:    { title: 'ECG (Electrocardiogram)',                    body: 'An Electrocardiogram (ECG) is a quick, painless test that records the electrical activity of the heart. Sticky electrodes are placed on the chest, arms and legs. It takes around 5 minutes and can detect abnormal heart rhythms, heart attacks and other cardiac conditions.' },
-    holter: { title: 'Holter Monitor',                            body: 'A Holter monitor is a small wearable device that continuously records your heart rhythm over 24-48 hours or longer while you go about your normal daily activities. It helps detect intermittent arrhythmias that may not show on a standard ECG.' },
-    abpm:   { title: 'ABPM (Ambulatory Blood Pressure Monitoring)',body: 'Ambulatory Blood Pressure Monitoring (ABPM) involves wearing a blood pressure cuff for 24 hours that automatically inflates at regular intervals to record your blood pressure throughout the day and night. It gives a more accurate picture of your blood pressure than a single clinic reading.' },
-    echo:   { title: 'Echocardiogram (ECHO)',                     body: "An echocardiogram uses ultrasound waves to create detailed images of the heart's structure and function. It shows the heart chambers, valves, and pumping function. It is painless, takes around 30-45 minutes, and requires no radiation." },
-    ett:    { title: 'Exercise Tolerance Test (ETT)',              body: 'An Exercise Tolerance Test (ETT) or stress test involves walking on a treadmill while your heart rate, blood pressure and ECG are monitored. It assesses how your heart responds to physical exertion and helps detect coronary artery disease and exercise-induced arrhythmias.' },
-    ct:     { title: 'CT Scan',                                   body: 'A Cardiac CT scan uses X-rays to create detailed cross-sectional images of the heart and blood vessels. It can assess the coronary arteries for blockages, evaluate heart structure, and is often used before ablation procedures to map the heart anatomy.' },
-    mri:    { title: 'Cardiac MRI',                               body: 'Cardiac MRI uses magnetic fields and radio waves to produce detailed images of the heart without radiation. It provides excellent assessment of heart muscle, function, scarring and structure. It is particularly useful in evaluating cardiomyopathies and conditions affecting heart muscle.' }
+    ecg: {
+      title: 'ECG (Electrocardiogram)',
+      svg: `<svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" width="200" height="150">
+  <rect width="200" height="150" fill="#fffafa"/>
+  <g stroke="#f0cece" stroke-width="0.4">
+    <line x1="20" y1="0" x2="20" y2="150"/><line x1="40" y1="0" x2="40" y2="150"/><line x1="60" y1="0" x2="60" y2="150"/>
+    <line x1="80" y1="0" x2="80" y2="150"/><line x1="100" y1="0" x2="100" y2="150"/><line x1="120" y1="0" x2="120" y2="150"/>
+    <line x1="140" y1="0" x2="140" y2="150"/><line x1="160" y1="0" x2="160" y2="150"/><line x1="180" y1="0" x2="180" y2="150"/>
+    <line x1="0" y1="30" x2="200" y2="30"/><line x1="0" y1="50" x2="200" y2="50"/><line x1="0" y1="70" x2="200" y2="70"/>
+    <line x1="0" y1="90" x2="200" y2="90"/><line x1="0" y1="110" x2="200" y2="110"/><line x1="0" y1="130" x2="200" y2="130"/>
+  </g>
+  <line x1="0" y1="85" x2="200" y2="85" stroke="#e8b8b8" stroke-width="0.7"/>
+  <polyline points="5,85 22,85 26,77 31,85 35,85 37,88 39,31 41,97 44,85 50,85 59,69 69,85 88,85 105,85 109,77 114,85 118,85 120,88 122,31 124,97 127,85 133,85 142,69 152,85 195,85"
+    fill="none" stroke="#b35c5c" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+  <line x1="28" y1="74" x2="28" y2="78" stroke="#0A2342" stroke-width="0.8"/>
+  <text x="28" y="71" font-size="9" fill="#0A2342" font-family="Arial,sans-serif" text-anchor="middle" font-weight="700">P</text>
+  <line x1="39" y1="27" x2="39" y2="32" stroke="#0A2342" stroke-width="0.8"/>
+  <text x="39" y="24" font-size="9" fill="#0A2342" font-family="Arial,sans-serif" text-anchor="middle" font-weight="700">QRS</text>
+  <line x1="59" y1="65" x2="59" y2="69" stroke="#0A2342" stroke-width="0.8"/>
+  <text x="59" y="62" font-size="9" fill="#0A2342" font-family="Arial,sans-serif" text-anchor="middle" font-weight="700">T</text>
+  <text x="6" y="147" font-size="7" fill="#bbb" font-family="Arial,sans-serif">time →</text>
+</svg>`,
+      body: 'An Electrocardiogram (ECG) is a quick, painless test that records the electrical activity of the heart through sticky electrodes placed on the chest, arms and legs. It takes around 5 minutes and can detect abnormal heart rhythms, evidence of a previous heart attack, heart enlargement, and conduction abnormalities. It is usually the first test performed when an arrhythmia is suspected.',
+      link: 'https://www.bhf.org.uk/informationsupport/tests/electrocardiogram-ecg',
+      linkText: 'British Heart Foundation — ECG'
+    },
+    holter: {
+      title: 'Holter Monitor',
+      svg: `<svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" width="200" height="150">
+  <circle cx="100" cy="22" r="13" fill="none" stroke="#8fa8c8" stroke-width="2"/>
+  <path d="M82,35 Q100,30 118,35 L115,92 Q100,97 85,92 Z" fill="none" stroke="#8fa8c8" stroke-width="2"/>
+  <line x1="82" y1="46" x2="60" y2="72" stroke="#8fa8c8" stroke-width="2" stroke-linecap="round"/>
+  <line x1="118" y1="46" x2="140" y2="72" stroke="#8fa8c8" stroke-width="2" stroke-linecap="round"/>
+  <line x1="90" y1="92" x2="83" y2="138" stroke="#8fa8c8" stroke-width="2" stroke-linecap="round"/>
+  <line x1="110" y1="92" x2="117" y2="138" stroke="#8fa8c8" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="88" cy="54" r="4" fill="#b35c5c"/>
+  <circle cx="100" cy="51" r="4" fill="#C9A84C"/>
+  <circle cx="112" cy="54" r="4" fill="#b35c5c"/>
+  <line x1="88" y1="58" x2="70" y2="82" stroke="#666" stroke-width="1.3" stroke-dasharray="3,2"/>
+  <line x1="100" y1="55" x2="70" y2="82" stroke="#666" stroke-width="1.3" stroke-dasharray="3,2"/>
+  <line x1="112" y1="58" x2="70" y2="82" stroke="#666" stroke-width="1.3" stroke-dasharray="3,2"/>
+  <rect x="55" y="80" width="32" height="20" rx="3" fill="#0A2342" stroke="#C9A84C" stroke-width="1.5"/>
+  <rect x="59" y="84" width="20" height="10" rx="1" fill="#0d1f3d"/>
+  <polyline points="60,89 62,89 63,85 64,93 66,89 68,89 69,85 70,93 72,89 74,89 75,85 77,93 79,89"
+    fill="none" stroke="#4ade80" stroke-width="0.9"/>
+  <circle cx="84" cy="84" r="2.5" fill="#4ade80"/>
+  <text x="100" y="148" font-size="7.5" fill="#8fa8c8" font-family="Arial,sans-serif" text-anchor="middle">24–48 hour recording</text>
+</svg>`,
+      body: 'A Holter monitor is a small wearable device that continuously records your heart rhythm over 24-48 hours or longer while you go about your normal daily activities. Sticky electrodes are placed on your chest and connected to a small recorder. It is particularly useful for detecting intermittent arrhythmias such as paroxysmal atrial fibrillation or SVT that may not appear on a standard ECG.',
+      link: 'https://heartrhythmalliance.org/aa/uk/holter-monitor',
+      linkText: 'Arrhythmia Alliance — Holter Monitor'
+    },
+    abpm: {
+      title: 'ABPM (Ambulatory Blood Pressure Monitoring)',
+      svg: `<svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" width="200" height="150">
+  <rect x="62" y="18" width="52" height="100" rx="26" fill="#f0ead8" stroke="#c8a882" stroke-width="1.5"/>
+  <rect x="67" y="95" width="42" height="55" rx="20" fill="#f0ead8" stroke="#c8a882" stroke-width="1.5"/>
+  <rect x="55" y="42" width="66" height="38" rx="5" fill="#8fa8c8" stroke="#5a7a9a" stroke-width="1.5" opacity="0.9"/>
+  <g stroke="#6a8aaa" stroke-width="0.8" opacity="0.55">
+    <line x1="67" y1="42" x2="67" y2="80"/><line x1="78" y1="42" x2="78" y2="80"/>
+    <line x1="89" y1="42" x2="89" y2="80"/><line x1="100" y1="42" x2="100" y2="80"/>
+    <line x1="111" y1="42" x2="111" y2="80"/>
+  </g>
+  <path d="M121,61 Q148,61 148,42 Q148,25 162,22" fill="none" stroke="#5a7a9a" stroke-width="2" stroke-linecap="round"/>
+  <rect x="155" y="6" width="42" height="30" rx="4" fill="#0A2342" stroke="#C9A84C" stroke-width="1.5"/>
+  <rect x="158" y="9" width="36" height="20" rx="2" fill="#0d1f3d"/>
+  <text x="176" y="19" font-size="10" fill="#4ade80" font-family="Arial,sans-serif" text-anchor="middle" font-weight="700">120</text>
+  <text x="176" y="27" font-size="8" fill="#4ade80" font-family="Arial,sans-serif" text-anchor="middle">80</text>
+  <text x="96" y="143" font-size="7.5" fill="#8fa8c8" font-family="Arial,sans-serif" text-anchor="middle">Upper arm cuff · 24-hour monitoring</text>
+</svg>`,
+      body: 'Ambulatory Blood Pressure Monitoring (ABPM) involves wearing a blood pressure cuff on your upper arm for 24 hours. The cuff automatically inflates every 20-30 minutes during the day and every hour at night, recording your blood pressure throughout. It gives a more accurate picture than a single clinic reading and helps diagnose high blood pressure, white coat hypertension, and nocturnal hypertension.',
+      link: 'https://www.bloodpressureuk.org/your-blood-pressure/how-to-lower-your-blood-pressure/monitoring-your-blood-pressure/ambulatory-blood-pressure-monitoring/',
+      linkText: 'Blood Pressure UK — ABPM'
+    },
+    echo: {
+      title: 'Echocardiogram (ECHO)',
+      svg: `<svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" width="200" height="150">
+  <ellipse cx="100" cy="95" rx="78" ry="52" fill="#f0ead8" stroke="#c8a882" stroke-width="1.5"/>
+  <path d="M48,80 Q100,68 152,80" fill="none" stroke="#d4c9b0" stroke-width="1" opacity="0.7"/>
+  <path d="M44,93 Q100,81 156,93" fill="none" stroke="#d4c9b0" stroke-width="1" opacity="0.7"/>
+  <rect x="86" y="28" width="28" height="40" rx="9" fill="#444" stroke="#222" stroke-width="1.5"/>
+  <rect x="90" y="30" width="20" height="24" rx="3" fill="#666"/>
+  <path d="M100,28 Q100,14 82,9" fill="none" stroke="#444" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M100,68 L52,138 Q100,148 148,138 Z" fill="rgba(138,180,248,0.15)" stroke="rgba(90,130,200,0.45)" stroke-width="0.8"/>
+  <line x1="100" y1="68" x2="65" y2="140" stroke="rgba(90,130,200,0.25)" stroke-width="0.7"/>
+  <line x1="100" y1="68" x2="82" y2="143" stroke="rgba(90,130,200,0.25)" stroke-width="0.7"/>
+  <line x1="100" y1="68" x2="100" y2="145" stroke="rgba(90,130,200,0.25)" stroke-width="0.7"/>
+  <line x1="100" y1="68" x2="118" y2="143" stroke="rgba(90,130,200,0.25)" stroke-width="0.7"/>
+  <line x1="100" y1="68" x2="135" y2="140" stroke="rgba(90,130,200,0.25)" stroke-width="0.7"/>
+  <ellipse cx="100" cy="110" rx="26" ry="22" fill="rgba(200,168,130,0.35)" stroke="#a07850" stroke-width="1.2"/>
+  <line x1="100" y1="88" x2="100" y2="132" stroke="#a07850" stroke-width="1" opacity="0.55"/>
+  <line x1="74" y1="110" x2="126" y2="110" stroke="#a07850" stroke-width="1" opacity="0.55"/>
+  <text x="100" y="7" font-size="7.5" fill="#8fa8c8" font-family="Arial,sans-serif" text-anchor="middle">Ultrasound probe</text>
+</svg>`,
+      body: 'An echocardiogram uses ultrasound waves to create real-time images of the heart structure and function. A probe is placed on the chest with gel. It shows the four heart chambers, valves, wall motion, and pumping function (ejection fraction). It is completely painless, uses no radiation, takes 30-45 minutes, and is essential before most electrophysiology procedures.',
+      link: 'https://www.bhf.org.uk/informationsupport/tests/echocardiogram',
+      linkText: 'British Heart Foundation — Echo'
+    },
+    ett: {
+      title: 'Exercise Tolerance Test (ETT)',
+      svg: `<svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" width="200" height="150">
+  <rect x="8" y="112" width="118" height="11" rx="4" fill="#555" stroke="#333" stroke-width="1.3"/>
+  <rect x="14" y="104" width="108" height="10" rx="2" fill="#777"/>
+  <line x1="28" y1="104" x2="14" y2="82" stroke="#555" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="100" y1="104" x2="114" y2="82" stroke="#555" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="14" y1="82" x2="114" y2="82" stroke="#555" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="72" cy="56" r="10" fill="none" stroke="#8fa8c8" stroke-width="2"/>
+  <line x1="72" y1="66" x2="72" y2="98" stroke="#8fa8c8" stroke-width="2" stroke-linecap="round"/>
+  <line x1="72" y1="74" x2="56" y2="88" stroke="#8fa8c8" stroke-width="2" stroke-linecap="round"/>
+  <line x1="72" y1="74" x2="86" y2="82" stroke="#8fa8c8" stroke-width="2" stroke-linecap="round"/>
+  <line x1="72" y1="98" x2="60" y2="112" stroke="#8fa8c8" stroke-width="2" stroke-linecap="round"/>
+  <line x1="72" y1="98" x2="84" y2="108" stroke="#8fa8c8" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="70" cy="76" r="2.5" fill="#b35c5c"/>
+  <circle cx="76" cy="74" r="2.5" fill="#b35c5c"/>
+  <path d="M76,74 Q138,68 148,54" fill="none" stroke="#666" stroke-width="1.2" stroke-dasharray="3,2"/>
+  <path d="M70,76 Q138,72 148,60" fill="none" stroke="#666" stroke-width="1.2" stroke-dasharray="3,2"/>
+  <rect x="141" y="28" width="52" height="38" rx="4" fill="#0A2342" stroke="#C9A84C" stroke-width="1.5"/>
+  <rect x="144" y="31" width="46" height="28" rx="2" fill="#0d1f3d"/>
+  <polyline points="146,45 149,45 151,40 153,51 155,45 158,45 160,41 162,36 164,50 167,45 170,45 173,41 177,45 181,45 183,40 185,45 188,45"
+    fill="none" stroke="#4ade80" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="167" y1="66" x2="167" y2="74" stroke="#555" stroke-width="2"/>
+  <rect x="158" y="73" width="18" height="4" rx="2" fill="#555"/>
+</svg>`,
+      body: 'An Exercise Tolerance Test (ETT) involves walking on a treadmill or cycling on a stationary bike while your heart rate, blood pressure and ECG are continuously monitored. The speed and incline increase gradually. It assesses how your heart responds to physical exertion, helps detect coronary artery disease, exercise-induced arrhythmias, and abnormal blood pressure responses. The test typically takes 30-60 minutes.',
+      link: 'https://www.bhf.org.uk/informationsupport/tests/exercise-stress-test',
+      linkText: 'British Heart Foundation — ETT'
+    },
+    ct: {
+      title: 'CT Scan',
+      svg: `<svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" width="200" height="150">
+  <ellipse cx="82" cy="80" rx="52" ry="52" fill="none" stroke="#8fa8c8" stroke-width="13" opacity="0.65"/>
+  <ellipse cx="82" cy="80" rx="52" ry="52" fill="none" stroke="#6a8aaa" stroke-width="7"/>
+  <ellipse cx="82" cy="80" rx="36" ry="36" fill="#eef0f4"/>
+  <circle cx="82" cy="31" r="5.5" fill="#C9A84C" opacity="0.85"/>
+  <rect x="5" y="76" width="148" height="7" rx="3" fill="#aaa" stroke="#888" stroke-width="1"/>
+  <ellipse cx="42" cy="73" rx="14" ry="8" fill="#f0ead8" stroke="#c8a882" stroke-width="1.2"/>
+  <rect x="42" y="66" width="90" height="9" rx="4" fill="#f0ead8" stroke="#c8a882" stroke-width="1" opacity="0.7"/>
+  <rect x="158" y="32" width="38" height="34" rx="4" fill="#0A2342" stroke="#C9A84C" stroke-width="1.5"/>
+  <rect x="161" y="35" width="32" height="24" rx="2" fill="#0d1f3d"/>
+  <ellipse cx="177" cy="47" rx="12" ry="10" fill="#1a2f4a" stroke="#6a8aaa" stroke-width="0.8"/>
+  <line x1="177" y1="37" x2="177" y2="57" stroke="#6a8aaa" stroke-width="0.6" opacity="0.5"/>
+  <line x1="165" y1="47" x2="189" y2="47" stroke="#6a8aaa" stroke-width="0.6" opacity="0.5"/>
+  <ellipse cx="173" cy="44" rx="4" ry="4" fill="#b35c5c" opacity="0.55"/>
+  <ellipse cx="181" cy="44" rx="4" ry="4" fill="#8fa8c8" opacity="0.55"/>
+  <ellipse cx="173" cy="51" rx="4" ry="4" fill="#8fa8c8" opacity="0.55"/>
+  <ellipse cx="181" cy="51" rx="4" ry="4" fill="#b35c5c" opacity="0.55"/>
+  <line x1="177" y1="66" x2="177" y2="73" stroke="#555" stroke-width="2"/>
+  <rect x="168" y="72" width="18" height="3" rx="1" fill="#555"/>
+  <text x="82" y="144" font-size="7.5" fill="#8fa8c8" font-family="Arial,sans-serif" text-anchor="middle">CT Scanner</text>
+</svg>`,
+      body: 'A Cardiac CT scan uses X-rays and computer processing to create detailed cross-sectional images of the heart and coronary arteries. It can assess the coronary arteries for blockages (CT coronary angiogram), evaluate heart structure, detect calcium deposits, and provide detailed 3D anatomy of the heart chambers and pulmonary veins — essential for planning complex ablation procedures such as AF ablation. The scan itself takes only a few minutes.',
+      link: 'https://www.bhf.org.uk/informationsupport/tests/ct-scan',
+      linkText: 'British Heart Foundation — CT Scan'
+    },
+    mri: {
+      title: 'Cardiac MRI',
+      svg: `<svg viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" width="200" height="150">
+  <rect x="4" y="28" width="132" height="88" rx="8" fill="#dde1e7" stroke="#aab0bb" stroke-width="2"/>
+  <rect x="4" y="40" width="132" height="64" rx="0" fill="#e8eaed"/>
+  <ellipse cx="4" cy="72" rx="8" ry="38" fill="#ccd0da" stroke="#aab0bb" stroke-width="1.5"/>
+  <ellipse cx="136" cy="72" rx="8" ry="38" fill="none" stroke="#aab0bb" stroke-width="1.5"/>
+  <g stroke="#aab0bb" stroke-width="3" opacity="0.45">
+    <line x1="34" y1="28" x2="34" y2="116"/>
+    <line x1="62" y1="28" x2="62" y2="116"/>
+    <line x1="90" y1="28" x2="90" y2="116"/>
+    <line x1="110" y1="28" x2="110" y2="116"/>
+  </g>
+  <rect x="4" y="76" width="170" height="6" rx="2" fill="#bbb" stroke="#999" stroke-width="1"/>
+  <circle cx="150" cy="70" r="9" fill="#f0ead8" stroke="#c8a882" stroke-width="1.5"/>
+  <rect x="74" y="65" width="72" height="11" rx="5" fill="#f0ead8" stroke="#c8a882" stroke-width="1" opacity="0.8"/>
+  <rect x="156" y="30" width="40" height="34" rx="4" fill="#0A2342" stroke="#C9A84C" stroke-width="1.5"/>
+  <rect x="159" y="33" width="34" height="24" rx="2" fill="#0d1f3d"/>
+  <ellipse cx="176" cy="45" rx="13" ry="11" fill="#2a3f5f" stroke="#8fa8c8" stroke-width="1"/>
+  <ellipse cx="176" cy="45" rx="9" ry="7" fill="#1a2f4a" stroke="#6a8aaa" stroke-width="0.8"/>
+  <path d="M169,42 Q173,38 177,42" fill="none" stroke="#C9A84C" stroke-width="1.3" opacity="0.85"/>
+  <ellipse cx="173" cy="43" rx="3" ry="3" fill="#b35c5c" opacity="0.65"/>
+  <ellipse cx="180" cy="43" rx="3" ry="3" fill="#8fa8c8" opacity="0.65"/>
+  <ellipse cx="173" cy="49" rx="3" ry="3" fill="#8fa8c8" opacity="0.65"/>
+  <ellipse cx="180" cy="49" rx="3" ry="3" fill="#b35c5c" opacity="0.65"/>
+  <line x1="176" y1="64" x2="176" y2="72" stroke="#555" stroke-width="2"/>
+  <rect x="167" y="71" width="18" height="3" rx="1" fill="#555"/>
+  <text x="70" y="24" font-size="7.5" fill="#6a8aaa" font-family="Arial,sans-serif" text-anchor="middle" font-weight="600">MRI Scanner</text>
+</svg>`,
+      body: 'Cardiac MRI uses powerful magnetic fields and radio waves to produce highly detailed images of the heart without any radiation. It provides excellent assessment of heart muscle structure, function, scarring (fibrosis), and blood flow. It is particularly valuable for evaluating cardiomyopathies, cardiac sarcoidosis, myocarditis, and assessing scar tissue before ventricular tachycardia ablation. The scan takes 45-75 minutes.',
+      link: 'https://www.bhf.org.uk/informationsupport/tests/mri-scan',
+      linkText: 'British Heart Foundation — MRI'
+    }
   };
   function openInvModal(key) {
     var d = invData[key];
     document.getElementById('inv-modal-title').textContent = d.title;
+    document.getElementById('inv-modal-svg').innerHTML = d.svg;
     document.getElementById('inv-modal-body').textContent = d.body;
+    var link = document.getElementById('inv-modal-link');
+    link.href = d.link;
+    link.textContent = d.linkText + ' →';
     document.getElementById('inv-modal').classList.add('active');
   }
   function closeInvModal() {
