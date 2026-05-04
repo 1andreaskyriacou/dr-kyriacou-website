@@ -73,91 +73,91 @@
               <image href="heart.svg" xlink:href="heart.svg" x="0" y="0" width="662.65082" height="651.49066" preserveAspectRatio="xMidYMid meet" style="pointer-events:none;"/>
               <g class="ae-overlay" data-cond="normal">
                 <!-- Dim background guide paths showing the conduction route -->
-                <path d="M258,252 C228,288 205,335 212,378 C220,402 268,412 318,410" fill="none" stroke="#C9A84C" stroke-width="2" opacity="0.22" stroke-linecap="round"/>
-                <path d="M258,252 C292,234 338,237 378,256 C410,272 422,286 416,299" fill="none" stroke="#C9A84C" stroke-width="2" opacity="0.22" stroke-linecap="round"/>
-                <path d="M318,410 L350,450" fill="none" stroke="#C9A84C" stroke-width="2" opacity="0.22" stroke-linecap="round"/>
-                <path d="M350,450 C337,480 326,500 318,520" fill="none" stroke="#C9A84C" stroke-width="2" opacity="0.22" stroke-linecap="round"/>
-                <path d="M350,450 C382,462 424,472 462,482" fill="none" stroke="#C9A84C" stroke-width="2" opacity="0.22" stroke-linecap="round"/>
+                <path d="M258,252 C228,288 205,335 212,378 C220,402 268,412 318,410" fill="none" stroke="#00952E" stroke-width="2" opacity="0.22" stroke-linecap="round"/>
+                <path d="M258,252 C292,234 338,237 378,256 C410,272 422,286 416,299" fill="none" stroke="#00952E" stroke-width="2" opacity="0.22" stroke-linecap="round"/>
+                <path d="M318,410 L350,450" fill="none" stroke="#00952E" stroke-width="2" opacity="0.22" stroke-linecap="round"/>
+                <path d="M350,450 C337,480 326,500 318,520" fill="none" stroke="#00952E" stroke-width="2" opacity="0.22" stroke-linecap="round"/>
+                <path d="M350,450 C382,462 424,472 462,482" fill="none" stroke="#00952E" stroke-width="2" opacity="0.22" stroke-linecap="round"/>
                 <!-- RA conduction: sinus node → AV node across right atrium -->
                 <path d="M258,252 C228,288 205,335 212,378 C220,402 268,412 318,410"
-                      fill="none" stroke="#E8C56A" stroke-width="4.5" stroke-linecap="round"
+                      fill="none" stroke="#00C853" stroke-width="4.5" stroke-linecap="round"
                       stroke-dasharray="380 380" stroke-dashoffset="380" opacity="0">
                   <animate attributeName="stroke-dashoffset" values="380;380;0;0;380" keyTimes="0;0.02;0.22;0.64;1" dur="1.5s" repeatCount="indefinite"/>
                   <animate attributeName="opacity" values="0;1;1;0.2;0" keyTimes="0;0.02;0.22;0.64;1" dur="1.5s" repeatCount="indefinite"/>
                 </path>
                 <!-- Bachmann's bundle / LA conduction: sinus node → left atrium -->
                 <path d="M258,252 C292,234 338,237 378,256 C410,272 422,286 416,299"
-                      fill="none" stroke="#E8C56A" stroke-width="4.5" stroke-linecap="round"
+                      fill="none" stroke="#00C853" stroke-width="4.5" stroke-linecap="round"
                       stroke-dasharray="260 260" stroke-dashoffset="260" opacity="0">
                   <animate attributeName="stroke-dashoffset" values="260;260;0;0;260" keyTimes="0;0.04;0.24;0.64;1" dur="1.5s" repeatCount="indefinite"/>
                   <animate attributeName="opacity" values="0;1;1;0.2;0" keyTimes="0;0.04;0.24;0.64;1" dur="1.5s" repeatCount="indefinite"/>
                 </path>
                 <!-- AV node delay ring (flashes as impulse waits at AV node) -->
-                <circle cx="318" cy="410" r="10" fill="none" stroke="#C9A84C" stroke-width="3" opacity="0">
+                <circle cx="318" cy="410" r="10" fill="none" stroke="#00952E" stroke-width="3" opacity="0">
                   <animate attributeName="r" values="10;10;28;28" keyTimes="0;0.25;0.38;1" dur="1.5s" repeatCount="indefinite"/>
                   <animate attributeName="opacity" values="0;0.9;0;0" keyTimes="0;0.25;0.4;1" dur="1.5s" repeatCount="indefinite"/>
                 </circle>
                 <!-- His bundle: AV node → bifurcation -->
-                <path d="M318,410 L350,450" fill="none" stroke="#E8C56A" stroke-width="4.5" stroke-linecap="round"
+                <path d="M318,410 L350,450" fill="none" stroke="#00C853" stroke-width="4.5" stroke-linecap="round"
                       stroke-dasharray="62 62" stroke-dashoffset="62" opacity="0">
                   <animate attributeName="stroke-dashoffset" values="62;62;0;0;62" keyTimes="0;0.38;0.45;0.64;1" dur="1.5s" repeatCount="indefinite"/>
                   <animate attributeName="opacity" values="0;0;1;0.2;0" keyTimes="0;0.38;0.45;0.64;1" dur="1.5s" repeatCount="indefinite"/>
                 </path>
                 <!-- Right bundle branch: septum → RV -->
                 <path d="M350,450 C337,480 326,500 318,520"
-                      fill="none" stroke="#E8C56A" stroke-width="4" stroke-linecap="round"
+                      fill="none" stroke="#00C853" stroke-width="4" stroke-linecap="round"
                       stroke-dasharray="115 115" stroke-dashoffset="115" opacity="0">
                   <animate attributeName="stroke-dashoffset" values="115;115;0;0;115" keyTimes="0;0.45;0.56;0.64;1" dur="1.5s" repeatCount="indefinite"/>
                   <animate attributeName="opacity" values="0;0;1;0.2;0" keyTimes="0;0.45;0.56;0.64;1" dur="1.5s" repeatCount="indefinite"/>
                 </path>
                 <!-- Left bundle branch: septum → LV -->
                 <path d="M350,450 C382,462 424,472 462,482"
-                      fill="none" stroke="#E8C56A" stroke-width="4" stroke-linecap="round"
+                      fill="none" stroke="#00C853" stroke-width="4" stroke-linecap="round"
                       stroke-dasharray="160 160" stroke-dashoffset="160" opacity="0">
                   <animate attributeName="stroke-dashoffset" values="160;160;0;0;160" keyTimes="0;0.45;0.58;0.64;1" dur="1.5s" repeatCount="indefinite"/>
                   <animate attributeName="opacity" values="0;0;1;0.2;0" keyTimes="0;0.45;0.58;0.64;1" dur="1.5s" repeatCount="indefinite"/>
                 </path>
                 <!-- RV activation expanding wave -->
-                <circle cx="320" cy="512" r="10" fill="rgba(201,168,76,0.18)" stroke="#C9A84C" stroke-width="2.5" opacity="0">
+                <circle cx="320" cy="512" r="10" fill="rgba(0,200,83,0.18)" stroke="#00952E" stroke-width="2.5" opacity="0">
                   <animate attributeName="r" values="10;10;48;48" keyTimes="0;0.55;0.7;1" dur="1.5s" repeatCount="indefinite"/>
                   <animate attributeName="opacity" values="0;0.8;0;0" keyTimes="0;0.55;0.7;1" dur="1.5s" repeatCount="indefinite"/>
                 </circle>
                 <!-- LV activation expanding wave -->
-                <circle cx="460" cy="480" r="10" fill="rgba(201,168,76,0.18)" stroke="#C9A84C" stroke-width="2.5" opacity="0">
+                <circle cx="460" cy="480" r="10" fill="rgba(0,200,83,0.18)" stroke="#00952E" stroke-width="2.5" opacity="0">
                   <animate attributeName="r" values="10;10;54;54" keyTimes="0;0.55;0.72;1" dur="1.5s" repeatCount="indefinite"/>
                   <animate attributeName="opacity" values="0;0.8;0;0" keyTimes="0;0.55;0.72;1" dur="1.5s" repeatCount="indefinite"/>
                 </circle>
-                <!-- Sinus node: pulsing gold dot -->
-                <circle cx="258" cy="252" r="14" fill="rgba(201,168,76,0.2)" stroke="#C9A84C" stroke-width="2.5" opacity="0.7">
+                <!-- Sinus node: pulsing green dot -->
+                <circle cx="258" cy="252" r="14" fill="rgba(0,200,83,0.2)" stroke="#00952E" stroke-width="2.5" opacity="0.7">
                   <animate attributeName="r" values="9;16;9" dur="1.5s" repeatCount="indefinite"/>
                   <animate attributeName="opacity" values="0.7;0.15;0.7" dur="1.5s" repeatCount="indefinite"/>
                 </circle>
-                <circle cx="258" cy="252" r="5" fill="#E8C56A"/>
+                <circle cx="258" cy="252" r="5" fill="#00C853"/>
                 <!-- Sinus Node label -->
-                <line x1="265" y1="246" x2="302" y2="222" stroke="#C9A84C" stroke-width="1.5" opacity="0.8"/>
-                <text x="306" y="219" font-size="14" font-weight="700" fill="#C9A84C" font-family="Arial,sans-serif">Sinus Node</text>
+                <line x1="265" y1="246" x2="302" y2="222" stroke="#00952E" stroke-width="1.5" opacity="0.8"/>
+                <text x="306" y="219" font-size="14" font-weight="700" fill="#00952E" font-family="Arial,sans-serif">Sinus Node</text>
                 <!-- Arrows: sinus → AV node (RA path) -->
-                <g><polygon points="-7,-4 7,0 -7,4" fill="#E8C56A"/>
+                <g><polygon points="-7,-4 7,0 -7,4" fill="#00C853"/>
                   <animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;0.02;0.12;0.22;1" dur="1.5s" repeatCount="indefinite"/>
                   <animateMotion path="M258,252 C228,288 205,335 212,378 C220,402 268,412 318,410" keyPoints="0;0;0.5;1;1" keyTimes="0;0.02;0.12;0.22;1" calcMode="linear" dur="1.5s" repeatCount="indefinite" rotate="auto"/>
                 </g>
                 <!-- Arrow: Bachmann's bundle → LA -->
-                <g><polygon points="-7,-4 7,0 -7,4" fill="#E8C56A"/>
+                <g><polygon points="-7,-4 7,0 -7,4" fill="#00C853"/>
                   <animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;0.04;0.14;0.24;1" dur="1.5s" repeatCount="indefinite"/>
                   <animateMotion path="M258,252 C292,234 338,237 378,256 C410,272 422,286 416,299" keyPoints="0;0;0.5;1;1" keyTimes="0;0.04;0.14;0.24;1" calcMode="linear" dur="1.5s" repeatCount="indefinite" rotate="auto"/>
                 </g>
                 <!-- Arrow: His bundle -->
-                <g><polygon points="-7,-4 7,0 -7,4" fill="#E8C56A"/>
+                <g><polygon points="-7,-4 7,0 -7,4" fill="#00C853"/>
                   <animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;0.38;0.42;0.45;1" dur="1.5s" repeatCount="indefinite"/>
                   <animateMotion path="M318,410 L350,450" keyPoints="0;0;0.5;1;1" keyTimes="0;0.38;0.42;0.45;1" calcMode="linear" dur="1.5s" repeatCount="indefinite" rotate="auto"/>
                 </g>
                 <!-- Arrow: RBB -->
-                <g><polygon points="-7,-4 7,0 -7,4" fill="#E8C56A"/>
+                <g><polygon points="-7,-4 7,0 -7,4" fill="#00C853"/>
                   <animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;0.45;0.50;0.56;1" dur="1.5s" repeatCount="indefinite"/>
                   <animateMotion path="M350,450 C337,480 326,500 318,520" keyPoints="0;0;0.5;1;1" keyTimes="0;0.45;0.50;0.56;1" calcMode="linear" dur="1.5s" repeatCount="indefinite" rotate="auto"/>
                 </g>
                 <!-- Arrow: LBB -->
-                <g><polygon points="-7,-4 7,0 -7,4" fill="#E8C56A"/>
+                <g><polygon points="-7,-4 7,0 -7,4" fill="#00C853"/>
                   <animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;0.45;0.51;0.58;1" dur="1.5s" repeatCount="indefinite"/>
                   <animateMotion path="M350,450 C382,462 424,472 462,482" keyPoints="0;0;0.5;1;1" keyTimes="0;0.45;0.51;0.58;1" calcMode="linear" dur="1.5s" repeatCount="indefinite" rotate="auto"/>
                 </g>
