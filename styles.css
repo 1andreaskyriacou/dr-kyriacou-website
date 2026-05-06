@@ -568,8 +568,9 @@
     .inv-modal-img {
       display: block;
       width: 100%;
-      max-height: 200px;
-      object-fit: cover;
+      max-height: 300px;
+      object-fit: contain;
+      background-color: white;
       border-radius: 6px;
       margin: 14px 0 4px;
     }
