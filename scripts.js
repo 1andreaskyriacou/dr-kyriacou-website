@@ -38,23 +38,10 @@
       }
     });
 
-    // Form handling
-    var enquiryForm = document.getElementById('enquiry-form');
-    if (enquiryForm) {
-      enquiryForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        var msg = document.getElementById('form-message');
-        var btn = this.querySelector('button[type="submit"]');
-        btn.disabled = true;
-        btn.textContent = 'Sending\u2026';
-        // Simulate submission — replace with real endpoint as needed
-        setTimeout(function() {
-          msg.style.color = '#C9A84C';
-          msg.textContent = 'Thank you for your enquiry. We will be in touch shortly.';
-          btn.disabled = false;
-          btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Sent';
-        }, 900);
-      });
+    // Show success banner when redirected back with ?sent=true
+    if (window.location.search.indexOf('sent=true') !== -1) {
+      var sentMsg = document.getElementById('form-sent-message');
+      if (sentMsg) sentMsg.style.display = 'block';
     }
 
     // ── ECG Patient Education Animations ────────────────────────────────────

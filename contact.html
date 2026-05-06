@@ -78,7 +78,14 @@
             </div>
           </div>
 
-          <form class="enquiry-form" id="enquiry-form" novalidate aria-label="Appointment enquiry form">
+          <div id="form-sent-message" role="alert" style="display:none;background:rgba(201,168,76,0.12);border:1px solid var(--gold);border-radius:4px;padding:14px 18px;margin-bottom:20px;font-size:14px;color:var(--gold);line-height:1.6;">
+            Thank you — your enquiry has been sent. Dr Kyriacou's team will be in touch shortly.
+          </div>
+
+          <form class="enquiry-form" id="enquiry-form" action="https://formspree.io/f/enquiries@drandreaskyriacou.com" method="POST" novalidate aria-label="Appointment enquiry form">
+            <input type="hidden" name="_replyto" value="enquiries@drandreaskyriacou.com" />
+            <input type="hidden" name="_subject" value="New Appointment Enquiry — Dr Andreas Kyriacou" />
+            <input type="hidden" name="_next" value="https://www.drandreaskyriacou.com/contact.html?sent=true" />
             <div class="form-row">
               <div class="form-group">
                 <label for="first-name">First Name <span aria-hidden="true" style="color:var(--gold)">*</span></label>
