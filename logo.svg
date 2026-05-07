@@ -1,12 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" width="400" height="120">
-  <!-- Navy background -->
   <rect width="400" height="120" fill="#0A2342"/>
-  <!-- Gold heart (left side, centred vertically) -->
   <path d="M60 88 C60 88 32 68 32 50.5 C32 42 37.4 36 44 36 C49.6 36 54.2 39.4 60 45.5 C65.8 39.4 70.4 36 76 36 C82.6 36 88 42 88 50.5 C88 68 60 88 60 88Z" fill="#C9A84C"/>
-  <!-- Navy ECG trace on heart (matches heart y-midpoint ~62) -->
-  <polyline points="32,62 44,62 49,62 52,44 55,80 58,62 88,62" fill="none" stroke="#0A2342" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-  <!-- Doctor name in white -->
+  <!-- PQRST: flat → P bump → flat → Q dip → R spike → S dip → return → T hump → flat -->
+  <polyline points="32,62 39,62 40,61 43,55 45,61 46,62 48,62 51,67 54,43 57,69 59,62 60,62 64,57 67,55 71,57 74,62 88,62" fill="none" stroke="#0A2342" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
   <text x="108" y="58" font-family="'Cormorant Garamond', 'Georgia', serif" font-size="30" font-weight="700" fill="#ffffff">Dr Andreas Kyriacou</text>
-  <!-- Subtitle in gold -->
   <text x="108" y="82" font-family="'Cormorant Garamond', 'Georgia', serif" font-size="15" fill="#C9A84C">Consultant Cardiologist &amp; Electrophysiologist</text>
 </svg>
