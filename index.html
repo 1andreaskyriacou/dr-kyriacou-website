@@ -185,6 +185,14 @@
           <div class="hero-photo-frame" role="img" aria-label="Dr Andreas Kyriacou">
             <img src="a.kyriacou.jpg" alt="Dr Andreas Kyriacou — Consultant Cardiologist &amp; Electrophysiologist" class="hero-photo" style="filter: saturate(0.6) brightness(1.02) hue-rotate(15deg);" />
           </div>
+          <div style="display:flex;gap:12px;justify-content:center;margin-top:16px;flex-wrap:wrap;">
+            <button class="bio-modal-btn" onclick="openBioModal()" aria-haspopup="dialog" style="margin-top:0;">
+              📋 Clinical Profile
+            </button>
+            <button class="bio-modal-btn" onclick="openResearchModal()" aria-haspopup="dialog" style="margin-top:0;">
+              📊 Research Profile
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -253,6 +261,27 @@
         <p>During his training, Dr Kyriacou was awarded the competitive three-year British Heart Foundation (BHF) Clinical Research Training Fellowship at the International Centre for Circulatory Health, where he was awarded his PhD from Imperial College London. His research focused on complex cardiac pacemakers, exploring the physiological effects of complex pacing on heart function and developing methods to improve patient outcomes. His innovative work earned him the prestigious European Society of Cardiology Heart Failure Association Young Investigator in Clinical Research Award (2012) and he was runner-up in the British Heart Rhythm Society Young Investigator Competition (2012). His research findings were selected for presentation at the SET for Britain ceremonies at the House of Parliament in Westminster London in 2011 and 2012. Dr Kyriacou's research has been published extensively in highly impactful Cardiology journals internationally.</p>
         <p>In his clinical practice, Dr Kyriacou specialises in the medical treatment and ablation of all heart rhythm disorders, including complex arrhythmias such as atrial fibrillation and ventricular tachycardia, as well as the implantation of complex cardiac pacemakers and defibrillators. He has been instrumental in developing arrhythmia services in Sheffield and South Yorkshire UK. With his leadership his team has received distinguished recognitions, including the Atrial Fibrillation Pioneers Award from the AF Association UK and Arrhythmia Alliance, and the Team of the Year award from the British Heart Rhythm Society and Arrhythmia Alliance.</p>
         <p>Dr Kyriacou continues to contribute to research on cardiac devices and the holistic management of patients with arrhythmias. He also serves on the Faculty of national and international cardiology meetings.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Research profile modal -->
+  <div id="research-modal" class="bio-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="research-modal-title">
+    <div class="bio-modal-box">
+      <button class="bio-modal-close" id="research-modal-close" aria-label="Close research profile">&#215;</button>
+      <h2 class="bio-modal-title" id="research-modal-title">Dr Andreas Kyriacou — Research Profile</h2>
+      <p class="bio-modal-subtitle">Consultant Cardiologist &amp; Electrophysiologist</p>
+      <div class="bio-modal-divider"></div>
+      <div class="bio-modal-body">
+        <p>Dr Kyriacou has an extensive research portfolio focused on cardiac electrophysiology and cardiac devices. He was awarded a prestigious three-year British Heart Foundation Clinical Research Training Fellowship at the International Centre for Circulatory Health, Imperial College London, where he completed his PhD. His research focused on the physiological effects of complex cardiac pacing on heart function and developing methods to improve patient outcomes.</p>
+        <p>His innovative research earned him the European Society of Cardiology Heart Failure Association Young Investigator in Clinical Research Award (2012) and he was runner-up in the British Heart Rhythm Society Young Investigator Competition (2012). His research findings were selected for presentation at the SET for Britain ceremonies at the House of Parliament in Westminster, London in 2011 and 2012.</p>
+        <p>Dr Kyriacou has published extensively in high-impact international cardiology journals. His work spans cardiac device physiology, atrial fibrillation, ventricular tachycardia ablation, and the holistic management of patients with complex arrhythmias. He serves on the faculty of national and international cardiology meetings.</p>
+        <p>View his full publication list via the links below.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:8px;">
+          <a href="https://scholar.google.com/citations?user=kQGyZRAAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" class="profile-link" style="font-size:0.85rem;">Google Scholar →</a>
+          <a href="https://www.researchgate.net/profile/Andreas-Kyriacou-4" target="_blank" rel="noopener noreferrer" class="profile-link" style="font-size:0.85rem;">ResearchGate →</a>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Andreas%20Kyriacou" target="_blank" rel="noopener noreferrer" class="profile-link" style="font-size:0.85rem;">PubMed →</a>
+        </div>
       </div>
     </div>
   </div>
