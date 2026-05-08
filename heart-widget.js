@@ -120,44 +120,95 @@
     rimLight.position.set(0, -5, 1);
     scene.add(rimLight);
 
-    /* ── Heart shape ──
-       Parametric heart curve: x = 16 sin³t, y = 13cost − 5cos2t − 2cos3t − cos4t
-       At t=0 (notch, centre-top): y ≈ +0.38
-       Bump peaks at t ≈ ±1 rad:  y ≈ +0.88   ← highest
-       Bottom point at t = π:      y ≈ −1.28   ← lowest
-       → Bumps-up / point-down orientation with no mesh rotation needed. */
-    var sc = 0.075, PTS = 160;
-    var pts = [];
-    for (var i = 0; i <= PTS; i++) {
-      var t   = (i / PTS) * Math.PI * 2;
-      var st  = Math.sin(t);
-      pts.push(new T.Vector2(
-        sc * 16 * st * st * st,
-        sc * (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t))
-      ));
+    /* ── Anatomical heart built from primitive geometry ──
+       Component layout (Y-up, Z-toward-viewer):
+
+         RA   LA          ← atria (upper, right & left)
+          | | |
+         [aorta / PA]     ← great vessels between atria
+          |
+         RV + LV          ← ventricles (lower, LV dominant)
+              ↓ apex
+
+       Coordinate origin placed near the visual centre of the whole group.
+       The group receives a slight clockwise Z-tilt (-14°) so the apex
+       points naturally down-left, as in the anatomical position.
+
+       Colour palette:
+         Ventricles  #7B1010 / #9B2020  (thick dark-red muscle)
+         Atria       #B03535             (thinner, lighter red)
+         Aorta       #EEE0CC             (cream / off-white artery)
+         Pulm. trunk #D8ECF4             (pale blue-white)
+    */
+
+    /* material helpers */
+    function mMuscle(hex) {
+      return new T.MeshPhongMaterial({
+        color: hex, specular: 0x331111, emissive: 0x0c0000, shininess: 85
+      });
     }
-    var heartShape = new T.Shape(pts);
-    var geo = new T.ExtrudeGeometry(heartShape, {
-      depth:          0.38,
-      bevelEnabled:   true,
-      bevelSegments:  5,
-      bevelSize:      0.07,
-      bevelThickness: 0.07,
-      curveSegments:  20
-    });
-    geo.center();
+    function mVessel(hex) {
+      return new T.MeshPhongMaterial({
+        color: hex, specular: 0x888877, emissive: 0x040402, shininess: 130
+      });
+    }
 
-    var mat = new T.MeshPhongMaterial({
-      color:     0xC0392B,
-      specular:  0xC9A84C,
-      shininess: 160,
-      emissive:  0x1a0000
-    });
+    var heartGroup = new T.Group();
 
-    var mesh = new T.Mesh(geo, mat);
-    var BS = 0.88; // base scale
-    mesh.scale.setScalar(BS);
-    scene.add(mesh);
+    /* Left Ventricle — dominant, elongated, lower-centre-left */
+    var lv = new T.Mesh(new T.SphereGeometry(0.5, 32, 24), mMuscle(0x7B1010));
+    lv.scale.set(1.0, 1.32, 0.88);
+    lv.position.set(-0.12, -0.26, 0);
+    heartGroup.add(lv);
+
+    /* Right Ventricle — smaller, wraps front-right of LV */
+    var rv = new T.Mesh(new T.SphereGeometry(0.37, 32, 24), mMuscle(0x9B2020));
+    rv.scale.set(0.88, 1.1, 0.72);
+    rv.position.set(0.32, -0.13, 0.13);
+    heartGroup.add(rv);
+
+    /* Left Atrium — upper-left-back, receives pulmonary veins */
+    var la = new T.Mesh(new T.SphereGeometry(0.3, 32, 24), mMuscle(0xB03535));
+    la.scale.set(0.95, 0.82, 0.88);
+    la.position.set(-0.22, 0.35, -0.12);
+    heartGroup.add(la);
+
+    /* Right Atrium — upper-right, receives systemic veins */
+    var ra = new T.Mesh(new T.SphereGeometry(0.28, 32, 24), mMuscle(0xB03535));
+    ra.scale.set(0.90, 0.82, 0.85);
+    ra.position.set(0.35, 0.30, 0);
+    heartGroup.add(ra);
+
+    /* Aorta — stem rising from LV outlet */
+    var aortaStem = new T.Mesh(
+      new T.CylinderGeometry(0.09, 0.115, 0.52, 16), mVessel(0xEEE0CC));
+    aortaStem.rotation.z = 0.12;
+    aortaStem.position.set(-0.03, 0.60, 0);
+    heartGroup.add(aortaStem);
+
+    /* Aortic arch — short horizontal segment curving left */
+    var aortaArch = new T.Mesh(
+      new T.CylinderGeometry(0.08, 0.09, 0.38, 16), mVessel(0xEEE0CC));
+    aortaArch.rotation.z = Math.PI / 2 - 0.25;
+    aortaArch.position.set(-0.27, 0.82, 0);
+    heartGroup.add(aortaArch);
+
+    /* Pulmonary trunk — exits RV, rises up-right toward the lungs */
+    var pa = new T.Mesh(
+      new T.CylinderGeometry(0.08, 0.10, 0.46, 16), mVessel(0xD8ECF4));
+    pa.rotation.z = -0.22;
+    pa.position.set(0.22, 0.52, 0.10);
+    heartGroup.add(pa);
+
+    /* Anatomical tilt: apex (LV bottom) points down-left */
+    heartGroup.rotation.z = -0.14;
+
+    var BS = 0.88; // base scale — pulse() always returns BS × factor
+    heartGroup.scale.setScalar(BS);
+    scene.add(heartGroup);
+
+    /* alias used by the interaction & animation code below */
+    var mesh = heartGroup;
 
     /* ── Drag-to-rotate state ── */
     var dragging = false;
