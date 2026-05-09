@@ -380,6 +380,58 @@
           }
         });
 
+        // ── Valve / vessel overlay mesh ──────────────────────────────────────
+        // Clone each SkinnedMesh; apply pale material + vertex shader that
+        // discards vertices not primarily influenced by valve-named bones.
+        model.traverse(function (node) {
+          if (!node.isSkinnedMesh || !node.skeleton) return;
+
+          var valveIdxs = [];
+          node.skeleton.bones.forEach(function (bone, idx) {
+            if (bone.name.toLowerCase().indexOf('valve') !== -1) {
+              valveIdxs.push(idx);
+            }
+          });
+          if (valveIdxs.length === 0) return;
+          console.log('[heart3d] valve bone indices:', valveIdxs);
+
+          // Build per-index GLSL checks for WebGL2 (ivec4) and WebGL1 (vec4)
+          var gl2 = valveIdxs.map(function (i) {
+            return 'skinIndex.x==' + i + '||skinIndex.y==' + i + '||skinIndex.z==' + i + '||skinIndex.w==' + i;
+          }).join('||');
+          var gl1 = valveIdxs.map(function (i) {
+            return 'abs(skinIndex.x-' + i + '.0)<0.5||abs(skinIndex.y-' + i + '.0)<0.5||abs(skinIndex.z-' + i + '.0)<0.5||abs(skinIndex.w-' + i + '.0)<0.5';
+          }).join('||');
+
+          var valveMat = new THREE.MeshStandardMaterial({
+            color:     new THREE.Color(0xf0ece0),
+            roughness: 0.9,
+            metalness: 0.0
+          });
+          valveMat.onBeforeCompile = function (shader) {
+            shader.vertexShader = shader.vertexShader.replace(
+              '#include <skinning_vertex>',
+              [
+                '#include <skinning_vertex>',
+                'bool _isValve = false;',
+                '#ifdef WEBGL2',
+                'if (' + gl2 + ') _isValve = true;',
+                '#else',
+                'if (' + gl1 + ') _isValve = true;',
+                '#endif',
+                'if (!_isValve) { transformed = vec3(99999.0); }'
+              ].join('\n')
+            );
+          };
+
+          var overlay = node.clone();
+          overlay.material    = valveMat;
+          overlay.castShadow  = false;
+          overlay.receiveShadow = true;
+          overlay.scale.multiplyScalar(1.001);
+          node.parent.add(overlay);
+        });
+
         // ── Collect bones + set shadows ──────────────────────────────────────
         model.traverse(function (node) {
           if (node.isMesh) {
