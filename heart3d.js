@@ -9,24 +9,29 @@
   var drag = false, pm = { x: 0, y: 0 };
   var rotX = 0.12, rotY = 0.5;
 
-  // ── Bone groups (exact names from the GLB skeleton) ──────────────────────────
+  // ── Bone groups (exact names from the GLB skeleton, no dot separator) ─────────
   var ATRIA_NAMES = [
-    'right_atrium_jnt.6_6',
-    'left_atrium_jnt.13_13'
+    'right_atrium_jnt6_6',
+    'left_atrium_jnt13_13',
+    'left_atrium_storage_jnt14_14'
   ];
   var VENTS_NAMES = [
-    'cardiac_muscle_jnt.7_7',
-    'left_mitral_valve_jnt.15_15',
-    'right_mitral_valve_jnt.16_16',
-    'aortic_valve_01_jnt.21_21',
-    'left_tricuspid_valve_jnt.23_23',
-    'right_tricuspid_valve_jnt.24_24'
+    'cardiac_muscle_jnt7_7',
+    'cardiac_muscle_endjnt8_8',
+    'right_pulmonary_valve_jnt9_9',
+    'left_pulmonary_valve_jnt11_11',
+    'left_mitral_valve_jnt15_15',
+    'right_mitral_valve_jnt16_16',
+    'aortic_valve_02_jnt17_17',
+    'aortic_valve_03_jnt19_19',
+    'aortic_valve_01_jnt21_21',
+    'left_tricuspid_valve_jnt23_23',
+    'right_tricuspid_valve_jnt24_24'
   ];
 
   // Bone data: { bone, restScale }  — restScale captured at load time
   var bonesAtria = [];
   var bonesVents = [];
-  var useBones   = false;
 
   // Contraction parameters: default amplitude and duration in ms
   var ATRIA_AMT     = 0.07;  // normal atrial contraction
@@ -69,18 +74,14 @@
     });
     contractions = alive;
 
-    if (useBones) {
-      bonesAtria.forEach(function (d) {
-        var s = 1 - aEnv;
-        d.bone.scale.set(d.restScale.x * s, d.restScale.y * s, d.restScale.z * s);
-      });
-      bonesVents.forEach(function (d) {
-        var s = 1 - vEnv;
-        d.bone.scale.set(d.restScale.x * s, d.restScale.y * s, d.restScale.z * s);
-      });
-    } else if (modelGroup) {
-      modelGroup.scale.setScalar(Math.min(1 - aEnv, 1 - vEnv));
-    }
+    bonesAtria.forEach(function (d) {
+      var s = 1 - aEnv;
+      d.bone.scale.set(d.restScale.x * s, d.restScale.y * s, d.restScale.z * s);
+    });
+    bonesVents.forEach(function (d) {
+      var s = 1 - vEnv;
+      d.bone.scale.set(d.restScale.x * s, d.restScale.y * s, d.restScale.z * s);
+    });
   }
 
   // ── Rhythm state ─────────────────────────────────────────────────────────────
@@ -287,30 +288,10 @@
         var dist     = Math.max(4.5, halfDiag / Math.tan(fovHalf) * 1.20);
         camera.position.set(0, halfDiag * 0.08, dist);
 
-        // ── DEBUG: log every node and every skeleton bone ────────────────────
-        console.group('heart3d DEBUG — full scene hierarchy');
-        model.traverse(function (node) {
-          console.log(
-            'node | type:', node.type,
-            '| name:', JSON.stringify(node.name),
-            '| isBone:', !!node.isBone,
-            '| isSkinnedMesh:', !!node.isSkinnedMesh
-          );
-          if (node.isSkinnedMesh && node.skeleton) {
-            console.group('  skeleton bones for SkinnedMesh "' + node.name + '"');
-            node.skeleton.bones.forEach(function (b, i) {
-              console.log('  [' + i + '] ' + JSON.stringify(b.name));
-            });
-            console.groupEnd();
-          }
-        });
-        console.groupEnd();
-
-        // ── Mesh and bone collection ─────────────────────────────────────────
+        // ── Mesh shadows + bone collection ───────────────────────────────────
         model.traverse(function (node) {
           if (node.isMesh) { node.castShadow = true; node.receiveShadow = true; }
 
-          // Collect bones from SkinnedMesh skeletons (most reliable path)
           if (node.isSkinnedMesh && node.skeleton) {
             node.skeleton.bones.forEach(function (b) {
               if (ATRIA_NAMES.indexOf(b.name) !== -1) {
@@ -321,7 +302,6 @@
               }
             });
           }
-          // Also catch standalone bone nodes
           if ((node.isBone || node.type === 'Bone') && node.name) {
             if (ATRIA_NAMES.indexOf(node.name) !== -1) {
               bonesAtria.push({ bone: node, restScale: node.scale.clone() });
@@ -332,7 +312,7 @@
           }
         });
 
-        // Deduplicate
+        // Deduplicate (skeleton traversal can yield same bone via multiple meshes)
         function dedupe(arr) {
           return arr.filter(function (d, i) {
             return arr.findIndex(function (x) { return x.bone === d.bone; }) === i;
@@ -340,14 +320,9 @@
         }
         bonesAtria = dedupe(bonesAtria);
         bonesVents = dedupe(bonesVents);
-        useBones   = (bonesAtria.length + bonesVents.length) > 0;
 
-        if (useBones) {
-          console.log('heart3d: matched atria:', bonesAtria.map(function (d) { return d.bone.name; }));
-          console.log('heart3d: matched vents:', bonesVents.map(function (d) { return d.bone.name; }));
-        } else {
-          console.warn('heart3d: no target bones matched — running model-scale fallback');
-        }
+        console.log('heart3d: atria bones found:', bonesAtria.map(function (d) { return d.bone.name; }));
+        console.log('heart3d: vent/valve bones found:', bonesVents.map(function (d) { return d.bone.name; }));
 
         // No AnimationMixer — all motion driven by our timing engine below.
 
