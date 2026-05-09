@@ -1143,6 +1143,15 @@
       margin-bottom: 16px;
     }
     .bio-modal-body p:last-child { margin-bottom: 0; }
+    .bio-modal-body a {
+      color: var(--gold-dim) !important;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-weight: 500;
+    }
+    .bio-modal-body a:hover {
+      color: var(--text) !important;
+    }
 
     @media (max-width: 600px) {
       .bio-modal-box { padding: 52px 20px 28px; }
