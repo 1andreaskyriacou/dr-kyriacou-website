@@ -362,9 +362,9 @@
               map:       texMap,
               normalMap: orig.normalMap || null,
               aoMap:     orig.aoMap     || null,
-              roughness: orig.roughness !== undefined ? orig.roughness : 0.8,
-              metalness: orig.metalness !== undefined ? orig.metalness : 0.0,
-              color:     new THREE.Color(0xcc1a1a)
+              color:     new THREE.Color(0xaa0000),
+              roughness: 0.9,
+              metalness: 0.0
             });
           }
         });
