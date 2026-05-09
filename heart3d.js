@@ -156,7 +156,7 @@
         nextA = now; nextV = now; break;
 
       case 'vt':
-        // Ventricles 180bpm (333ms); atria 70bpm (857ms), dissociated
+        // Ventricles 180bpm (333ms); atria 50bpm (1200ms), dissociated
         nextV = now; nextA = now + rand(0, 800); break;
 
       case 'af':
@@ -174,8 +174,8 @@
 
     switch (cond) {
       case 'normal': case 'csp': case 'crt':
-        if (now >= nextA) { fire('a'); nextA += 857; }
-        if (now >= nextV) { fire('v'); nextV += 857; }
+        if (now >= nextA) { fire('a'); nextA += 1200; }
+        if (now >= nextV) { fire('v'); nextV += 1200; }
         break;
 
       case 'flutter':
@@ -195,7 +195,7 @@
         break;
 
       case 'vt':
-        if (now >= nextA) { fire('a'); nextA += 857; }
+        if (now >= nextA) { fire('a'); nextA += 1200; }
         if (now >= nextV) { fire('v'); nextV += 333; }
         break;
 

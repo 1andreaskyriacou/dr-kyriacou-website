@@ -17,7 +17,7 @@
 
   var ATRIA_ROT = 0.52, ATRIA_SCALE = 0.38, ATRIA_DUR = 160;
   var VENTS_ROT = 0.20, VENTS_SCALE = 0.22, VENTS_DUR = 290;
-  var BEAT_MS   = 857; // 70 bpm
+  var BEAT_MS   = 1200; // 50 bpm
 
   var ATRIA_NAMES = [
     'right_atrium_jnt6_6', 'left_atrium_jnt13_13', 'left_atrium_storage_jnt14_14'
