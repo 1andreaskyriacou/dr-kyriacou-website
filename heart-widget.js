@@ -1,10 +1,10 @@
-/* heart-widget.js — compact fixed 3D heart + ECG widget, 70 bpm sinus only */
+/* heart-widget.js — compact 3D beating heart widget, 50 bpm sinus only */
 (function () {
   'use strict';
 
   var THREE = window.THREE;
 
-  var W = 150, H_3D = 118, H_ECG = 42;
+  var W = 150, H_3D = 150;
 
   // Animation state
   var scene, camera, renderer, clock;
@@ -13,7 +13,6 @@
   var bonesAtria = [], bonesVents = [];
   var contractions = [];
   var nextA = 0, nextV = 0;
-  var beatEpoch = performance.now();
 
   var ATRIA_ROT = 0.52, ATRIA_SCALE = 0.38, ATRIA_DUR = 160;
   var VENTS_ROT = 0.20, VENTS_SCALE = 0.22, VENTS_DUR = 290;
@@ -80,49 +79,6 @@
     if (now >= nextV) { fire('v'); nextV += BEAT_MS; }
   }
 
-  // ECG
-  var ecgCtx, ecgMid, ecgAmp, PX_PER_MS;
-  var ECG_BEAT_PX = 80;
-
-  function gauss(x, mu, sig) { return Math.exp(-0.5 * Math.pow((x - mu) / sig, 2)); }
-  function pqrst(p) {
-    return  0.14 * gauss(p, 0.120, 0.040)
-          - 0.07 * gauss(p, 0.270, 0.016)
-          + 0.95 * gauss(p, 0.320, 0.022)
-          - 0.20 * gauss(p, 0.380, 0.016)
-          + 0.24 * gauss(p, 0.580, 0.070);
-  }
-
-  function drawEcg() {
-    if (!ecgCtx) return;
-    var now = performance.now();
-    ecgCtx.fillStyle = 'rgba(5,12,22,0.95)';
-    ecgCtx.fillRect(0, 0, W, H_ECG);
-
-    var SMALL = ECG_BEAT_PX / 5;
-    var sOff  = (now - beatEpoch) * PX_PER_MS % SMALL;
-    ecgCtx.strokeStyle = 'rgba(74,222,128,0.09)';
-    ecgCtx.lineWidth   = 0.5;
-    for (var gx = W - sOff; gx >= -SMALL; gx -= SMALL) {
-      ecgCtx.beginPath(); ecgCtx.moveTo(gx, 0); ecgCtx.lineTo(gx, H_ECG); ecgCtx.stroke();
-    }
-
-    ecgCtx.strokeStyle = '#4ade80';
-    ecgCtx.lineWidth   = 1.2;
-    ecgCtx.lineJoin    = 'round';
-    ecgCtx.shadowBlur  = 4;
-    ecgCtx.shadowColor = 'rgba(74,222,128,0.5)';
-    ecgCtx.beginPath();
-    for (var x = 0; x < W; x++) {
-      var t     = now - beatEpoch - (W - 1 - x) / PX_PER_MS;
-      var phase = ((t % BEAT_MS) + BEAT_MS) % BEAT_MS / BEAT_MS;
-      var y     = ecgMid - pqrst(phase) * ecgAmp;
-      if (x === 0) ecgCtx.moveTo(0, y); else ecgCtx.lineTo(x, y);
-    }
-    ecgCtx.stroke();
-    ecgCtx.shadowBlur = 0;
-  }
-
   function init() {
     if (!THREE || !THREE.GLTFLoader) return;
 
@@ -149,22 +105,8 @@
     var hCanvas = document.createElement('canvas');
     hCanvas.style.cssText = 'display:block;width:' + W + 'px;height:' + H_3D + 'px;';
 
-    var eCanvas = document.createElement('canvas');
-    eCanvas.style.cssText = 'display:block;width:' + W + 'px;height:' + H_ECG + 'px;';
-
     widget.appendChild(hCanvas);
-    widget.appendChild(eCanvas);
     document.body.appendChild(widget);
-
-    // ECG canvas resolution
-    var dpr = window.devicePixelRatio || 1;
-    eCanvas.width  = Math.round(W   * dpr);
-    eCanvas.height = Math.round(H_ECG * dpr);
-    ecgCtx = eCanvas.getContext('2d');
-    ecgCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    ecgMid    = H_ECG * 0.50;
-    ecgAmp    = H_ECG * 0.35;
-    PX_PER_MS = ECG_BEAT_PX / BEAT_MS;
 
     // Three.js scene
     scene = new THREE.Scene();
@@ -285,7 +227,7 @@
       scene.add(modelGroup);
 
       var now = performance.now();
-      beatEpoch = now; nextA = now; nextV = now + 120;
+      nextA = now; nextV = now + 120;
     });
 
     // Render loop
@@ -299,7 +241,6 @@
         applyContractions();
       }
       renderer.render(scene, camera);
-      drawEcg();
     }());
   }
 

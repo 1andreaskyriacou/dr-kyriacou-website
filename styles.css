@@ -1714,10 +1714,3 @@
       flex-shrink: 0;
     }
 
-    /* ECG strip sits as a separate flex row below the heart — no overlap */
-    .hero-ecg-strip {
-      width: 100%;
-      height: 54px;
-      display: block;
-      flex-shrink: 0;
-    }

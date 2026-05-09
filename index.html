@@ -202,7 +202,6 @@
                 <canvas id="heart3d-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%;display:block;"></canvas>
               </div>
             </div>
-            <canvas id="hero-ecg-canvas" class="hero-ecg-strip"></canvas>
           </div>
           <a href="contact.html" class="btn-primary">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.36 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.36 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.34 1.85.573 2.81.7A2 2 0 0 1 21.28 16z"/></svg>
@@ -319,105 +318,5 @@
   <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/loaders/GLTFLoader.js"></script>
   <script src="heart3d.js"></script>
 
-  <!-- Hero ECG strip — 70 bpm PQRST trace synced to heart3d rhythm -->
-  <script>
-  (function () {
-    'use strict';
-
-    var MS_PER_BEAT = 1200; // 50 bpm
-    var BEAT_PX     = 110;
-    var beatEpoch   = performance.now();
-
-    document.addEventListener('heart3d:rhythmStart', function (e) {
-      beatEpoch = e.detail.t0;
-    });
-
-    function gauss(x, mu, sig) {
-      return Math.exp(-0.5 * Math.pow((x - mu) / sig, 2));
-    }
-
-    function pqrst(phase) {
-      return  0.14 * gauss(phase, 0.120, 0.040)
-            - 0.07 * gauss(phase, 0.270, 0.016)
-            + 0.95 * gauss(phase, 0.320, 0.022)
-            - 0.20 * gauss(phase, 0.380, 0.016)
-            + 0.24 * gauss(phase, 0.580, 0.070);
-    }
-
-    var canvas, ctx, W, H, mid, amp, PX_PER_MS, rafId;
-
-    function setup() {
-      canvas = document.getElementById('hero-ecg-canvas');
-      if (!canvas) return false;
-      var dpr   = window.devicePixelRatio || 1;
-      var frame = canvas.parentElement; // .hero-vitals-frame
-      W = frame.clientWidth  || 160;
-      H = canvas.clientHeight || 42;
-      canvas.width  = Math.round(W * dpr);
-      canvas.height = Math.round(H * dpr);
-      canvas.style.width  = W + 'px';
-      canvas.style.height = H + 'px';
-      ctx = canvas.getContext('2d');
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      mid       = H * 0.50;
-      amp       = H * 0.35;
-      PX_PER_MS = BEAT_PX / MS_PER_BEAT;
-      return true;
-    }
-
-    function draw() {
-      if (!ctx) return;
-      var now     = performance.now();
-      var elapsed = (now - beatEpoch) * PX_PER_MS;
-      var SMALL   = BEAT_PX / 5;
-
-      ctx.fillStyle = 'rgba(5,12,22,0.92)';
-      ctx.fillRect(0, 0, W, H);
-
-      ctx.lineWidth = 0.5;
-      ctx.strokeStyle = 'rgba(74,222,128,0.09)';
-      var sOff = elapsed % SMALL;
-      for (var gx = W - sOff; gx >= -SMALL; gx -= SMALL) {
-        ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, H); ctx.stroke();
-      }
-
-      ctx.strokeStyle = 'rgba(74,222,128,0.06)';
-      ctx.beginPath(); ctx.moveTo(0, mid); ctx.lineTo(W, mid); ctx.stroke();
-
-      ctx.strokeStyle = '#4ade80';
-      ctx.lineWidth   = 1.4;
-      ctx.lineJoin    = 'round';
-      ctx.shadowBlur  = 5;
-      ctx.shadowColor = 'rgba(74,222,128,0.55)';
-      ctx.beginPath();
-      for (var x = 0; x < W; x++) {
-        var t     = now - beatEpoch - (W - 1 - x) / PX_PER_MS;
-        var phase = ((t % MS_PER_BEAT) + MS_PER_BEAT) % MS_PER_BEAT / MS_PER_BEAT;
-        var y     = mid - pqrst(phase) * amp;
-        if (x === 0) ctx.moveTo(0, y);
-        else         ctx.lineTo(x, y);
-      }
-      ctx.stroke();
-      ctx.shadowBlur = 0;
-
-      rafId = requestAnimationFrame(draw);
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-      requestAnimationFrame(function () {
-        if (setup()) draw();
-      });
-
-      var debounce;
-      window.addEventListener('resize', function () {
-        clearTimeout(debounce);
-        debounce = setTimeout(function () {
-          if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
-          if (setup()) draw();
-        }, 200);
-      });
-    });
-  }());
-  </script>
 </body>
 </html>
