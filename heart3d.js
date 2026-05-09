@@ -368,37 +368,32 @@
           var swAttr = node.geometry.attributes.skinWeight;
           if (!siAttr || !swAttr) return;
 
-          // Explicit pale-white set: all valve joints + vessels + chordae end joint
-          var PALE_NAMES = [
-            'right_pulmonary_valve_jnt9_9',  'left_pulmonary_valve_jnt11_11',
+          // Find the skeleton index of each pale-white bone by name
+          var PALE_BONE_NAMES = [
             'left_mitral_valve_jnt15_15',    'right_mitral_valve_jnt16_16',
-            'aortic_valve_02_jnt17_17',      'aortic_valve_03_jnt19_19',
-            'aortic_valve_01_jnt21_21',      'left_tricuspid_valve_jnt23_23',
-            'right_tricuspid_valve_jnt24_24','cardiac_muscle_endjnt8_8'
+            'aortic_valve_01_jnt21_21',      'aortic_valve_02_jnt17_17',
+            'aortic_valve_03_jnt19_19',      'left_tricuspid_valve_jnt23_23',
+            'right_tricuspid_valve_jnt24_24','right_pulmonary_valve_jnt9_9',
+            'left_pulmonary_valve_jnt11_11', 'cardiac_muscle_endjnt8_8'
           ];
-
-          var boneCol = bones.map(function (bone) {
-            var n = bone.name;
-            if (ATRIA_NAMES.indexOf(n) !== -1)  return [0.800, 0.133, 0.133]; // #cc2222
-            if (PALE_NAMES.indexOf(n)  !== -1)  return [0.941, 0.925, 0.878]; // #f0ece0
-            return [0.545, 0.000, 0.000];                                       // #8b0000
+          var paleIndexSet = {};
+          bones.forEach(function (bone, idx) {
+            if (PALE_BONE_NAMES.indexOf(bone.name) !== -1) paleIndexSet[idx] = true;
           });
+          console.log('[heart3d] pale bone indices:', Object.keys(paleIndexSet));
 
+          // Assign per-vertex colour based on dominant bone (highest skinWeight)
           var count  = siAttr.count;
           var colArr = new Float32Array(count * 3);
           for (var vi = 0; vi < count; vi++) {
-            var iw = [
-              [siAttr.getX(vi), swAttr.getX(vi)],
-              [siAttr.getY(vi), swAttr.getY(vi)],
-              [siAttr.getZ(vi), swAttr.getZ(vi)],
-              [siAttr.getW(vi), swAttr.getW(vi)]
-            ];
+            var bi = [siAttr.getX(vi), siAttr.getY(vi), siAttr.getZ(vi), siAttr.getW(vi)];
+            var bw = [swAttr.getX(vi), swAttr.getY(vi), swAttr.getZ(vi), swAttr.getW(vi)];
             var dom = 0;
-            for (var k = 1; k < 4; k++) { if (iw[k][1] > iw[dom][1]) dom = k; }
-            var col = boneCol[iw[dom][0]] || [0.545, 0.000, 0.000];
-            colArr[vi * 3]     = col[0];
-            colArr[vi * 3 + 1] = col[1];
-            colArr[vi * 3 + 2] = col[2];
+            for (var k = 1; k < 4; k++) { if (bw[k] > bw[dom]) dom = k; }
+            var isPale = paleIndexSet[bi[dom]] === true;
+            colArr[vi * 3]     = isPale ? 240/255 : 139/255;
+            colArr[vi * 3 + 1] = isPale ? 235/255 : 0;
+            colArr[vi * 3 + 2] = isPale ? 225/255 : 0;
           }
 
           node.geometry.setAttribute('color', new THREE.BufferAttribute(colArr, 3));
