@@ -287,6 +287,25 @@
         var dist     = Math.max(4.5, halfDiag / Math.tan(fovHalf) * 1.20);
         camera.position.set(0, halfDiag * 0.08, dist);
 
+        // ── DEBUG: log every node and every skeleton bone ────────────────────
+        console.group('heart3d DEBUG — full scene hierarchy');
+        model.traverse(function (node) {
+          console.log(
+            'node | type:', node.type,
+            '| name:', JSON.stringify(node.name),
+            '| isBone:', !!node.isBone,
+            '| isSkinnedMesh:', !!node.isSkinnedMesh
+          );
+          if (node.isSkinnedMesh && node.skeleton) {
+            console.group('  skeleton bones for SkinnedMesh "' + node.name + '"');
+            node.skeleton.bones.forEach(function (b, i) {
+              console.log('  [' + i + '] ' + JSON.stringify(b.name));
+            });
+            console.groupEnd();
+          }
+        });
+        console.groupEnd();
+
         // ── Mesh and bone collection ─────────────────────────────────────────
         model.traverse(function (node) {
           if (node.isMesh) { node.castShadow = true; node.receiveShadow = true; }
@@ -324,16 +343,10 @@
         useBones   = (bonesAtria.length + bonesVents.length) > 0;
 
         if (useBones) {
-          console.log('heart3d: atria bones:', bonesAtria.map(function (d) { return d.bone.name; }));
-          console.log('heart3d: vent/valve bones:', bonesVents.map(function (d) { return d.bone.name; }));
+          console.log('heart3d: matched atria:', bonesAtria.map(function (d) { return d.bone.name; }));
+          console.log('heart3d: matched vents:', bonesVents.map(function (d) { return d.bone.name; }));
         } else {
-          console.warn('heart3d: no target bones found — using model-scale fallback');
-          // Log all bones found to help diagnose naming issues
-          model.traverse(function (node) {
-            if (node.isSkinnedMesh && node.skeleton) {
-              node.skeleton.bones.forEach(function (b) { console.log('  bone:', b.name); });
-            }
-          });
+          console.warn('heart3d: no target bones matched — running model-scale fallback');
         }
 
         // No AnimationMixer — all motion driven by our timing engine below.
