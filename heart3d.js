@@ -347,6 +347,11 @@
                   px[i]     = Math.max(r, 160);
                   px[i + 1] = Math.round(g * 0.3);
                   px[i + 2] = 0;
+                } else if (r < 80 && g < 20 && b < 20) {
+                  // Very dark inner pixels → pale white (valves/chordae)
+                  px[i]     = 240;
+                  px[i + 1] = 235;
+                  px[i + 2] = 225;
                 }
               }
               ctx.putImageData(id, 0, 0);
