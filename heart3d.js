@@ -329,12 +329,11 @@
         var dist     = Math.max(4.5, halfDiag / Math.tan(fovHalf) * 1.20);
         camera.position.set(0, halfDiag * 0.08, dist);
 
-        // ── Bone-weight vertex colours + texture ─────────────────────────────
-        // Dominant bone per vertex drives colour; texture provides detail on top.
+        // ── Valve/vessel shader — vIsValve varying bypasses texture on valves ──
         model.traverse(function (node) {
           if (!node.isSkinnedMesh || !node.skeleton) return;
 
-          // Restore original texture with blue-only pixel fix
+          // Blue pixel fix on texture
           var orig   = node.material;
           var texMap = (orig && orig.map) || null;
           if (texMap && texMap.image) {
@@ -363,12 +362,7 @@
             texMap          = newTex;
           }
 
-          var bones  = node.skeleton.bones;
-          var siAttr = node.geometry.attributes.skinIndex;
-          var swAttr = node.geometry.attributes.skinWeight;
-          if (!siAttr || !swAttr) return;
-
-          // Find the skeleton index of each pale-white bone by name
+          // Resolve pale-bone skeleton indices by name
           var PALE_BONE_NAMES = [
             'left_mitral_valve_jnt15_15',    'right_mitral_valve_jnt16_16',
             'aortic_valve_01_jnt21_21',      'aortic_valve_02_jnt17_17',
@@ -376,33 +370,71 @@
             'right_tricuspid_valve_jnt24_24','right_pulmonary_valve_jnt9_9',
             'left_pulmonary_valve_jnt11_11', 'cardiac_muscle_endjnt8_8'
           ];
-          var paleIndexSet = {};
-          bones.forEach(function (bone, idx) {
-            if (PALE_BONE_NAMES.indexOf(bone.name) !== -1) paleIndexSet[idx] = true;
+          var paleIdxs = [];
+          node.skeleton.bones.forEach(function (bone, idx) {
+            if (PALE_BONE_NAMES.indexOf(bone.name) !== -1) paleIdxs.push(idx);
           });
-          console.log('[heart3d] pale bone indices:', Object.keys(paleIndexSet));
+          console.log('[heart3d] valve shader bone indices:', paleIdxs);
 
-          // Assign per-vertex colour based on dominant bone (highest skinWeight)
-          var count  = siAttr.count;
-          var colArr = new Float32Array(count * 3);
-          for (var vi = 0; vi < count; vi++) {
-            var bi = [siAttr.getX(vi), siAttr.getY(vi), siAttr.getZ(vi), siAttr.getW(vi)];
-            var bw = [swAttr.getX(vi), swAttr.getY(vi), swAttr.getZ(vi), swAttr.getW(vi)];
-            var dom = 0;
-            for (var k = 1; k < 4; k++) { if (bw[k] > bw[dom]) dom = k; }
-            var isPale = paleIndexSet[bi[dom]] === true;
-            colArr[vi * 3]     = isPale ? 240/255 : 139/255;
-            colArr[vi * 3 + 1] = isPale ? 235/255 : 0;
-            colArr[vi * 3 + 2] = isPale ? 225/255 : 0;
-          }
+          // Build GLSL per-index checks (WebGL2 int path + WebGL1 float path)
+          var gl2 = paleIdxs.length
+            ? paleIdxs.map(function (i) { return '_dom==' + i; }).join('||')
+            : 'false';
+          var gl1 = paleIdxs.length
+            ? paleIdxs.map(function (i) { return 'abs(_domF-' + i + '.0)<0.5'; }).join('||')
+            : 'false';
 
-          node.geometry.setAttribute('color', new THREE.BufferAttribute(colArr, 3));
-          node.material = new THREE.MeshStandardMaterial({
-            map:          texMap,
-            vertexColors: true,
-            roughness:    0.9,
-            metalness:    0.0
+          var mat = new THREE.MeshStandardMaterial({
+            map:      texMap,
+            color:    new THREE.Color(0xaa0000),
+            roughness: 0.9,
+            metalness: 0.0
           });
+
+          mat.onBeforeCompile = function (shader) {
+            // vIsValve varying declaration in both stages
+            shader.vertexShader   = 'varying float vIsValve;\n' + shader.vertexShader;
+            shader.fragmentShader = 'varying float vIsValve;\n' + shader.fragmentShader;
+
+            // Vertex: compute vIsValve from dominant bone after skinning
+            shader.vertexShader = shader.vertexShader.replace(
+              '#include <skinning_vertex>',
+              [
+                '#include <skinning_vertex>',
+                '{',
+                '  vec4 _sw = skinWeight;',
+                '  float _mw = _sw.x;',
+                '#ifdef WEBGL2',
+                '  ivec4 _si = skinIndex;',
+                '  int _dom = _si.x;',
+                '  if(_sw.y>_mw){_mw=_sw.y;_dom=_si.y;}',
+                '  if(_sw.z>_mw){_mw=_sw.z;_dom=_si.z;}',
+                '  if(_sw.w>_mw){_mw=_sw.w;_dom=_si.w;}',
+                '  vIsValve = (' + gl2 + ') ? 1.0 : 0.0;',
+                '#else',
+                '  float _domF = skinIndex.x;',
+                '  if(_sw.y>_mw){_mw=_sw.y;_domF=skinIndex.y;}',
+                '  if(_sw.z>_mw){_mw=_sw.z;_domF=skinIndex.z;}',
+                '  if(_sw.w>_mw){_mw=_sw.w;_domF=skinIndex.w;}',
+                '  vIsValve = (' + gl1 + ') ? 1.0 : 0.0;',
+                '#endif',
+                '}'
+              ].join('\n')
+            );
+
+            // Fragment: if valve vertex override diffuse with pale white
+            shader.fragmentShader = shader.fragmentShader.replace(
+              '#include <map_fragment>',
+              [
+                '#include <map_fragment>',
+                'if (vIsValve > 0.5) {',
+                '  diffuseColor.rgb = vec3(0.94, 0.92, 0.88);',
+                '}'
+              ].join('\n')
+            );
+          };
+
+          node.material = mat;
         });
 
         // ── Collect bones + set shadows ──────────────────────────────────────
