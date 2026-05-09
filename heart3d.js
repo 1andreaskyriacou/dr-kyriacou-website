@@ -340,11 +340,23 @@
               var id = ctx.getImageData(0, 0, cv.width, cv.height);
               var px = id.data;
               for (var i = 0; i < px.length; i += 4) {
-                var r = px[i], g = px[i + 1], b = px[i + 2];
+                var r   = px[i], g = px[i + 1], b = px[i + 2];
+                var lum = (r + g + b) / 3 / 255;
                 if (b > r + 40 && b > g + 20) {
+                  // Blue → red (existing fix)
                   px[i]     = b;
                   px[i + 1] = Math.round(g * 0.3);
                   px[i + 2] = 0;
+                } else if (r > 180 && g > 150 && b > 120 && r - b < 40) {
+                  // Pale beige/pericardium → fleshy red, brightness-preserved
+                  px[i]     = Math.min(255, Math.round(180 * lum));
+                  px[i + 1] = Math.min(255, Math.round(60  * lum));
+                  px[i + 2] = Math.min(255, Math.round(55  * lum));
+                } else if (r > 150 && b > 80 && g < 80) {
+                  // Hot pink/magenta remnants → red, brightness-preserved
+                  px[i]     = Math.min(255, Math.round(180 * lum));
+                  px[i + 1] = Math.min(255, Math.round(50  * lum));
+                  px[i + 2] = Math.min(255, Math.round(50  * lum));
                 }
               }
               ctx.putImageData(id, 0, 0);
