@@ -344,20 +344,14 @@
               for (var i = 0; i < px.length; i += 4) {
                 var r = px[i], g = px[i + 1], b = px[i + 2];
                 if (b > r + 40 && b > g + 20) {
-                  // Blue → red
-                  px[i]     = 160;
-                  px[i + 1] = 20;
+                  px[i]     = Math.max(r, 160);
+                  px[i + 1] = Math.round(g * 0.3);
                   px[i + 2] = 0;
-                } else if (g > 155 && b > 145 && r > 200) {
-                  // Great vessels / pale pink → pale white
+                } else if (r < 80 && g < 20 && b < 20) {
+                  // Very dark inner pixels → pale white (valves/chordae)
                   px[i]     = 240;
                   px[i + 1] = 235;
                   px[i + 2] = 225;
-                } else {
-                  // Cardiac muscle → deep red
-                  px[i]     = Math.min(255, Math.floor(r * 1.2));
-                  px[i + 1] = Math.floor(g * 0.25);
-                  px[i + 2] = Math.floor(b * 0.2);
                 }
               }
               ctx.putImageData(id, 0, 0);
@@ -373,63 +367,11 @@
               map:       texMap,
               normalMap: orig.normalMap || null,
               aoMap:     orig.aoMap     || null,
-              color:     new THREE.Color(0xffffff),
+              color:     new THREE.Color(0xaa0000),
               roughness: 0.9,
               metalness: 0.0
             });
           }
-        });
-
-        // ── Valve / vessel overlay mesh ──────────────────────────────────────
-        // Clone each SkinnedMesh; apply pale material + vertex shader that
-        // discards vertices not primarily influenced by valve-named bones.
-        model.traverse(function (node) {
-          if (!node.isSkinnedMesh || !node.skeleton) return;
-
-          var valveIdxs = [];
-          node.skeleton.bones.forEach(function (bone, idx) {
-            if (bone.name.toLowerCase().indexOf('valve') !== -1) {
-              valveIdxs.push(idx);
-            }
-          });
-          if (valveIdxs.length === 0) return;
-          console.log('[heart3d] valve bone indices:', valveIdxs);
-
-          // Build per-index GLSL checks for WebGL2 (ivec4) and WebGL1 (vec4)
-          var gl2 = valveIdxs.map(function (i) {
-            return 'skinIndex.x==' + i + '||skinIndex.y==' + i + '||skinIndex.z==' + i + '||skinIndex.w==' + i;
-          }).join('||');
-          var gl1 = valveIdxs.map(function (i) {
-            return 'abs(skinIndex.x-' + i + '.0)<0.5||abs(skinIndex.y-' + i + '.0)<0.5||abs(skinIndex.z-' + i + '.0)<0.5||abs(skinIndex.w-' + i + '.0)<0.5';
-          }).join('||');
-
-          var valveMat = new THREE.MeshStandardMaterial({
-            color:     new THREE.Color(0xf0ece0),
-            roughness: 0.9,
-            metalness: 0.0
-          });
-          valveMat.onBeforeCompile = function (shader) {
-            shader.vertexShader = shader.vertexShader.replace(
-              '#include <skinning_vertex>',
-              [
-                '#include <skinning_vertex>',
-                'bool _isValve = false;',
-                '#ifdef WEBGL2',
-                'if (' + gl2 + ') _isValve = true;',
-                '#else',
-                'if (' + gl1 + ') _isValve = true;',
-                '#endif',
-                'if (!_isValve) { transformed = vec3(99999.0); }'
-              ].join('\n')
-            );
-          };
-
-          var overlay = node.clone();
-          overlay.material    = valveMat;
-          overlay.castShadow  = false;
-          overlay.receiveShadow = true;
-          overlay.scale.multiplyScalar(1.001);
-          node.parent.add(overlay);
         });
 
         // ── Collect bones + set shadows ──────────────────────────────────────
