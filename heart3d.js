@@ -359,35 +359,6 @@
           }
         });
 
-        // ── Pale material on any mesh children of non-cardiac bones ─────────
-        // Note: with a single SkinnedMesh (Object_30) this has no visual
-        // effect — it only applies if the GLB has separate mesh objects
-        // parented to vessel/aorta bones.
-        var CARDIAC_PREFIXES = [
-          'cardiac_muscle_jnt', 'cardiac_muscle_endjnt',
-          'right_atrium_jnt',   'left_atrium_jnt',
-          'left_atrium_storage_jnt'
-        ];
-        var vesselPaleMat = new THREE.MeshStandardMaterial({
-          color:     new THREE.Color(0xece8e0),
-          roughness: 0.9,
-          metalness: 0.0
-        });
-        model.traverse(function (node) {
-          if (node.isBone || node.type === 'Bone') {
-            var isCardiac = CARDIAC_PREFIXES.some(function (p) {
-              return node.name.indexOf(p) === 0;
-            });
-            if (!isCardiac) {
-              node.children.forEach(function (child) {
-                if (child.isMesh) {
-                  child.material = vesselPaleMat;
-                }
-              });
-            }
-          }
-        });
-
         // ── Collect bones + set shadows ──────────────────────────────────────
         model.traverse(function (node) {
           if (node.isMesh) {
