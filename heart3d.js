@@ -286,15 +286,15 @@
 
     clock = new THREE.Clock();
 
-    scene.add(new THREE.AmbientLight(0xffffff, 0.55));
-    var key = new THREE.DirectionalLight(0xfff8f0, 2.2);
+    scene.add(new THREE.AmbientLight(0xfff5ee, 1.1));
+    var key = new THREE.DirectionalLight(0xfff8f0, 1.0);
     key.position.set(3, 5, 4); key.castShadow = true; key.shadow.mapSize.set(512, 512);
     scene.add(key);
-    var fill = new THREE.DirectionalLight(0xffe0d8, 1.1);
+    var fill = new THREE.DirectionalLight(0xffe8d8, 0.65);
     fill.position.set(-4, 1, 2); scene.add(fill);
-    var rim = new THREE.DirectionalLight(0xffcccc, 0.55);
+    var rim = new THREE.DirectionalLight(0xffd8c8, 0.35);
     rim.position.set(0, -3, -4); scene.add(rim);
-    var top = new THREE.DirectionalLight(0xffeedd, 1.4);
+    var top = new THREE.DirectionalLight(0xfff0e0, 0.85);
     top.position.set(0, 8, 1); scene.add(top);
 
     // ── Load GLB ─────────────────────────────────────────────────────────────
@@ -327,36 +327,47 @@
         var dist     = Math.max(4.5, halfDiag / Math.tan(fovHalf) * 1.20);
         camera.position.set(0, halfDiag * 0.08, dist);
 
-        // ── Override blue materials → deep red Phong; preserve red/pink originals ─
-        var heartMat = new THREE.MeshPhongMaterial({
-          color:     new THREE.Color(0xc0202a),
-          specular:  new THREE.Color(0xff6666),
-          shininess: 40,
-          emissive:  new THREE.Color(0x1a0005)
+        // ── Name-based material assignment (no blue anywhere) ───────────────
+        var muscleMat = new THREE.MeshPhongMaterial({
+          color:     new THREE.Color(0xb81c26),
+          specular:  new THREE.Color(0x1a0000),
+          shininess: 5,
+          emissive:  new THREE.Color(0x0f0003)
         });
+        var valveMat = new THREE.MeshPhongMaterial({
+          color:     new THREE.Color(0xe8ddb0),
+          specular:  new THREE.Color(0x000000),
+          shininess: 3,
+          emissive:  new THREE.Color(0x0a0900)
+        });
+        var vesselMat = new THREE.MeshPhongMaterial({
+          color:     new THREE.Color(0xddd0a0),
+          specular:  new THREE.Color(0x000000),
+          shininess: 3,
+          emissive:  new THREE.Color(0x080800)
+        });
+        var VALVE_KW  = ['mitral', 'tricuspid', 'aortic_valve', 'pulmonary_valve',
+                         'pulmonic_valve', 'valve', 'chordae', 'papillary', 'cusp',
+                         'leaflet', 'tendon'];
+        var VESSEL_KW = ['aorta', 'ivc', 'svc', 'pulmonary_artery', 'pulm_artery',
+                         'vena_cava', 'superior_vena', 'inferior_vena', 'great_vessel',
+                         'trunk', 'ductus'];
+        function nameMatches(node, kws) {
+          var n = (node.name || '').toLowerCase();
+          return kws.some(function (k) { return n.indexOf(k) !== -1; });
+        }
 
         // ── Collect bones + set shadows ──────────────────────────────────────
         model.traverse(function (node) {
           if (node.isMesh) {
             node.castShadow    = true;
             node.receiveShadow = true;
-            var orig = node.material;
-            var c    = (orig && orig.color) ? orig.color : null;
-            var isBlue = c && (c.b > c.r * 1.2) && (c.b > c.g * 1.2);
-            if (isBlue || !c) {
-              node.material = heartMat;
+            if (nameMatches(node, VALVE_KW)) {
+              node.material = valveMat;
+            } else if (nameMatches(node, VESSEL_KW)) {
+              node.material = vesselMat;
             } else {
-              // Patch to red Phong while keeping original texture maps
-              var m = new THREE.MeshPhongMaterial({
-                color:     new THREE.Color(0xc0202a),
-                specular:  new THREE.Color(0xff6666),
-                shininess: 40,
-                emissive:  new THREE.Color(0x1a0005),
-                map:             orig.map             || null,
-                normalMap:       orig.normalMap       || null,
-                aoMap:           orig.aoMap           || null
-              });
-              node.material = m;
+              node.material = muscleMat;
             }
           }
 
