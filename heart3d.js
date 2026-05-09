@@ -342,10 +342,17 @@
               for (var i = 0; i < px.length; i += 4) {
                 var r = px[i], g = px[i + 1], b = px[i + 2];
                 if (b > r + 40 && b > g + 20) {
+                  // Blue → red
                   px[i]     = b;
                   px[i + 1] = Math.round(g * 0.3);
                   px[i + 2] = 0;
+                } else if (!(r > 210 && g > 210 && b > 210)) {
+                  // Non-white muscle → uniform deep red (preserves shading depth)
+                  px[i]     = Math.max(r, 160);
+                  px[i + 1] = Math.min(g, 60);
+                  px[i + 2] = Math.min(b, 60);
                 }
+                // Pale white (valves/chordae) — untouched
               }
               ctx.putImageData(id, 0, 0);
               var newTex      = new THREE.CanvasTexture(cv);
