@@ -58,7 +58,18 @@
     .ae-dual-view.ae-2d-expanded .ae-2d-panel { flex:1 1 100%; }
     .ae-dual-view.ae-2d-expanded #heart2d-collapse { display:flex; }
     .ae-dual-view.ae-2d-expanded .ae-enlarge-hint { display:none; }
+    #heart2d-diagram-wrap { position:relative; width:100%; overflow:hidden; cursor:pointer; }
     .ae-dual-view.ae-2d-expanded #heart2d-diagram-wrap { cursor:default; }
+    #heart-schematic-main { width:100%; height:auto; display:block; }
+    #heart2d-expand {
+      position:absolute; bottom:8px; right:8px;
+      width:28px; height:28px; padding:0;
+      background:rgba(255,255,255,0.88); border:1px solid #d1d5db; border-radius:5px;
+      cursor:pointer; color:#64748b; display:flex; align-items:center; justify-content:center;
+      z-index:5; transition:background 0.15s, color 0.15s;
+    }
+    #heart2d-expand:hover { background:#fff; color:#1e293b; }
+    .ae-dual-view.ae-2d-expanded #heart2d-expand { display:none; }
     @media (max-width:600px) {
       .ae-dual-view { flex-direction:column; }
       .ae-3d-panel { border-left:none; border-top:1px solid #e2e8f0; }
@@ -124,7 +135,7 @@
           <div class="ae-heart-wrap">
             <div class="ae-dual-view">
             <div class="ae-2d-panel">
-            <div id="heart2d-diagram-wrap" style="cursor:pointer;position:relative;" onclick="var dv=this.closest('.ae-dual-view');if(dv&&!dv.classList.contains('ae-2d-expanded'))dv.classList.add('ae-2d-expanded');">
+            <div id="heart2d-diagram-wrap" onclick="var dv=this.closest('.ae-dual-view');if(dv&&!dv.classList.contains('ae-2d-expanded'))dv.classList.add('ae-2d-expanded');">
             <svg id="heart-schematic-main" viewBox="0 0 662.65082 651.49066" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" aria-label="Heart diagram — click to enlarge">
               <image href="heart.svg" xlink:href="heart.svg" x="0" y="0" width="662.65082" height="651.49066" preserveAspectRatio="xMidYMid meet" style="pointer-events:none;"/>
               <g class="ae-overlay" data-cond="normal">
@@ -436,6 +447,12 @@
                 </g>
               </g>
             </svg>
+            <button id="heart2d-expand" aria-label="Expand diagram" title="Expand" onclick="var dv=this.closest('.ae-dual-view');if(dv)dv.classList.add('ae-2d-expanded');event.stopPropagation();">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                <polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/>
+                <line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/>
+              </svg>
+            </button>
             <button id="heart2d-collapse" aria-label="Collapse diagram" title="Collapse" onclick="var dv=this.closest('.ae-dual-view');if(dv)dv.classList.remove('ae-2d-expanded');event.stopPropagation();">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
                 <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
