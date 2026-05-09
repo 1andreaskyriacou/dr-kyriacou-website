@@ -399,7 +399,7 @@
 
           var mat = new THREE.MeshStandardMaterial({
             map:      texMap,
-            color:    new THREE.Color(0xaa0000),
+            color:    new THREE.Color(0.85, 0.15, 0.10),
             roughness: 0.9,
             metalness: 0.0
           });
@@ -441,7 +441,7 @@
               [
                 '#include <map_fragment>',
                 'if (vIsValve > 0.5) {',
-                '  diffuseColor.rgb = vec3(0.94, 0.92, 0.88);',
+                '  diffuseColor.rgb = vec3(0.95, 0.90, 0.70);',
                 '}'
               ].join('\n')
             );
