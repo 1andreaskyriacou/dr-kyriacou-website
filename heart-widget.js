@@ -126,20 +126,17 @@
   function init() {
     if (!THREE || !THREE.GLTFLoader) return;
 
-    // Inject a stylesheet so !important overrides any page CSS that could
-    // break position:fixed (transforms/filters on ancestors, etc.)
+    // Inject a stylesheet to lock position — absolute so it stays in place
+    // at the top-right of the page content and scrolls away naturally
     var styleTag = document.createElement('style');
     styleTag.textContent = [
       '#hw-widget{',
-      'position:fixed!important;',
+      'position:absolute!important;',
       'top:80px!important;',
       'right:30px!important;',
-      'z-index:999!important;',
+      'z-index:10!important;',
       'width:' + W + 'px!important;',
       'pointer-events:none!important;',
-      'transform:none!important;',
-      'filter:none!important;',
-      'will-change:auto!important;',
       '}'
     ].join('');
     document.head.appendChild(styleTag);
