@@ -93,7 +93,14 @@
       'z-index:10!important;',
       'width:' + W + 'px!important;',
       'pointer-events:none!important;',
-      '}'
+      '}',
+      '@media(max-width:768px){',
+      '#hw-widget{',
+      'transform:scale(0.55)!important;',
+      'transform-origin:top right!important;',
+      'top:72px!important;',
+      'right:4px!important;',
+      '}}'
     ].join('');
     document.head.appendChild(styleTag);
 
