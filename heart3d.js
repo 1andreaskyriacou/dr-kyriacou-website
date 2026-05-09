@@ -348,7 +348,7 @@
                   px[i]     = Math.max(r, 160);
                   px[i + 1] = Math.round(g * 0.3);
                   px[i + 2] = 0;
-                } else if (g > 60 && b > 50 && r < 220) {
+                } else if (g > 30 && b > 25) {
                   // Pale pink/beige valve and chordae → pale white
                   px[i]     = 240;
                   px[i + 1] = 235;
