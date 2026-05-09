@@ -6,6 +6,7 @@
 
   var scene, camera, renderer, clock;
   var modelGroup = null;
+  var heartMeshMat = null; // shared material reference for emissive glow
   var drag = false, pm = { x: 0, y: 0 };
   var rotX = 0.12, rotY = 0.5;
 
@@ -99,6 +100,15 @@
       d.bone.rotation.x = d.restRot.x + rot;
       d.bone.scale.set(d.restScale.x * sc, d.restScale.y * sc, d.restScale.z * sc);
     });
+
+    // Emissive glow: atria → orange #ff6600, ventricles → red #cc0000
+    if (heartMeshMat) {
+      heartMeshMat.emissive.setRGB(
+        Math.min(1, aEnv * 1.00 + vEnv * 0.80), // red channel
+        Math.min(1, aEnv * 0.40),                // green: atria orange only
+        0                                         // blue: none
+      );
+    }
   }
 
   // ── Rhythm state ─────────────────────────────────────────────────────────────
@@ -373,8 +383,10 @@
               aoMap:     orig.aoMap     || null,
               color:     new THREE.Color(0xaa0000),
               roughness: 0.9,
-              metalness: 0.0
+              metalness: 0.0,
+              emissive:  new THREE.Color(0x000000)
             });
+            heartMeshMat = node.material;
           }
         });
 
