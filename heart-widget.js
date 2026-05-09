@@ -126,14 +126,31 @@
   function init() {
     if (!THREE || !THREE.GLTFLoader) return;
 
+    // Inject a stylesheet so !important overrides any page CSS that could
+    // break position:fixed (transforms/filters on ancestors, etc.)
+    var styleTag = document.createElement('style');
+    styleTag.textContent = [
+      '#hw-widget{',
+      'position:fixed!important;',
+      'top:80px!important;',
+      'right:30px!important;',
+      'z-index:999!important;',
+      'width:' + W + 'px!important;',
+      'pointer-events:none!important;',
+      'transform:none!important;',
+      'filter:none!important;',
+      'will-change:auto!important;',
+      '}'
+    ].join('');
+    document.head.appendChild(styleTag);
+
     // Build widget DOM
     var widget = document.createElement('div');
+    widget.id = 'hw-widget';
     widget.style.cssText = [
-      'position:fixed', 'top:80px', 'right:30px',
-      'width:' + W + 'px',
       'border-radius:10px', 'overflow:hidden',
       'box-shadow:0 4px 18px rgba(10,35,66,0.22),0 0 0 1px rgba(201,168,76,0.25)',
-      'background:#f9f6f1', 'z-index:999', 'pointer-events:none'
+      'background:#f9f6f1'
     ].join(';');
 
     var hCanvas = document.createElement('canvas');
