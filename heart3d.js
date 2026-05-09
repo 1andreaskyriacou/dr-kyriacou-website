@@ -345,19 +345,19 @@
                 var r = px[i], g = px[i + 1], b = px[i + 2];
                 if (b > r + 40 && b > g + 20) {
                   // Blue → red
-                  px[i]     = Math.max(r, 160);
-                  px[i + 1] = Math.round(g * 0.3);
+                  px[i]     = 160;
+                  px[i + 1] = 20;
                   px[i + 2] = 0;
                 } else if (g > 140 && b > 130 && r > 180) {
-                  // Great vessels (aorta, IVC, SVC, pulmonary artery) → pale white
+                  // Great vessels / pale pink → pale white
                   px[i]     = 240;
                   px[i + 1] = 235;
                   px[i + 2] = 225;
-                } else if (g > 30 && b > 25) {
-                  // Pale pink/beige valve and chordae → pale white
-                  px[i]     = 240;
-                  px[i + 1] = 235;
-                  px[i + 2] = 225;
+                } else {
+                  // Cardiac muscle → deep red
+                  px[i]     = Math.min(255, Math.floor(r * 1.2));
+                  px[i + 1] = Math.floor(g * 0.25);
+                  px[i + 2] = Math.floor(b * 0.2);
                 }
               }
               ctx.putImageData(id, 0, 0);
@@ -373,7 +373,7 @@
               map:       texMap,
               normalMap: orig.normalMap || null,
               aoMap:     orig.aoMap     || null,
-              color:     new THREE.Color(0xaa0000),
+              color:     new THREE.Color(0xffffff),
               roughness: 0.9,
               metalness: 0.0
             });
