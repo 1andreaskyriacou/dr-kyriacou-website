@@ -187,10 +187,17 @@
             <div class="hero-photo-frame" role="img" aria-label="Dr Andreas Kyriacou">
               <img src="a.kyriacou.jpg" alt="Dr Andreas Kyriacou — Consultant Cardiologist &amp; Electrophysiologist" class="hero-photo" />
             </div>
-            <div style="display:flex;gap:12px;justify-content:center;margin-top:16px;flex-wrap:wrap;">
+            <div style="display:flex;gap:14px;justify-content:center;margin-top:16px;flex-wrap:wrap;align-items:center;">
               <button class="bio-modal-btn" onclick="openBioModal()" aria-haspopup="dialog" style="margin-top:0;">
                 📋 Clinical Profile
               </button>
+              <!-- compact 3D heart + ECG frame -->
+              <div class="hero-vitals-frame" aria-hidden="true">
+                <div id="heart3d-canvas-wrap" style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;">
+                  <canvas id="heart3d-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%;display:block;"></canvas>
+                </div>
+                <canvas id="hero-ecg-canvas" class="hero-ecg-strip"></canvas>
+              </div>
               <button class="bio-modal-btn" onclick="openResearchModal()" aria-haspopup="dialog" style="margin-top:0;">
                 📊 Research Profile
               </button>
@@ -200,44 +207,6 @@
       </div>
     </section>
 
-    <!-- ===== HEARTBEAT ===== -->
-    <section id="heartbeat" aria-label="3D heart and ECG rhythm demonstration">
-      <div class="container">
-        <header class="heartbeat-header">
-          <span class="heartbeat-eyebrow">Live Simulation</span>
-          <h2 class="heartbeat-title">The Heart in Motion</h2>
-          <p class="heartbeat-sub">Normal Sinus Rhythm at 70 beats per minute — interact with the 3D model or watch the real&#8209;time ECG trace.</p>
-        </header>
-        <div class="heartbeat-grid">
-
-          <!-- 3D Heart -->
-          <div class="heartbeat-3d-panel">
-            <div class="heartbeat-3d-frame">
-              <div id="heart3d-canvas-wrap" style="position:relative;width:100%;height:100%;overflow:hidden;">
-                <canvas id="heart3d-canvas" class="heartbeat-3d-canvas"></canvas>
-              </div>
-            </div>
-            <p class="heartbeat-drag-hint">Drag to rotate</p>
-          </div>
-
-          <!-- Live ECG -->
-          <div class="heartbeat-ecg-panel">
-            <div class="heartbeat-ecg-toprow">
-              <span class="heartbeat-ecg-lead">Lead II</span>
-              <span class="heartbeat-ecg-bpm">70 BPM</span>
-            </div>
-            <div class="heartbeat-ecg-screen">
-              <canvas id="index-ecg-canvas"></canvas>
-            </div>
-            <p class="heartbeat-ecg-caption">
-              P&nbsp;wave &rarr; QRS complex &rarr; T&nbsp;wave, repeating at 70 beats per minute.
-              A normal ECG trace reflects healthy electrical conduction through the heart.
-            </p>
-          </div>
-
-        </div>
-      </div>
-    </section>
   </main>
 
   <!-- ===== FOOTER ===== -->
@@ -345,16 +314,15 @@
   <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/loaders/GLTFLoader.js"></script>
   <script src="heart3d.js"></script>
 
-  <!-- Index ECG — 70 bpm PQRST trace synced to heart3d rhythm -->
+  <!-- Hero ECG strip — 70 bpm PQRST trace synced to heart3d rhythm -->
   <script>
   (function () {
     'use strict';
 
     var MS_PER_BEAT = 857; // 70 bpm
-    var BEAT_PX     = 190; // pixels one beat spans on canvas
+    var BEAT_PX     = 110; // ~1.45 beats visible across the 160 px frame width
     var beatEpoch   = performance.now();
 
-    /* Sync epoch when heart3d starts its rhythm so the two animations align */
     document.addEventListener('heart3d:rhythmStart', function (e) {
       beatEpoch = e.detail.t0;
     });
@@ -374,20 +342,20 @@
     var canvas, ctx, W, H, mid, amp, PX_PER_MS, rafId;
 
     function setup() {
-      canvas = document.getElementById('index-ecg-canvas');
+      canvas = document.getElementById('hero-ecg-canvas');
       if (!canvas) return false;
-      var screen = canvas.parentElement;
-      var dpr = window.devicePixelRatio || 1;
-      W = screen.clientWidth  || 400;
-      H = screen.clientHeight || 200;
+      var dpr   = window.devicePixelRatio || 1;
+      var frame = canvas.parentElement; // .hero-vitals-frame
+      W = frame.clientWidth  || 160;
+      H = canvas.clientHeight || 42;
       canvas.width  = Math.round(W * dpr);
       canvas.height = Math.round(H * dpr);
       canvas.style.width  = W + 'px';
       canvas.style.height = H + 'px';
       ctx = canvas.getContext('2d');
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      mid       = H * 0.52;
-      amp       = H * 0.37;
+      mid       = H * 0.50;
+      amp       = H * 0.35;
       PX_PER_MS = BEAT_PX / MS_PER_BEAT;
       return true;
     }
@@ -398,33 +366,24 @@
       var elapsed = (now - beatEpoch) * PX_PER_MS;
       var SMALL   = BEAT_PX / 5;
 
-      /* Background */
-      ctx.fillStyle = '#06101d';
+      ctx.fillStyle = 'rgba(5,12,22,0.92)';
       ctx.fillRect(0, 0, W, H);
 
-      /* Scrolling ECG grid — small divisions */
       ctx.lineWidth = 0.5;
-      ctx.strokeStyle = 'rgba(74,222,128,0.07)';
+      ctx.strokeStyle = 'rgba(74,222,128,0.09)';
       var sOff = elapsed % SMALL;
       for (var gx = W - sOff; gx >= -SMALL; gx -= SMALL) {
         ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, H); ctx.stroke();
       }
-      /* Major grid — one line per beat */
-      ctx.strokeStyle = 'rgba(74,222,128,0.13)';
-      var bOff = elapsed % BEAT_PX;
-      for (var bx = W - bOff; bx >= -BEAT_PX; bx -= BEAT_PX) {
-        ctx.beginPath(); ctx.moveTo(bx, 0); ctx.lineTo(bx, H); ctx.stroke();
-      }
-      /* Horizontal baseline */
+
       ctx.strokeStyle = 'rgba(74,222,128,0.06)';
       ctx.beginPath(); ctx.moveTo(0, mid); ctx.lineTo(W, mid); ctx.stroke();
 
-      /* PQRST trace — each pixel computed from real time */
       ctx.strokeStyle = '#4ade80';
-      ctx.lineWidth   = 1.5;
+      ctx.lineWidth   = 1.4;
       ctx.lineJoin    = 'round';
-      ctx.shadowBlur  = 7;
-      ctx.shadowColor = 'rgba(74,222,128,0.50)';
+      ctx.shadowBlur  = 5;
+      ctx.shadowColor = 'rgba(74,222,128,0.55)';
       ctx.beginPath();
       for (var x = 0; x < W; x++) {
         var t     = now - beatEpoch - (W - 1 - x) / PX_PER_MS;

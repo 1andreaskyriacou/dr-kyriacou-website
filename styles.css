@@ -1684,149 +1684,24 @@
       .faq-question { font-size: 13px; padding: 16px 0; }
     }
 
-    /* ===== INDEX HEARTBEAT SECTION ===== */
-    #heartbeat {
-      padding: 5rem 0 4.5rem;
-      background: linear-gradient(180deg, var(--dark-2) 0%, #f3efe8 50%, var(--dark-2) 100%);
-      border-top: 1px solid rgba(10,35,66,0.09);
-    }
-
-    .heartbeat-header {
-      text-align: center;
-      margin-bottom: 3.5rem;
-    }
-
-    .heartbeat-eyebrow {
-      display: block;
-      font-family: var(--font-sans);
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 14px;
-    }
-
-    .heartbeat-title {
-      font-family: var(--font-serif);
-      font-size: clamp(2rem, 4vw, 2.8rem);
-      font-weight: 300;
-      line-height: 1.15;
-      color: var(--text);
-      margin-bottom: 14px;
-    }
-
-    .heartbeat-sub {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      max-width: 460px;
-      margin: 0 auto;
-      line-height: 1.75;
-    }
-
-    .heartbeat-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: center;
-      max-width: 860px;
-      margin: 0 auto;
-    }
-
-    .heartbeat-3d-panel {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .heartbeat-3d-frame {
-      width: 100%;
-      max-width: 320px;
-      aspect-ratio: 1;
+    /* ===== HERO VITALS FRAME (compact 3D heart + ECG badge) ===== */
+    .hero-vitals-frame {
       position: relative;
+      width: 160px;
+      height: 160px;
       border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 8px 40px rgba(10,35,66,0.13);
+      border: 1px solid rgba(201,168,76,0.30);
+      box-shadow: 0 4px 22px rgba(10,35,66,0.18), 0 0 0 3px rgba(201,168,76,0.07);
+      flex-shrink: 0;
+      background: #f9f6f1;
     }
 
-    .heartbeat-3d-canvas {
+    .hero-ecg-strip {
       position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      display: block;
-      cursor: grab;
-    }
-
-    .heartbeat-3d-canvas:active { cursor: grabbing; }
-
-    .heartbeat-drag-hint {
-      margin-top: 9px;
-      font-family: var(--font-sans);
-      font-size: 0.71rem;
-      color: #94a3b8;
-      letter-spacing: 0.05em;
-    }
-
-    .heartbeat-ecg-panel {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .heartbeat-ecg-toprow {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 8px;
-    }
-
-    .heartbeat-ecg-lead {
-      font-family: var(--font-sans);
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #64748b;
-    }
-
-    .heartbeat-ecg-bpm {
-      font-family: var(--font-sans);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.07em;
-      color: rgba(74,222,128,0.92);
-      background: rgba(6,14,26,0.90);
-      padding: 3px 10px;
-      border-radius: 20px;
-      border: 1px solid rgba(74,222,128,0.22);
-    }
-
-    .heartbeat-ecg-screen {
-      position: relative;
-      background: #06101d;
-      border-radius: 10px;
-      overflow: hidden;
-      height: 200px;
-      box-shadow: 0 6px 28px rgba(10,35,66,0.20), inset 0 0 0 1px rgba(74,222,128,0.09);
-    }
-
-    #index-ecg-canvas {
-      display: block;
+      bottom: 0;
+      left: 0;
       width: 100%;
-      height: 100%;
-    }
-
-    .heartbeat-ecg-caption {
-      margin-top: 12px;
-      font-size: 0.875rem;
-      color: var(--text-muted);
-      line-height: 1.7;
-    }
-
-    @media (max-width: 700px) {
-      .heartbeat-grid {
-        grid-template-columns: 1fr;
-        gap: 2.25rem;
-      }
-      .heartbeat-3d-frame { max-width: 270px; }
-      #heartbeat { padding: 3.5rem 0 3rem; }
+      height: 42px;
+      display: block;
     }
