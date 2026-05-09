@@ -147,11 +147,7 @@
     // Build widget DOM
     var widget = document.createElement('div');
     widget.id = 'hw-widget';
-    widget.style.cssText = [
-      'border-radius:10px', 'overflow:hidden',
-      'box-shadow:0 4px 18px rgba(10,35,66,0.22),0 0 0 1px rgba(201,168,76,0.25)',
-      'background:#f9f6f1'
-    ].join(';');
+    widget.style.cssText = 'overflow:hidden;background:#F9F9F9;';
 
     var hCanvas = document.createElement('canvas');
     hCanvas.style.cssText = 'display:block;width:' + W + 'px;height:' + H_3D + 'px;';
@@ -175,7 +171,7 @@
 
     // Three.js scene
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xf9f6f1);
+    scene.background = new THREE.Color(0xF9F9F9);
 
     camera = new THREE.PerspectiveCamera(35, W / H_3D, 0.01, 200);
     camera.position.set(0, 0.1, 5.0);

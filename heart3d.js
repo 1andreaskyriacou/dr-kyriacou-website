@@ -274,7 +274,7 @@
     var w = wrap.clientWidth || 360;
 
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xf9f6f1);
+    scene.background = new THREE.Color(0xF9F9F9);
 
     camera = new THREE.PerspectiveCamera(35, 1, 0.01, 200);
     camera.position.set(0, 0.1, 5.0);

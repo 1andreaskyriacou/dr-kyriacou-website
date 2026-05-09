@@ -1699,11 +1699,8 @@
       max-width: 100%;
       display: flex;
       flex-direction: column;
-      border-radius: 10px;
       overflow: hidden;
-      border: 1px solid rgba(201,168,76,0.30);
-      box-shadow: 0 4px 22px rgba(10,35,66,0.18), 0 0 0 3px rgba(201,168,76,0.07);
-      background: #f9f6f1;
+      background: var(--dark-2);
     }
 
     /* Square heart area — Three.js renders into this */
