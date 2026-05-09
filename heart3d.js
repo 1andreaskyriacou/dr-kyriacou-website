@@ -9,7 +9,7 @@
   var drag = false, pm = { x: 0, y: 0 };
   var rotX = 0.12, rotY = 0.5;
 
-  // ── Bone groups (exact names from the GLB skeleton, no dot separator) ─────────
+  // ── Bone groups (exact names, no dot separator) ───────────────────────────────
   var ATRIA_NAMES = [
     'right_atrium_jnt6_6',
     'left_atrium_jnt13_13',
@@ -29,16 +29,18 @@
     'right_tricuspid_valve_jnt24_24'
   ];
 
-  // Bone data: { bone, restScale }  — restScale captured at load time
+  // Bone data: { bone, restScale: Vector3, restRot: {x,y,z} }
   var bonesAtria = [];
   var bonesVents = [];
 
-  // Contraction parameters: default amplitude and duration in ms
-  var ATRIA_AMT     = 0.07;  // normal atrial contraction
-  var ATRIA_DUR     = 130;
-  var ATRIA_AF_AMT  = 0.025; // smaller quiver for AF
-  var VENTS_AMT     = 0.10;
-  var VENTS_DUR     = 290;
+  // Contraction amplitudes and durations
+  var ATRIA_ROT    = 0.32;  // radians — rotation applied at peak atrial contraction
+  var ATRIA_SCALE  = 0.18;  // fraction scale-down at peak (layered on top of rotation)
+  var ATRIA_DUR    = 140;   // ms
+  var ATRIA_AF_AMT = 0.40;  // AF quiver uses reduced rotation (× this fraction)
+  var VENTS_ROT    = 0.20;  // radians — peak ventricular contraction rotation
+  var VENTS_SCALE  = 0.22;  // fraction scale-down for ventricles
+  var VENTS_DUR    = 290;   // ms
 
   // ── Contraction envelope: fast attack (20%), smooth decay (80%) ──────────────
   function contEnv(elMs, durMs) {
@@ -48,15 +50,20 @@
   }
 
   // ── Active contractions pool ─────────────────────────────────────────────────
-  // tp: 'a' | 'v',  amt: override amplitude (optional)
   var contractions = [];
+  var _aFireCount  = 0; // diagnostic counter
 
-  function fire(tp, amt) {
-    contractions.push({
-      tp:  tp,
-      t0:  performance.now(),
-      amt: amt !== undefined ? amt : (tp === 'a' ? ATRIA_AMT : VENTS_AMT)
-    });
+  function fire(tp, frac) {
+    // frac: 0–1 multiplier on the full amplitude (default 1)
+    var f = (frac !== undefined) ? frac : 1;
+    if (tp === 'a') {
+      _aFireCount++;
+      if (_aFireCount <= 6 || _aFireCount % 20 === 0) {
+        console.log('heart3d: atrial contraction #' + _aFireCount
+                    + '  cond=' + cond + '  frac=' + f.toFixed(2));
+      }
+    }
+    contractions.push({ tp: tp, t0: performance.now(), frac: f });
   }
 
   function applyContractions() {
@@ -67,20 +74,28 @@
     contractions.forEach(function (c) {
       var dur = c.tp === 'a' ? ATRIA_DUR : VENTS_DUR;
       var el  = now - c.t0;
-      var e   = contEnv(el, dur);
+      var e   = contEnv(el, dur) * c.frac;
       if (el < dur) alive.push(c);
-      if (c.tp === 'a') aEnv = Math.max(aEnv, c.amt * e);
-      else              vEnv = Math.max(vEnv, c.amt * e);
+      if (c.tp === 'a') aEnv = Math.max(aEnv, e);
+      else              vEnv = Math.max(vEnv, e);
     });
     contractions = alive;
 
+    // Atria: rotation on X and Z axes + scale compression
     bonesAtria.forEach(function (d) {
-      var s = 1 - aEnv;
-      d.bone.scale.set(d.restScale.x * s, d.restScale.y * s, d.restScale.z * s);
+      var rot = ATRIA_ROT * aEnv;
+      var sc  = 1 - ATRIA_SCALE * aEnv;
+      d.bone.rotation.x = d.restRot.x + rot;
+      d.bone.rotation.z = d.restRot.z + rot;
+      d.bone.scale.set(d.restScale.x * sc, d.restScale.y * sc, d.restScale.z * sc);
     });
+
+    // Ventricles + valves: rotation on X axis + scale compression
     bonesVents.forEach(function (d) {
-      var s = 1 - vEnv;
-      d.bone.scale.set(d.restScale.x * s, d.restScale.y * s, d.restScale.z * s);
+      var rot = VENTS_ROT * vEnv;
+      var sc  = 1 - VENTS_SCALE * vEnv;
+      d.bone.rotation.x = d.restRot.x + rot;
+      d.bone.scale.set(d.restScale.x * sc, d.restScale.y * sc, d.restScale.z * sc);
     });
   }
 
@@ -89,65 +104,57 @@
   var nextA = 0;
   var nextV = 0;
 
-  // PVC template: 4 normal beats + early ventricular + compensatory pause
-  // Beat 5 normal vents = 4×857+120 = 3548ms; PVC fires 300ms early → 3248ms.
-  // Compensatory pause end: 3248+1200 = 4448ms.
   var PVC_CYCLE = 4448;
   var PVC_TPL   = [
     { dt: 0,    tp: 'a' }, { dt: 120,  tp: 'v' },
     { dt: 857,  tp: 'a' }, { dt: 977,  tp: 'v' },
     { dt: 1714, tp: 'a' }, { dt: 1834, tp: 'v' },
     { dt: 2571, tp: 'a' }, { dt: 2691, tp: 'v' },
-    { dt: 3248, tp: 'v' }  // PVC — vents only, no preceding atrial beat
+    { dt: 3248, tp: 'v' }  // PVC — vents only
   ];
   var pvcQueue     = [];
   var pvcNextCycle = 0;
 
   function rand(lo, hi) { return lo + Math.random() * (hi - lo); }
 
+  var COND_LABELS = {
+    normal:  'Normal Sinus Rhythm',
+    af:      'Atrial Fibrillation',
+    flutter: 'Atrial Flutter',
+    at:      'Atrial Tachycardia',
+    svt:     'SVT',
+    vt:      'Ventricular Tachycardia',
+    pvc:     'Ventricular Ectopics',
+    csp:     'Conduction System Pacing',
+    crt:     'CRT'
+  };
+
+  function updateFsLabel() {
+    var el = document.getElementById('heart3d-fs-label');
+    if (el) el.textContent = COND_LABELS[cond] || cond;
+  }
+
   // ── Start / switch rhythm ─────────────────────────────────────────────────────
   function startRhythm(c) {
     cond = c;
     contractions = [];
+    _aFireCount  = 0;
+    updateFsLabel();
     var now = performance.now();
 
     switch (c) {
-      case 'normal':
-      case 'csp':
-      case 'crt':
-        // 70 bpm (857ms): atria first, ventricles 120ms later
-        nextA = now;
-        nextV = now + 120;
-        break;
-
+      case 'normal': case 'csp': case 'crt':
+        nextA = now; nextV = now + 120; break;
       case 'flutter':
-        // Atria 300 bpm (200ms); ventricles 150 bpm (400ms), 2:1 block
-        nextA = now;
-        nextV = now;
-        break;
-
+        nextA = now; nextV = now; break;
       case 'svt':
-        // 200 bpm (300ms): all chambers simultaneous, no AV delay
-        nextA = now;
-        nextV = now;
-        break;
-
+        nextA = now; nextV = now; break;
       case 'vt':
-        // Ventricles 180 bpm (333ms); atria 70 bpm (857ms), fully dissociated
-        nextV = now;
-        nextA = now + rand(0, 800);
-        break;
-
+        nextV = now; nextA = now + rand(0, 800); break;
       case 'af':
-        // Atria quiver at ~350ms ±40%; ventricles irregular 400–900ms
-        nextA = now;
-        nextV = now + rand(50, 300);
-        break;
-
+        nextA = now; nextV = now + rand(50, 300); break;
       case 'pvc':
-        pvcQueue     = [];
-        pvcNextCycle = now;
-        break;
+        pvcQueue = []; pvcNextCycle = now; break;
     }
   }
 
@@ -156,42 +163,27 @@
     var now = performance.now();
 
     switch (cond) {
-
-      case 'normal':
-      case 'csp':
-      case 'crt':
-        if (now >= nextA) { fire('a');             nextA += 857; }
-        if (now >= nextV) { fire('v');             nextV += 857; }
+      case 'normal': case 'csp': case 'crt':
+        if (now >= nextA) { fire('a');              nextA += 857; }
+        if (now >= nextV) { fire('v');              nextV += 857; }
         break;
-
       case 'flutter':
-        if (now >= nextA) { fire('a');             nextA += 200; }
-        if (now >= nextV) { fire('v');             nextV += 400; }
+        if (now >= nextA) { fire('a');              nextA += 200; }
+        if (now >= nextV) { fire('v');              nextV += 400; }
         break;
-
       case 'svt':
-        if (now >= nextA) {
-          fire('a'); fire('v');
-          nextA += 300;
-          nextV = nextA;
-        }
+        if (now >= nextA) { fire('a'); fire('v');   nextA += 300; nextV = nextA; }
         break;
-
       case 'vt':
-        if (now >= nextA) { fire('a');             nextA += 857; }
-        if (now >= nextV) { fire('v');             nextV += 333; }
+        if (now >= nextA) { fire('a');              nextA += 857; }
+        if (now >= nextV) { fire('v');              nextV += 333; }
         break;
-
       case 'af':
-        // Atria: small-amplitude quiver
         if (now >= nextA) { fire('a', ATRIA_AF_AMT); nextA += rand(210, 490); }
-        // Ventricles: irregular 100–160 bpm range
-        if (now >= nextV) { fire('v');               nextV += rand(400, 900); }
+        if (now >= nextV) { fire('v');                nextV += rand(400, 900); }
         break;
-
       case 'pvc':
-        tickPvc(now);
-        break;
+        tickPvc(now); break;
     }
   }
 
@@ -211,6 +203,38 @@
     pvcQueue = rem;
   }
 
+  // ── Fullscreen helpers ────────────────────────────────────────────────────────
+  function isFullscreen() {
+    return document.body.classList.contains('heart-fullscreen');
+  }
+
+  function resizeRenderer() {
+    if (!renderer) return;
+    if (isFullscreen()) {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight, false);
+    } else {
+      var wrap = document.getElementById('heart3d-canvas-wrap');
+      if (wrap && wrap.clientWidth > 0) {
+        camera.aspect = 1;
+        camera.updateProjectionMatrix();
+        renderer.setSize(wrap.clientWidth, wrap.clientWidth, false);
+      }
+    }
+  }
+
+  function enterFullscreen() {
+    document.body.classList.add('heart-fullscreen');
+    resizeRenderer();
+    updateFsLabel();
+  }
+
+  function exitFullscreen() {
+    document.body.classList.remove('heart-fullscreen');
+    resizeRenderer();
+  }
+
   // ── Init ─────────────────────────────────────────────────────────────────────
   function init() {
     if (!THREE || !THREE.GLTFLoader) {
@@ -227,7 +251,7 @@
     scene.background = new THREE.Color(0xf9f6f1);
 
     camera = new THREE.PerspectiveCamera(35, 1, 0.01, 200);
-    camera.position.set(0, 0.1, 5.0); // updated after model loads
+    camera.position.set(0, 0.1, 5.0);
 
     renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -240,79 +264,62 @@
 
     clock = new THREE.Clock();
 
-    // Lighting
     scene.add(new THREE.AmbientLight(0xffffff, 1.8));
-
     var key = new THREE.DirectionalLight(0xfff8f0, 1.0);
-    key.position.set(3, 5, 4);
-    key.castShadow = true;
-    key.shadow.mapSize.set(512, 512);
+    key.position.set(3, 5, 4); key.castShadow = true; key.shadow.mapSize.set(512, 512);
     scene.add(key);
-
     var fill = new THREE.DirectionalLight(0xffe0d8, 0.60);
-    fill.position.set(-4, 1, 2);
-    scene.add(fill);
-
+    fill.position.set(-4, 1, 2); scene.add(fill);
     var rim = new THREE.DirectionalLight(0xd0e4ff, 0.35);
-    rim.position.set(0, -3, -4);
-    scene.add(rim);
+    rim.position.set(0, -3, -4); scene.add(rim);
 
     // ── Load GLB ─────────────────────────────────────────────────────────────
     var loader = new THREE.GLTFLoader();
     loader.load(
       'heart.glb',
       function (gltf) {
+        // Explicitly suppress any built-in animations
+        if (gltf.animations && gltf.animations.length > 0) {
+          console.log('heart3d: GLB has', gltf.animations.length,
+                      'built-in clip(s) — suppressed; timing engine drives all motion');
+        }
+
         modelGroup = new THREE.Group();
         var model  = gltf.scene;
 
-        // ── Centering and scaling ─────────────────────────────────────────────
-        // Box3 is computed before our transforms so it is in the model's own
-        // coordinate system (world = model space when model has no parent yet).
+        // ── Centre and scale ─────────────────────────────────────────────────
         var box    = new THREE.Box3().setFromObject(model);
         var centre = new THREE.Vector3();
         box.getCenter(centre);
         var sz = new THREE.Vector3();
         box.getSize(sz);
-
         var s = 3.0 / Math.max(sz.x, sz.y, sz.z);
-
-        // Apply scale first so the centring offset accounts for it.
-        // After scale s, the bounding-box centre in parent space = s * centre.
-        // Setting position = −s * centre puts it exactly at origin.
         model.scale.setScalar(s);
         model.position.copy(centre).multiplyScalar(-s);
 
-        // ── Camera distance: fit model bounding sphere with 20% margin ────────
-        var halfDiag = 0.5 * Math.sqrt(sz.x * sz.x + sz.y * sz.y + sz.z * sz.z) * s;
+        // Camera distance from bounding sphere
+        var halfDiag = 0.5 * Math.sqrt(sz.x*sz.x + sz.y*sz.y + sz.z*sz.z) * s;
         var fovHalf  = camera.fov * (Math.PI / 180) / 2;
         var dist     = Math.max(4.5, halfDiag / Math.tan(fovHalf) * 1.20);
         camera.position.set(0, halfDiag * 0.08, dist);
 
-        // ── Mesh shadows + bone collection ───────────────────────────────────
+        // ── Collect bones ────────────────────────────────────────────────────
         model.traverse(function (node) {
           if (node.isMesh) { node.castShadow = true; node.receiveShadow = true; }
 
+          function tryAdd(b) {
+            var d = { bone: b, restScale: b.scale.clone(),
+                      restRot: { x: b.rotation.x, y: b.rotation.y, z: b.rotation.z } };
+            if (ATRIA_NAMES.indexOf(b.name) !== -1) bonesAtria.push(d);
+            if (VENTS_NAMES.indexOf(b.name) !== -1) bonesVents.push(d);
+          }
+
           if (node.isSkinnedMesh && node.skeleton) {
-            node.skeleton.bones.forEach(function (b) {
-              if (ATRIA_NAMES.indexOf(b.name) !== -1) {
-                bonesAtria.push({ bone: b, restScale: b.scale.clone() });
-              }
-              if (VENTS_NAMES.indexOf(b.name) !== -1) {
-                bonesVents.push({ bone: b, restScale: b.scale.clone() });
-              }
-            });
+            node.skeleton.bones.forEach(tryAdd);
           }
-          if ((node.isBone || node.type === 'Bone') && node.name) {
-            if (ATRIA_NAMES.indexOf(node.name) !== -1) {
-              bonesAtria.push({ bone: node, restScale: node.scale.clone() });
-            }
-            if (VENTS_NAMES.indexOf(node.name) !== -1) {
-              bonesVents.push({ bone: node, restScale: node.scale.clone() });
-            }
-          }
+          if (node.isBone || node.type === 'Bone') tryAdd(node);
         });
 
-        // Deduplicate (skeleton traversal can yield same bone via multiple meshes)
         function dedupe(arr) {
           return arr.filter(function (d, i) {
             return arr.findIndex(function (x) { return x.bone === d.bone; }) === i;
@@ -321,10 +328,8 @@
         bonesAtria = dedupe(bonesAtria);
         bonesVents = dedupe(bonesVents);
 
-        console.log('heart3d: atria bones found:', bonesAtria.map(function (d) { return d.bone.name; }));
-        console.log('heart3d: vent/valve bones found:', bonesVents.map(function (d) { return d.bone.name; }));
-
-        // No AnimationMixer — all motion driven by our timing engine below.
+        console.log('heart3d: atria bones:', bonesAtria.map(function (d) { return d.bone.name; }));
+        console.log('heart3d: vent/valve bones:', bonesVents.map(function (d) { return d.bone.name; }));
 
         modelGroup.add(model);
         modelGroup.rotation.x = rotX;
@@ -351,7 +356,6 @@
     canvas.addEventListener('mousedown',  function (e) { onDown(e.clientX, e.clientY); });
     window.addEventListener('mousemove',  function (e) { onMove(e.clientX, e.clientY); });
     window.addEventListener('mouseup',    onUp);
-
     canvas.addEventListener('touchstart', function (e) {
       if (e.touches.length === 1) onDown(e.touches[0].clientX, e.touches[0].clientY);
     }, { passive: true });
@@ -362,28 +366,31 @@
     }, { passive: false });
     canvas.addEventListener('touchend', onUp);
 
-    // ── Resize ────────────────────────────────────────────────────────────────
-    window.addEventListener('resize', function () {
-      var el = document.getElementById('heart3d-canvas-wrap');
-      if (!el || !renderer) return;
-      var nw = el.clientWidth;
-      if (nw > 0) renderer.setSize(nw, nw, false);
+    // ── Fullscreen buttons ────────────────────────────────────────────────────
+    var btnExpand = document.getElementById('heart3d-expand');
+    var btnClose  = document.getElementById('heart3d-close');
+
+    if (btnExpand) btnExpand.addEventListener('click', enterFullscreen);
+    if (btnClose)  btnClose.addEventListener('click',  exitFullscreen);
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && isFullscreen()) exitFullscreen();
     });
+
+    // ── Resize ────────────────────────────────────────────────────────────────
+    window.addEventListener('resize', resizeRenderer);
 
     // ── Render loop ───────────────────────────────────────────────────────────
     (function loop() {
       requestAnimationFrame(loop);
       var dt = clock.getDelta();
-
       if (!drag && modelGroup) rotY += dt * 0.15;
-
       if (modelGroup) {
         modelGroup.rotation.x = rotX;
         modelGroup.rotation.y = rotY;
-        tickRhythm();        // schedule contractions at precise ms
-        applyContractions(); // apply bone / model-scale transforms
+        tickRhythm();
+        applyContractions();
       }
-
       renderer.render(scene, camera);
     }());
   }
@@ -391,13 +398,9 @@
   // ── Patch aeSwitch ────────────────────────────────────────────────────────────
   var origSwitch = window.aeSwitch;
   if (origSwitch) {
-    window.aeSwitch = function (c) {
-      origSwitch(c);
-      startRhythm(c);
-    };
+    window.aeSwitch = function (c) { origSwitch(c); startRhythm(c); };
   }
 
-  // ── Bootstrap ─────────────────────────────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', function () {
     requestAnimationFrame(init);
   });

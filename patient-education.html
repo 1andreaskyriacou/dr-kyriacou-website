@@ -21,6 +21,44 @@
     #heart3d-canvas { position:absolute; top:0; left:0; width:100%; height:100%; display:block; cursor:grab; }
     #heart3d-canvas:active { cursor:grabbing; }
     .ae-3d-hint { font-size:0.72rem; color:#94a3b8; margin-top:6px; letter-spacing:0.02em; }
+    /* Expand button */
+    #heart3d-expand {
+      position:absolute; bottom:8px; right:8px;
+      width:28px; height:28px; padding:0;
+      background:rgba(255,255,255,0.88); border:1px solid #d1d5db; border-radius:5px;
+      cursor:pointer; color:#64748b; display:flex; align-items:center; justify-content:center;
+      z-index:5; transition:background 0.15s, color 0.15s;
+    }
+    #heart3d-expand:hover { background:#fff; color:#1e293b; }
+    /* Fullscreen overlay UI (label + close button) */
+    #heart3d-fs-ui {
+      position:absolute; top:0; left:0; right:0;
+      display:none; align-items:center; justify-content:space-between;
+      padding:14px 16px; pointer-events:none; z-index:10;
+    }
+    #heart3d-fs-label {
+      font-family:'Inter',sans-serif; font-size:0.95rem; font-weight:500; color:#1e293b;
+      background:rgba(255,255,255,0.88); padding:4px 14px; border-radius:20px;
+      border:1px solid #e2e8f0; letter-spacing:0.01em;
+    }
+    #heart3d-close {
+      width:34px; height:34px; padding:0;
+      background:rgba(255,255,255,0.88); border:1px solid #d1d5db; border-radius:5px;
+      cursor:pointer; font-size:1.1rem; color:#64748b;
+      display:flex; align-items:center; justify-content:center;
+      pointer-events:auto; transition:background 0.15s, color 0.15s;
+    }
+    #heart3d-close:hover { background:#fff; color:#1e293b; }
+    /* Fullscreen state */
+    body.heart-fullscreen { overflow:hidden; }
+    body.heart-fullscreen #heart3d-canvas-wrap {
+      position:fixed !important; inset:0 !important;
+      width:100vw !important; height:100vh !important;
+      aspect-ratio:unset !important; border-radius:0; z-index:9000;
+    }
+    body.heart-fullscreen #heart3d-expand { display:none; }
+    body.heart-fullscreen #heart3d-fs-ui  { display:flex; }
+    body.heart-fullscreen .ae-3d-hint     { visibility:hidden; }
     @media (max-width:600px) {
       .ae-dual-view { flex-direction:column; }
       .ae-3d-panel { border-left:none; border-top:1px solid #e2e8f0; }
@@ -409,6 +447,22 @@
             <div class="ae-3d-panel">
               <div id="heart3d-canvas-wrap">
                 <canvas id="heart3d-canvas"></canvas>
+                <!-- Expand to fullscreen -->
+                <button id="heart3d-expand" aria-label="Expand to fullscreen" title="Expand">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                    <polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/>
+                    <line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/>
+                  </svg>
+                </button>
+                <!-- Fullscreen overlay: condition label + close button -->
+                <div id="heart3d-fs-ui">
+                  <span id="heart3d-fs-label"></span>
+                  <button id="heart3d-close" aria-label="Exit fullscreen" title="Close">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                      <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                  </button>
+                </div>
               </div>
               <p class="ae-3d-hint">Drag to rotate</p>
             </div>
