@@ -329,8 +329,37 @@
         model.traverse(function (node) {
           if (node.isMesh) {
             var orig = node.material;
+            var texMap = orig.map || null;
+
+            // Fix blue pixels baked into the texture before applying the tint
+            if (texMap && texMap.image) {
+              var img = texMap.image;
+              var cv  = document.createElement('canvas');
+              cv.width  = img.width  || img.naturalWidth  || 1024;
+              cv.height = img.height || img.naturalHeight || 1024;
+              var ctx = cv.getContext('2d');
+              ctx.drawImage(img, 0, 0, cv.width, cv.height);
+              var id = ctx.getImageData(0, 0, cv.width, cv.height);
+              var px = id.data;
+              for (var i = 0; i < px.length; i += 4) {
+                var r = px[i], g = px[i + 1], b = px[i + 2];
+                if (b > r + 40 && b > g + 20) {
+                  px[i]     = Math.max(r, 160);
+                  px[i + 1] = Math.round(g * 0.3);
+                  px[i + 2] = 0;
+                }
+              }
+              ctx.putImageData(id, 0, 0);
+              var newTex      = new THREE.CanvasTexture(cv);
+              newTex.encoding = texMap.encoding;
+              newTex.wrapS    = texMap.wrapS;
+              newTex.wrapT    = texMap.wrapT;
+              newTex.flipY    = texMap.flipY;
+              texMap          = newTex;
+            }
+
             node.material = new THREE.MeshStandardMaterial({
-              map:       orig.map       || null,
+              map:       texMap,
               normalMap: orig.normalMap || null,
               aoMap:     orig.aoMap     || null,
               roughness: orig.roughness !== undefined ? orig.roughness : 0.8,
