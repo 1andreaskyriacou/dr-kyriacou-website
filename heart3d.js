@@ -326,7 +326,7 @@
 
         var halfDiag = 0.5 * Math.sqrt(sz.x*sz.x + sz.y*sz.y + sz.z*sz.z) * s;
         var fovHalf  = camera.fov * (Math.PI / 180) / 2;
-        var dist     = Math.max(4.5, halfDiag / Math.tan(fovHalf) * 1.20);
+        var dist     = Math.max(3.8, halfDiag / Math.tan(fovHalf) * 1.00);
         camera.position.set(0, halfDiag * 0.08, dist);
 
         // ── Valve/vessel shader — vIsValve varying bypasses texture on valves ──

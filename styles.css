@@ -1686,7 +1686,7 @@
 
     /* ===== HERO VITALS FRAME (compact 3D heart + ECG badge) ===== */
     .hero-vitals-frame {
-      width: 240px;
+      width: 320px;
       max-width: 100%;
       display: flex;
       flex-direction: column;
