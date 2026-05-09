@@ -342,17 +342,10 @@
               for (var i = 0; i < px.length; i += 4) {
                 var r = px[i], g = px[i + 1], b = px[i + 2];
                 if (b > r + 40 && b > g + 20) {
-                  // Blue → red
                   px[i]     = b;
                   px[i + 1] = Math.round(g * 0.3);
                   px[i + 2] = 0;
-                } else if (!(r > 210 && g > 210 && b > 210)) {
-                  // Non-white muscle → uniform deep red (preserves shading depth)
-                  px[i]     = Math.max(r, 160);
-                  px[i + 1] = Math.min(g, 60);
-                  px[i + 2] = Math.min(b, 60);
                 }
-                // Pale white (valves/chordae) — untouched
               }
               ctx.putImageData(id, 0, 0);
               var newTex      = new THREE.CanvasTexture(cv);
@@ -362,6 +355,35 @@
               newTex.flipY    = tex.flipY;
               mat.map         = newTex;
               mat.needsUpdate = true;
+            }
+          }
+        });
+
+        // ── Pale material on any mesh children of non-cardiac bones ─────────
+        // Note: with a single SkinnedMesh (Object_30) this has no visual
+        // effect — it only applies if the GLB has separate mesh objects
+        // parented to vessel/aorta bones.
+        var CARDIAC_PREFIXES = [
+          'cardiac_muscle_jnt', 'cardiac_muscle_endjnt',
+          'right_atrium_jnt',   'left_atrium_jnt',
+          'left_atrium_storage_jnt'
+        ];
+        var vesselPaleMat = new THREE.MeshStandardMaterial({
+          color:     new THREE.Color(0xece8e0),
+          roughness: 0.9,
+          metalness: 0.0
+        });
+        model.traverse(function (node) {
+          if (node.isBone || node.type === 'Bone') {
+            var isCardiac = CARDIAC_PREFIXES.some(function (p) {
+              return node.name.indexOf(p) === 0;
+            });
+            if (!isCardiac) {
+              node.children.forEach(function (child) {
+                if (child.isMesh) {
+                  child.material = vesselPaleMat;
+                }
+              });
             }
           }
         });
