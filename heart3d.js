@@ -329,53 +329,50 @@
         var dist     = Math.max(4.5, halfDiag / Math.tan(fovHalf) * 1.20);
         camera.position.set(0, halfDiag * 0.08, dist);
 
-        // ── Tint entire model red via material colour × texture ─────────────
+        // ── Bone-weight vertex colours ───────────────────────────────────────
+        // For each vertex, read the dominant bone from skinIndex/skinWeight
+        // and assign a colour: atria → #cc2222, valves → #f0ece0, muscle → #8b0000
         model.traverse(function (node) {
-          if (node.isMesh) {
-            var orig = node.material;
-            var texMap = orig.map || null;
+          if (!node.isSkinnedMesh || !node.skeleton) return;
 
-            // Fix blue pixels baked into the texture before applying the tint
-            if (texMap && texMap.image) {
-              var img = texMap.image;
-              var cv  = document.createElement('canvas');
-              cv.width  = img.width  || img.naturalWidth  || 1024;
-              cv.height = img.height || img.naturalHeight || 1024;
-              var ctx = cv.getContext('2d');
-              ctx.drawImage(img, 0, 0, cv.width, cv.height);
-              var id = ctx.getImageData(0, 0, cv.width, cv.height);
-              var px = id.data;
-              for (var i = 0; i < px.length; i += 4) {
-                var r = px[i], g = px[i + 1], b = px[i + 2];
-                if (b > r + 40 && b > g + 20) {
-                  px[i]     = Math.max(r, 160);
-                  px[i + 1] = Math.round(g * 0.3);
-                  px[i + 2] = 0;
-                } else if (r < 80 && g < 20 && b < 20) {
-                  // Very dark inner pixels → pale white (valves/chordae)
-                  px[i]     = 240;
-                  px[i + 1] = 235;
-                  px[i + 2] = 225;
-                }
-              }
-              ctx.putImageData(id, 0, 0);
-              var newTex      = new THREE.CanvasTexture(cv);
-              newTex.encoding = texMap.encoding;
-              newTex.wrapS    = texMap.wrapS;
-              newTex.wrapT    = texMap.wrapT;
-              newTex.flipY    = texMap.flipY;
-              texMap          = newTex;
-            }
+          var bones     = node.skeleton.bones;
+          var siAttr    = node.geometry.attributes.skinIndex;
+          var swAttr    = node.geometry.attributes.skinWeight;
+          if (!siAttr || !swAttr) return;
 
-            node.material = new THREE.MeshStandardMaterial({
-              map:       texMap,
-              normalMap: orig.normalMap || null,
-              aoMap:     orig.aoMap     || null,
-              color:     new THREE.Color(0xaa0000),
-              roughness: 0.9,
-              metalness: 0.0
-            });
+          // Pre-classify every bone index to an RGB triple
+          var boneCol = bones.map(function (bone) {
+            var n = bone.name;
+            if (ATRIA_NAMES.indexOf(n) !== -1)           return [0.800, 0.133, 0.133]; // #cc2222
+            if (n.toLowerCase().indexOf('valve') !== -1) return [0.941, 0.925, 0.878]; // #f0ece0
+            return [0.545, 0.000, 0.000];                                               // #8b0000
+          });
+
+          var count  = siAttr.count;
+          var colArr = new Float32Array(count * 3);
+          for (var vi = 0; vi < count; vi++) {
+            // Find the bone with the highest skin weight for this vertex
+            var iw = [
+              [siAttr.getX(vi), swAttr.getX(vi)],
+              [siAttr.getY(vi), swAttr.getY(vi)],
+              [siAttr.getZ(vi), swAttr.getZ(vi)],
+              [siAttr.getW(vi), swAttr.getW(vi)]
+            ];
+            var dom = 0;
+            for (var k = 1; k < 4; k++) { if (iw[k][1] > iw[dom][1]) dom = k; }
+            var col = boneCol[iw[dom][0]] || [0.545, 0.000, 0.000];
+            colArr[vi * 3]     = col[0];
+            colArr[vi * 3 + 1] = col[1];
+            colArr[vi * 3 + 2] = col[2];
           }
+
+          node.geometry.setAttribute('color', new THREE.BufferAttribute(colArr, 3));
+          node.material = new THREE.MeshStandardMaterial({
+            vertexColors: true,
+            roughness:    0.9,
+            metalness:    0.0
+          });
+          console.log('[heart3d] vertex colours applied to', node.name);
         });
 
         // ── Collect bones + set shadows ──────────────────────────────────────
@@ -383,17 +380,6 @@
           if (node.isMesh) {
             node.castShadow    = true;
             node.receiveShadow = true;
-
-            // ── Geometry attribute audit (temporary diagnostic) ───────────
-            if (node.name === 'Object_30') {
-              var attrNames = Object.keys(node.geometry.attributes);
-              console.log('[heart3d] Object_30 attribute count:', attrNames.length);
-              attrNames.forEach(function (n) {
-                var a = node.geometry.attributes[n];
-                console.log('[heart3d]   "' + n + '" — itemSize:' + a.itemSize + ' count:' + a.count);
-              });
-            }
-            // ─────────────────────────────────────────────────────────────
           }
 
           function tryAdd(b) {
