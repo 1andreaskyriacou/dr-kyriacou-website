@@ -45,22 +45,8 @@
     .ae-dual-view.ae-3d-expanded #heart3d-expand { display:none; }
     .ae-dual-view.ae-3d-expanded #heart3d-collapse { display:flex; }
     .ae-dual-view.ae-3d-expanded .ae-3d-hint { display:none; }
-    /* 2D panel expand */
-    #heart2d-collapse {
-      position:absolute; top:8px; right:8px;
-      width:28px; height:28px; padding:0;
-      background:rgba(255,255,255,0.88); border:1px solid #d1d5db; border-radius:5px;
-      cursor:pointer; color:#64748b; display:none; align-items:center; justify-content:center;
-      z-index:5; transition:background 0.15s, color 0.15s;
-    }
-    #heart2d-collapse:hover { background:#fff; color:#1e293b; }
-    .ae-dual-view.ae-2d-expanded .ae-3d-panel { display:none; }
-    .ae-dual-view.ae-2d-expanded .ae-2d-panel { flex:1 1 100%; }
-    .ae-dual-view.ae-2d-expanded #heart2d-collapse { display:flex; }
-    .ae-dual-view.ae-2d-expanded .ae-enlarge-hint { display:none; }
-    #heart2d-diagram-wrap { position:relative; width:100%; overflow:hidden; cursor:pointer; }
-    .ae-dual-view.ae-2d-expanded #heart2d-diagram-wrap { cursor:default; }
-    #heart-schematic-main { width:100%; height:auto; display:block; }
+    /* 2D panel expand — identical mechanism to 3D */
+    #heart2d-diagram-wrap { position:relative; cursor:pointer; }
     #heart2d-expand {
       position:absolute; bottom:8px; right:8px;
       width:28px; height:28px; padding:0;
@@ -69,7 +55,21 @@
       z-index:5; transition:background 0.15s, color 0.15s;
     }
     #heart2d-expand:hover { background:#fff; color:#1e293b; }
-    .ae-dual-view.ae-2d-expanded #heart2d-expand { display:none; }
+    #heart2d-collapse {
+      position:absolute; top:8px; right:8px;
+      width:28px; height:28px; padding:0;
+      background:rgba(255,255,255,0.88); border:1px solid #d1d5db; border-radius:5px;
+      cursor:pointer; color:#64748b; display:none; align-items:center; justify-content:center;
+      z-index:5; transition:background 0.15s, color 0.15s;
+    }
+    #heart2d-collapse:hover { background:#fff; color:#1e293b; }
+    .ae-dual-view.ae-2d-expanded .ae-3d-panel  { display:none; }
+    .ae-dual-view.ae-2d-expanded .ae-2d-panel  { flex:1 1 100%; }
+    .ae-dual-view.ae-2d-expanded #heart2d-expand  { display:none; }
+    .ae-dual-view.ae-2d-expanded #heart2d-collapse { display:flex; }
+    .ae-dual-view.ae-2d-expanded .ae-enlarge-hint { display:none; }
+    .ae-dual-view.ae-2d-expanded #heart2d-diagram-wrap { width:100%; cursor:default; }
+    .ae-dual-view.ae-2d-expanded #heart-schematic-main { width:100%; height:auto; display:block; }
     @media (max-width:600px) {
       .ae-dual-view { flex-direction:column; }
       .ae-3d-panel { border-left:none; border-top:1px solid #e2e8f0; }
