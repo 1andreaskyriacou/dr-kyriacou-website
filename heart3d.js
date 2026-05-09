@@ -441,7 +441,7 @@
               [
                 '#include <map_fragment>',
                 'if (vIsValve > 0.5) {',
-                '  diffuseColor.rgb = vec3(0.95, 0.90, 0.70);',
+                '  diffuseColor.rgb = vec3(0.92, 0.82, 0.45);',
                 '}'
               ].join('\n')
             );
