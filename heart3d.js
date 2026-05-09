@@ -325,15 +325,20 @@
         var dist     = Math.max(4.5, halfDiag / Math.tan(fovHalf) * 1.20);
         camera.position.set(0, halfDiag * 0.08, dist);
 
-        // ── Collect bones + set shadows; tint blue meshes only ───────────────
+        // ── Collect bones + set shadows; log + tint blue meshes only ────────
+        console.log('[heart3d] ── Mesh colour audit ──────────────────────────');
         model.traverse(function (node) {
           if (node.isMesh) {
             node.castShadow    = true;
             node.receiveShadow = true;
-            // Only recolour meshes whose base colour is blue-dominant.
-            // All other meshes keep their original material and textures untouched.
             var c = node.material && node.material.color;
-            if (c && c.b > c.r * 1.2 && c.b > c.g * 1.2) {
+            var isBlue = c && c.b > c.r * 1.2 && c.b > c.g * 1.2;
+            console.log(
+              '[heart3d]', isBlue ? '🔵 BLUE' : '     ok',
+              '"' + node.name + '"',
+              c ? ('r=' + c.r.toFixed(3) + ' g=' + c.g.toFixed(3) + ' b=' + c.b.toFixed(3)) : 'no color'
+            );
+            if (isBlue) {
               node.material.color.set(0xc0202a);
             }
           }
