@@ -13,53 +13,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="styles.css">
-  <style>
-    .ae-dual-view {
-      display: flex;
-      flex-direction: row;
-      align-items: stretch;
-      width: 100%;
-      gap: 0;
-    }
-    .ae-2d-panel,
-    .ae-3d-panel {
-      flex: 1 1 0;
-      min-width: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-    .ae-3d-panel {
-      border-left: 1px solid #e2e8f0;
-      padding: 10px 8px;
-    }
-    #heart3d-canvas-wrap {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 1;
-      overflow: hidden;
-    }
-    #heart3d-canvas {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      display: block;
-      cursor: grab;
-    }
-    #heart3d-canvas:active { cursor: grabbing; }
-    .ae-3d-hint {
-      font-size: 0.72rem;
-      color: #94a3b8;
-      margin-top: 6px;
-      letter-spacing: 0.02em;
-    }
-    @media (max-width: 600px) {
-      .ae-dual-view { flex-direction: column; }
-      .ae-3d-panel { border-left: none; border-top: 1px solid #e2e8f0; }
-    }
-  </style>
   <title>Patient Education | Dr Andreas Kyriacou</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="shortcut icon" href="favicon.svg">
@@ -116,11 +69,8 @@
             <button class="ae-btn" data-cond="csp"     onclick="aeSwitch('csp')">Conduction System Pacing</button>
             <button class="ae-btn" data-cond="crt"     onclick="aeSwitch('crt')">CRT</button>
           </nav>
-          <!-- Centre heart SVG + 3D model -->
+          <!-- Centre heart SVG -->
           <div class="ae-heart-wrap">
-            <div class="ae-dual-view">
-            <!-- 2D diagram -->
-            <div class="ae-2d-panel">
             <div style="cursor:pointer;" onclick="var svg=this.querySelector('svg').cloneNode(true);svg.style.width='90vw';svg.style.height='90vh';svg.style.objectFit='contain';document.getElementById('hmodal-content').innerHTML='';document.getElementById('hmodal-content').appendChild(svg);document.getElementById('hmodal').style.display='flex';">
             <div style="position:relative;">
             <svg id="heart-schematic-main" viewBox="0 0 662.65082 651.49066" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" aria-label="Heart diagram — click to enlarge">
@@ -440,15 +390,6 @@
               Click to enlarge
             </p>
             </div>
-            </div><!-- /.ae-2d-panel -->
-            <!-- 3D model -->
-            <div class="ae-3d-panel">
-              <div id="heart3d-canvas-wrap">
-                <canvas id="heart3d-canvas"></canvas>
-              </div>
-              <p class="ae-3d-hint">Drag to rotate</p>
-            </div>
-            </div><!-- /.ae-dual-view -->
           </div>
           <!-- Right info panel -->
           <div class="ae-info-wrap">
@@ -776,8 +717,5 @@
   <script>document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.getElementById('hmodal').style.display='none';}});</script>
 
   <script src="scripts.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/loaders/GLTFLoader.js"></script>
-  <script src="heart3d.js"></script>
 </body>
 </html>
