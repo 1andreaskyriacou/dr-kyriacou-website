@@ -135,7 +135,9 @@
 
     switch (c) {
       case 'normal': case 'csp': case 'crt':
-        nextA = now; nextV = now + 120; break;
+        nextA = now; nextV = now + 120;
+        document.dispatchEvent(new CustomEvent('heart3d:rhythmStart', { detail: { cond: c, t0: now } }));
+        break;
 
       case 'flutter':
         // Atria 300bpm (200ms); ventricles 150bpm (400ms), 2:1 block

@@ -199,6 +199,45 @@
         </div>
       </div>
     </section>
+
+    <!-- ===== HEARTBEAT ===== -->
+    <section id="heartbeat" aria-label="3D heart and ECG rhythm demonstration">
+      <div class="container">
+        <header class="heartbeat-header">
+          <span class="heartbeat-eyebrow">Live Simulation</span>
+          <h2 class="heartbeat-title">The Heart in Motion</h2>
+          <p class="heartbeat-sub">Normal Sinus Rhythm at 70 beats per minute — interact with the 3D model or watch the real&#8209;time ECG trace.</p>
+        </header>
+        <div class="heartbeat-grid">
+
+          <!-- 3D Heart -->
+          <div class="heartbeat-3d-panel">
+            <div class="heartbeat-3d-frame">
+              <div id="heart3d-canvas-wrap" style="position:relative;width:100%;height:100%;overflow:hidden;">
+                <canvas id="heart3d-canvas" class="heartbeat-3d-canvas"></canvas>
+              </div>
+            </div>
+            <p class="heartbeat-drag-hint">Drag to rotate</p>
+          </div>
+
+          <!-- Live ECG -->
+          <div class="heartbeat-ecg-panel">
+            <div class="heartbeat-ecg-toprow">
+              <span class="heartbeat-ecg-lead">Lead II</span>
+              <span class="heartbeat-ecg-bpm">70 BPM</span>
+            </div>
+            <div class="heartbeat-ecg-screen">
+              <canvas id="index-ecg-canvas"></canvas>
+            </div>
+            <p class="heartbeat-ecg-caption">
+              P&nbsp;wave &rarr; QRS complex &rarr; T&nbsp;wave, repeating at 70 beats per minute.
+              A normal ECG trace reflects healthy electrical conduction through the heart.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- ===== FOOTER ===== -->
@@ -300,5 +339,121 @@
   <script>document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.getElementById('hmodal').style.display='none';}});</script>
 
   <script src="scripts.js"></script>
+
+  <!-- Three.js + heart3d for the heartbeat section -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="heart3d.js"></script>
+
+  <!-- Index ECG — 70 bpm PQRST trace synced to heart3d rhythm -->
+  <script>
+  (function () {
+    'use strict';
+
+    var MS_PER_BEAT = 857; // 70 bpm
+    var BEAT_PX     = 190; // pixels one beat spans on canvas
+    var beatEpoch   = performance.now();
+
+    /* Sync epoch when heart3d starts its rhythm so the two animations align */
+    document.addEventListener('heart3d:rhythmStart', function (e) {
+      beatEpoch = e.detail.t0;
+    });
+
+    function gauss(x, mu, sig) {
+      return Math.exp(-0.5 * Math.pow((x - mu) / sig, 2));
+    }
+
+    function pqrst(phase) {
+      return  0.14 * gauss(phase, 0.120, 0.040)
+            - 0.07 * gauss(phase, 0.270, 0.016)
+            + 0.95 * gauss(phase, 0.320, 0.022)
+            - 0.20 * gauss(phase, 0.380, 0.016)
+            + 0.24 * gauss(phase, 0.580, 0.070);
+    }
+
+    var canvas, ctx, W, H, mid, amp, PX_PER_MS, rafId;
+
+    function setup() {
+      canvas = document.getElementById('index-ecg-canvas');
+      if (!canvas) return false;
+      var screen = canvas.parentElement;
+      var dpr = window.devicePixelRatio || 1;
+      W = screen.clientWidth  || 400;
+      H = screen.clientHeight || 200;
+      canvas.width  = Math.round(W * dpr);
+      canvas.height = Math.round(H * dpr);
+      canvas.style.width  = W + 'px';
+      canvas.style.height = H + 'px';
+      ctx = canvas.getContext('2d');
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      mid       = H * 0.52;
+      amp       = H * 0.37;
+      PX_PER_MS = BEAT_PX / MS_PER_BEAT;
+      return true;
+    }
+
+    function draw() {
+      if (!ctx) return;
+      var now     = performance.now();
+      var elapsed = (now - beatEpoch) * PX_PER_MS;
+      var SMALL   = BEAT_PX / 5;
+
+      /* Background */
+      ctx.fillStyle = '#06101d';
+      ctx.fillRect(0, 0, W, H);
+
+      /* Scrolling ECG grid — small divisions */
+      ctx.lineWidth = 0.5;
+      ctx.strokeStyle = 'rgba(74,222,128,0.07)';
+      var sOff = elapsed % SMALL;
+      for (var gx = W - sOff; gx >= -SMALL; gx -= SMALL) {
+        ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, H); ctx.stroke();
+      }
+      /* Major grid — one line per beat */
+      ctx.strokeStyle = 'rgba(74,222,128,0.13)';
+      var bOff = elapsed % BEAT_PX;
+      for (var bx = W - bOff; bx >= -BEAT_PX; bx -= BEAT_PX) {
+        ctx.beginPath(); ctx.moveTo(bx, 0); ctx.lineTo(bx, H); ctx.stroke();
+      }
+      /* Horizontal baseline */
+      ctx.strokeStyle = 'rgba(74,222,128,0.06)';
+      ctx.beginPath(); ctx.moveTo(0, mid); ctx.lineTo(W, mid); ctx.stroke();
+
+      /* PQRST trace — each pixel computed from real time */
+      ctx.strokeStyle = '#4ade80';
+      ctx.lineWidth   = 1.5;
+      ctx.lineJoin    = 'round';
+      ctx.shadowBlur  = 7;
+      ctx.shadowColor = 'rgba(74,222,128,0.50)';
+      ctx.beginPath();
+      for (var x = 0; x < W; x++) {
+        var t     = now - beatEpoch - (W - 1 - x) / PX_PER_MS;
+        var phase = ((t % MS_PER_BEAT) + MS_PER_BEAT) % MS_PER_BEAT / MS_PER_BEAT;
+        var y     = mid - pqrst(phase) * amp;
+        if (x === 0) ctx.moveTo(0, y);
+        else         ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+
+      rafId = requestAnimationFrame(draw);
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      requestAnimationFrame(function () {
+        if (setup()) draw();
+      });
+
+      var debounce;
+      window.addEventListener('resize', function () {
+        clearTimeout(debounce);
+        debounce = setTimeout(function () {
+          if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+          if (setup()) draw();
+        }, 200);
+      });
+    });
+  }());
+  </script>
 </body>
 </html>
