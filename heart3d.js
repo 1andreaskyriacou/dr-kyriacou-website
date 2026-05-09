@@ -348,7 +348,7 @@
                   px[i]     = 160;
                   px[i + 1] = 20;
                   px[i + 2] = 0;
-                } else if (g > 140 && b > 130 && r > 180) {
+                } else if (g > 155 && b > 145 && r > 200) {
                   // Great vessels / pale pink → pale white
                   px[i]     = 240;
                   px[i + 1] = 235;
