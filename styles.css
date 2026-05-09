@@ -170,6 +170,7 @@
     .hero-bg {
       position: absolute;
       inset: 0;
+      pointer-events: none;
       background:
         radial-gradient(ellipse 70% 60% at 80% 50%, rgba(201,168,76,0.08) 0%, transparent 60%),
         radial-gradient(ellipse 50% 50% at 10% 90%, rgba(10,35,66,0.04) 0%, transparent 55%);
