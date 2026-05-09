@@ -45,6 +45,20 @@
     .ae-dual-view.ae-3d-expanded #heart3d-expand { display:none; }
     .ae-dual-view.ae-3d-expanded #heart3d-collapse { display:flex; }
     .ae-dual-view.ae-3d-expanded .ae-3d-hint { display:none; }
+    /* 2D panel expand */
+    #heart2d-collapse {
+      position:absolute; top:8px; right:8px;
+      width:28px; height:28px; padding:0;
+      background:rgba(255,255,255,0.88); border:1px solid #d1d5db; border-radius:5px;
+      cursor:pointer; color:#64748b; display:none; align-items:center; justify-content:center;
+      z-index:5; transition:background 0.15s, color 0.15s;
+    }
+    #heart2d-collapse:hover { background:#fff; color:#1e293b; }
+    .ae-dual-view.ae-2d-expanded .ae-3d-panel { display:none; }
+    .ae-dual-view.ae-2d-expanded .ae-2d-panel { flex:1 1 100%; }
+    .ae-dual-view.ae-2d-expanded #heart2d-collapse { display:flex; }
+    .ae-dual-view.ae-2d-expanded .ae-enlarge-hint { display:none; }
+    .ae-dual-view.ae-2d-expanded #heart2d-diagram-wrap { cursor:default; }
     @media (max-width:600px) {
       .ae-dual-view { flex-direction:column; }
       .ae-3d-panel { border-left:none; border-top:1px solid #e2e8f0; }
@@ -110,8 +124,7 @@
           <div class="ae-heart-wrap">
             <div class="ae-dual-view">
             <div class="ae-2d-panel">
-            <div style="cursor:pointer;" onclick="var svg=this.querySelector('svg').cloneNode(true);svg.style.width='90vw';svg.style.height='90vh';svg.style.objectFit='contain';document.getElementById('hmodal-content').innerHTML='';document.getElementById('hmodal-content').appendChild(svg);document.getElementById('hmodal').style.display='flex';">
-            <div style="position:relative;">
+            <div id="heart2d-diagram-wrap" style="cursor:pointer;position:relative;" onclick="var dv=this.closest('.ae-dual-view');if(dv&&!dv.classList.contains('ae-2d-expanded'))dv.classList.add('ae-2d-expanded');">
             <svg id="heart-schematic-main" viewBox="0 0 662.65082 651.49066" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" aria-label="Heart diagram — click to enlarge">
               <image href="heart.svg" xlink:href="heart.svg" x="0" y="0" width="662.65082" height="651.49066" preserveAspectRatio="xMidYMid meet" style="pointer-events:none;"/>
               <g class="ae-overlay" data-cond="normal">
@@ -423,12 +436,16 @@
                 </g>
               </g>
             </svg>
-            </div>
+            <button id="heart2d-collapse" aria-label="Collapse diagram" title="Collapse" onclick="var dv=this.closest('.ae-dual-view');if(dv)dv.classList.remove('ae-2d-expanded');event.stopPropagation();">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </button>
+            </div><!-- /#heart2d-diagram-wrap -->
             <p class="ae-enlarge-hint">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
               Click to enlarge
             </p>
-            </div>
             </div><!-- /.ae-2d-panel -->
             <div class="ae-3d-panel">
               <div id="heart3d-canvas-wrap">
@@ -767,14 +784,7 @@
     </div>
   </div>
 
-  <!-- Heart schematic enlarge modal (hmodal) -->
-  <div id="hmodal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,35,66,0.92);z-index:9999;justify-content:center;align-items:center;cursor:default;" onclick="if(event.target===this)this.style.display='none'">
-    <div style="position:relative;background:#FEFEFE;padding:2rem;border-radius:4px;display:flex;justify-content:center;align-items:center;">
-      <button onclick="document.getElementById('hmodal').style.display='none'" style="position:absolute;top:1rem;right:1rem;font-size:1.5rem;background:none;border:none;cursor:pointer;color:#0A2342;">&#10005;</button>
-      <div id="hmodal-content"></div>
-    </div>
-  </div>
-  <script>document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.getElementById('hmodal').style.display='none';}});</script>
+  <script>document.addEventListener('keydown',function(e){if(e.key==='Escape'){var dv=document.querySelector('.ae-dual-view.ae-2d-expanded');if(dv)dv.classList.remove('ae-2d-expanded');}});</script>
 
   <script src="scripts.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js"></script>
