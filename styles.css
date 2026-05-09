@@ -5,9 +5,9 @@
       --gold:         #C9A84C;
       --gold-light:   #D4A843;
       --gold-dim:     #8B6E2E;
-      --dark:         #FCFCFC;
-      --dark-2:       #F7F7F7;
-      --dark-3:       #FCFCFC;
+      --dark:         #FEFEFE;
+      --dark-2:       #F9F9F9;
+      --dark-3:       #FEFEFE;
       --dark-4:       #E8EAED;
       --dark-5:       #DDE1E7;
       --text:         #0A2342;
@@ -745,7 +745,7 @@
     /* ===== HEART SCHEMATICS ===== */
     .heart-schematic {
       padding: 14px 20px 0;
-      background: #F7F7F7;
+      background: #F9F9F9;
       border-bottom: 1px solid var(--border);
     }
     .heart-schematic svg {
@@ -791,7 +791,7 @@
     .schematic-modal.active { display: flex; }
     .schematic-modal-box {
       position: relative;
-      background: #F7F7F7;
+      background: #F9F9F9;
       border-radius: 14px;
       padding: 56px 28px 28px;
       max-width: 90vw;
