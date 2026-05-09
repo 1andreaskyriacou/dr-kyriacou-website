@@ -341,10 +341,16 @@
               var px = id.data;
               for (var i = 0; i < px.length; i += 4) {
                 var r = px[i], g = px[i + 1], b = px[i + 2];
-                if (b > r + 40 && b > g + 20) {
-                  px[i]     = b;                        // map blue strength → red
-                  px[i + 1] = Math.round(g * 0.4);     // suppress green
-                  px[i + 2] = Math.round(b * 0.05);    // nearly zero blue
+                if (r > 210 && g > 210 && b > 210) {
+                  // Valve / chordae — clean pale white
+                  px[i]     = 245;
+                  px[i + 1] = 240;
+                  px[i + 2] = 235;
+                } else {
+                  // Cardiac muscle — shift toward rich red
+                  px[i]     = Math.min(255, Math.round(r * 1.5 + 40));
+                  px[i + 1] = Math.round(g * 0.25);
+                  px[i + 2] = Math.round(b * 0.15);
                 }
               }
               ctx.putImageData(id, 0, 0);
@@ -355,7 +361,6 @@
               newTex.flipY    = tex.flipY;
               mat.map         = newTex;
               mat.needsUpdate = true;
-              console.log('[heart3d] Object_30 texture repainted: blue→red');
             }
           }
         });
