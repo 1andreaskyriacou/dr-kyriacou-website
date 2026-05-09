@@ -372,16 +372,23 @@
           ];
           var paleIdxs = [];
           node.skeleton.bones.forEach(function (bone, idx) {
+            console.log('[heart3d] bone', idx + ':', bone.name);
             if (PALE_BONE_NAMES.indexOf(bone.name) !== -1) paleIdxs.push(idx);
           });
           console.log('[heart3d] valve shader bone indices:', paleIdxs);
 
-          // Build GLSL per-index checks (WebGL2 int path + WebGL1 float path)
+          // Build GLSL per-index checks across ALL 4 bone slots
+          // WebGL2: ivec4 skinIndex (integer), WebGL1: vec4 skinIndex (float)
           var gl2 = paleIdxs.length
-            ? paleIdxs.map(function (i) { return '_dom==' + i; }).join('||')
+            ? paleIdxs.map(function (i) {
+                return '_si.x==' + i + '||_si.y==' + i + '||_si.z==' + i + '||_si.w==' + i;
+              }).join('||')
             : 'false';
           var gl1 = paleIdxs.length
-            ? paleIdxs.map(function (i) { return 'abs(_domF-' + i + '.0)<0.5'; }).join('||')
+            ? paleIdxs.map(function (i) {
+                var f = i + '.0';
+                return 'abs(skinIndex.x-' + f + ')<0.5||abs(skinIndex.y-' + f + ')<0.5||abs(skinIndex.z-' + f + ')<0.5||abs(skinIndex.w-' + f + ')<0.5';
+              }).join('||')
             : 'false';
 
           var mat = new THREE.MeshStandardMaterial({
