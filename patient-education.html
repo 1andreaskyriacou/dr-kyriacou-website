@@ -13,7 +13,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js"></script>
+  <style>
+    .ae-dual-view { display:flex; flex-direction:row; gap:8px; width:100%; align-items:flex-start; }
+    .ae-2d-panel  { flex:1 1 0; min-width:0; display:flex; flex-direction:column; align-items:center; }
+    .ae-3d-panel  { flex:1 1 0; min-width:0; display:flex; flex-direction:column; align-items:center; }
+    .ae-sketchfab-wrap {
+      position:relative; width:100%; aspect-ratio:1;
+      border-radius:6px; overflow:hidden;
+      transform-origin:center center; will-change:transform;
+      background:#0a0a0a;
+    }
+    .ae-sketchfab-wrap iframe {
+      position:absolute; top:0; left:0; width:100%; height:100%; border:0; display:block;
+    }
+    @media (max-width:768px) { .ae-dual-view { flex-direction:column; } }
+  </style>
   <title>Patient Education | Dr Andreas Kyriacou</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="shortcut icon" href="favicon.svg">
@@ -70,9 +84,10 @@
             <button class="ae-btn" data-cond="csp"     onclick="aeSwitch('csp')">Conduction System Pacing</button>
             <button class="ae-btn" data-cond="crt"     onclick="aeSwitch('crt')">CRT</button>
           </nav>
-          <!-- Centre heart SVG -->
+          <!-- Centre heart SVG + 3D embed -->
           <div class="ae-heart-wrap">
-            <div id="ae-2d-view">
+            <div class="ae-dual-view">
+              <div class="ae-2d-panel">
             <div style="cursor:pointer;" onclick="var svg=this.querySelector('svg').cloneNode(true);svg.style.width='90vw';svg.style.height='90vh';svg.style.objectFit='contain';document.getElementById('hmodal-content').innerHTML='';document.getElementById('hmodal-content').appendChild(svg);document.getElementById('hmodal').style.display='flex';">
             <div style="position:relative;">
             <svg id="heart-schematic-main" viewBox="0 0 662.65082 651.49066" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" aria-label="Heart diagram — click to enlarge">
@@ -392,20 +407,27 @@
               Click to enlarge
             </p>
             </div>
-            </div><!-- /ae-2d-view -->
-            <div id="ae-3d-view" style="display:none; width:100%; max-width:380px; position:relative; aspect-ratio:1/1;">
-              <canvas id="heart3d-canvas" style="display:block; border-radius:8px; cursor:grab; touch-action:none;"></canvas>
-              <div aria-hidden="true" style="position:absolute; bottom:10px; left:50%; transform:translateX(-50%); font-size:11px; color:#94a3b8; pointer-events:none; white-space:nowrap; display:flex; align-items:center; gap:4px;">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
-                Drag to rotate
+              </div><!-- /ae-2d-panel -->
+              <!-- 3D Sketchfab embed with beat-animation overlays -->
+              <div class="ae-3d-panel">
+                <div class="ae-sketchfab-wrap" id="ae-sketchfab-wrap">
+                  <!-- Atrial activity overlay: upper 35%, pulsing gradient glow -->
+                  <div id="ae-atria-overlay" style="position:absolute;top:0;left:0;right:0;height:35%;z-index:2;pointer-events:none;border-radius:6px 6px 0 0;"></div>
+                  <iframe
+                    title="3D anatomical heart model"
+                    src="https://sketchfab.com/models/a3f0ea2030214a6bbaa97e7357eebd58/embed?autostart=1&ui_controls=0&ui_infos=0&ui_inspector=0&ui_stop=0&ui_watermark=0"
+                    frameborder="0"
+                    allow="autoplay; fullscreen; xr-spatial-tracking"
+                    allowfullscreen
+                    loading="lazy"
+                  ></iframe>
+                </div>
+                <p class="ae-enlarge-hint" aria-hidden="true">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M3 3h6M3 3v6M21 3h-6M21 3v6M3 21h6M3 21v-6M21 21h-6M21 21v-6"/></svg>
+                  Interactive 3D · drag to rotate
+                </p>
               </div>
-            </div>
-            <div style="display:flex; justify-content:center; padding:8px 0 4px; width:100%;">
-              <button id="ae-view-toggle-btn" onclick="toggleHeartView()" aria-pressed="false" style="display:inline-flex; align-items:center; gap:6px; padding:6px 14px; font-family:inherit; font-size:11.5px; font-weight:600; color:#64748b; background:rgba(10,35,66,0.06); border:1px solid rgba(10,35,66,0.16); border-radius:20px; cursor:pointer; letter-spacing:0.03em; transition:background 0.18s,color 0.18s;">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                <span id="ae-toggle-label">View 3D Model</span>
-              </button>
-            </div>
+            </div><!-- /ae-dual-view -->
           </div>
           <!-- Right info panel -->
           <div class="ae-info-wrap">
@@ -733,33 +755,139 @@
   <script>document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.getElementById('hmodal').style.display='none';}});</script>
 
   <script src="scripts.js"></script>
-  <script src="heart3d.js"></script>
   <script>
-    window.toggleHeartView = function () {
-      var btn    = document.getElementById('ae-view-toggle-btn');
-      var label  = document.getElementById('ae-toggle-label');
-      var view2d = document.getElementById('ae-2d-view');
-      var view3d = document.getElementById('ae-3d-view');
-      var is3d   = view3d.style.display !== 'none';
-      if (is3d) {
-        view3d.style.display = 'none';
-        view2d.style.display = '';
-        label.textContent = 'View 3D Model';
-        btn.setAttribute('aria-pressed', 'false');
-        btn.style.color = '#64748b';
-        if (window.Heart3D) window.Heart3D.hide();
-      } else {
-        view2d.style.display = 'none';
-        view3d.style.display = '';
-        label.textContent = 'View 2D Diagram';
-        btn.setAttribute('aria-pressed', 'true');
-        btn.style.color = '#0A2342';
-        if (window.Heart3D) {
-          window.Heart3D.setCondition(window._ae3dCond || 'normal');
-          window.Heart3D.show();
+  /* ── Arrhythmia beat animation for the Sketchfab 3D panel ──────────────
+     Ventricular contraction: scale the iframe wrapper slightly
+     Atrial activity:        pulsing top-gradient overlay
+  */
+  (function () {
+    'use strict';
+
+    var cond = 'normal';
+    var t = 0, lastTs = null;
+    var wrap = null, atriaEl = null;
+
+    // Beat envelope: phase [0,1] → amplitude [0,1]
+    // Fast systolic rise, slower diastolic relaxation
+    function beat(ph) {
+      if (ph < 0.18) return Math.sin(ph / 0.18 * Math.PI * 0.5);
+      if (ph < 0.30) return 1.0 - (ph - 0.18) / 0.12 * 0.22;
+      return 0.78 * Math.max(0, 1.0 - (ph - 0.30) / 0.70);
+    }
+
+    function getAmps(c, t) {
+      // Returns { v:[0,1] ventricular amplitude, a:[0,1] atrial amplitude }
+      switch (c) {
+
+        case 'normal': {
+          var p = 60 / 70; // 0.857 s
+          // Atria contract ~120 ms before ventricles
+          return { v: beat((t % p) / p),
+                   a: beat(((t + 0.12) % p) / p) * 0.80 };
+        }
+
+        case 'af': {
+          // Irregular ventricular response; atria quiver with no organised beat
+          var n = Math.sin(t * 9.8) * 0.055 + Math.sin(t * 13.7) * 0.030
+                + Math.sin(t * 7.1) * 0.020;
+          var vp = Math.max(0.36, Math.min(0.92, 0.62 + n));
+          // Atrial quiver: ~5 Hz flickering, no synchronous contraction
+          var quiver = 0.50 + 0.50 * Math.sin(t * Math.PI * 2 * 5.3);
+          return { v: beat((t % vp) / vp),
+                   a: quiver * 0.52 };
+        }
+
+        case 'flutter': {
+          // Atria 300 bpm (0.20 s); ventricles 150 bpm via 2:1 block (0.40 s)
+          return { v: beat((t % 0.40) / 0.40),
+                   a: beat((t % 0.20) / 0.20) * 0.72 };
+        }
+
+        case 'at': {
+          // Focal atrial tachycardia 160 bpm
+          var p = 60 / 160; // 0.375 s
+          return { v: beat((t % p) / p),
+                   a: beat(((t + 0.06) % p) / p) * 0.80 };
+        }
+
+        case 'svt': {
+          // 200 bpm; P buried in QRS → near-simultaneous chambers
+          var p = 60 / 200; // 0.30 s
+          var amp = beat((t % p) / p);
+          return { v: amp, a: amp * 0.62 };
+        }
+
+        case 'vt': {
+          // Ventricles 180 bpm; atria dissociated at 70 bpm
+          return { v: beat((t % (60 / 180)) / (60 / 180)),
+                   a: beat((t % (60 / 70))  / (60 / 70))  * 0.28 };
+        }
+
+        case 'pvc': {
+          // Normal 70 bpm + PVC every ~5 beats with compensatory pause
+          var np = 60 / 70; // 0.833 s normal period
+          // Cycle: 4 normal beats, 1 early PVC (0.48 s), compensatory pause
+          var cl = np * 4 + 0.48 + np * 1.35; // ~5.64 s cycle
+          var pos = t % cl;
+          var vph = 0, aph = 0;
+          if      (pos < np)         { vph = pos / np;          aph = vph; }
+          else if (pos < np * 2)     { vph = (pos - np) / np;   aph = vph; }
+          else if (pos < np * 3)     { vph = (pos - np*2) / np; aph = vph; }
+          else if (pos < np * 4)     { vph = (pos - np*3) / np; aph = vph; }
+          else if (pos < np*4+0.48)  { vph = (pos - np*4) / 0.48; aph = 0; } // PVC — no P wave
+          // compensatory pause: vph=aph=0
+          return { v: beat(vph), a: beat(aph) * 0.80 };
+        }
+
+        case 'csp':
+        case 'crt': {
+          // Paced 70 bpm; atrial sensing → ventricular pacing with short AV delay
+          var p = 60 / 70; // 0.857 s
+          return { v: beat((t % p) / p),
+                   a: beat(((t + 0.10) % p) / p) * 0.85 };
+        }
+
+        default: {
+          var p = 60 / 70;
+          return { v: beat((t % p) / p), a: beat((t % p) / p) * 0.80 };
         }
       }
-    };
+    }
+
+    function frame(ts) {
+      if (lastTs !== null) t += (ts - lastTs) / 1000;
+      lastTs = ts;
+
+      if (!wrap) {
+        wrap    = document.getElementById('ae-sketchfab-wrap');
+        atriaEl = document.getElementById('ae-atria-overlay');
+      }
+
+      if (wrap) {
+        var s = getAmps(cond, t);
+
+        // Ventricular beat: scale whole 3D panel (1.00 → 0.930 → 1.00)
+        wrap.style.transform = 'scale(' + (1 - s.v * 0.070).toFixed(4) + ')';
+
+        // Atrial beat: subtle warm glow across the upper third
+        if (atriaEl) {
+          var a = (s.a * 0.38).toFixed(3);
+          atriaEl.style.background =
+            'linear-gradient(to bottom,rgba(205,55,55,' + a + ') 0%,rgba(205,55,55,0) 100%)';
+        }
+      }
+
+      requestAnimationFrame(frame);
+    }
+
+    // Patch aeSwitch so condition changes propagate to the animation
+    var origSwitch = window.aeSwitch;
+    if (origSwitch) {
+      window.aeSwitch = function (c) { origSwitch(c); cond = c; };
+    }
+
+    requestAnimationFrame(frame);
+  }());
   </script>
 </body>
 </html>
