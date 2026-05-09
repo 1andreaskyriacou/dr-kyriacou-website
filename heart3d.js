@@ -364,11 +364,17 @@
 
           // Resolve pale-bone skeleton indices by name
           var PALE_BONE_NAMES = [
-            'left_mitral_valve_jnt15_15',    'right_mitral_valve_jnt16_16',
-            'aortic_valve_01_jnt21_21',      'aortic_valve_02_jnt17_17',
-            'aortic_valve_03_jnt19_19',      'left_tricuspid_valve_jnt23_23',
-            'right_tricuspid_valve_jnt24_24','right_pulmonary_valve_jnt9_9',
-            'left_pulmonary_valve_jnt11_11', 'cardiac_muscle_endjnt8_8'
+            'left_mitral_valve_jnt15_15',         'right_mitral_valve_jnt16_16',
+            'aortic_valve_01_jnt21_21',           'aortic_valve_02_jnt17_17',
+            'aortic_valve_03_jnt19_19',           'left_tricuspid_valve_jnt23_23',
+            'right_tricuspid_valve_jnt24_24',
+            // pulmonary valves + end joints (skeleton indices 6-9)
+            'right_pulmonary_valve_jnt9_9',       'right_pulmonary_valve_endjnt10_10',
+            'left_pulmonary_valve_jnt11_11',      'left_pulmonary_valve_endjnt12_12',
+            'cardiac_muscle_endjnt8_8',
+            // aortic end joints (skeleton indices 15, 17, 19)
+            'aortic_valve_02_endjnt18_18',        'aortic_valve_03_endjnt20_20',
+            'aortic_valve_01_endjnt22_22'
           ];
           var paleIdxs = [];
           node.skeleton.bones.forEach(function (bone, idx) {
