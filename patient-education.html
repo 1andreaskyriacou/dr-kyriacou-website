@@ -13,6 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js"></script>
   <title>Patient Education | Dr Andreas Kyriacou</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="shortcut icon" href="favicon.svg">
@@ -71,6 +72,7 @@
           </nav>
           <!-- Centre heart SVG -->
           <div class="ae-heart-wrap">
+            <div id="ae-2d-view">
             <div style="cursor:pointer;" onclick="var svg=this.querySelector('svg').cloneNode(true);svg.style.width='90vw';svg.style.height='90vh';svg.style.objectFit='contain';document.getElementById('hmodal-content').innerHTML='';document.getElementById('hmodal-content').appendChild(svg);document.getElementById('hmodal').style.display='flex';">
             <div style="position:relative;">
             <svg id="heart-schematic-main" viewBox="0 0 662.65082 651.49066" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" aria-label="Heart diagram — click to enlarge">
@@ -389,6 +391,20 @@
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
               Click to enlarge
             </p>
+            </div>
+            </div><!-- /ae-2d-view -->
+            <div id="ae-3d-view" style="display:none; width:100%; max-width:380px; position:relative; aspect-ratio:1/1;">
+              <canvas id="heart3d-canvas" style="display:block; border-radius:8px; cursor:grab; touch-action:none;"></canvas>
+              <div aria-hidden="true" style="position:absolute; bottom:10px; left:50%; transform:translateX(-50%); font-size:11px; color:#94a3b8; pointer-events:none; white-space:nowrap; display:flex; align-items:center; gap:4px;">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                Drag to rotate
+              </div>
+            </div>
+            <div style="display:flex; justify-content:center; padding:8px 0 4px; width:100%;">
+              <button id="ae-view-toggle-btn" onclick="toggleHeartView()" aria-pressed="false" style="display:inline-flex; align-items:center; gap:6px; padding:6px 14px; font-family:inherit; font-size:11.5px; font-weight:600; color:#64748b; background:rgba(10,35,66,0.06); border:1px solid rgba(10,35,66,0.16); border-radius:20px; cursor:pointer; letter-spacing:0.03em; transition:background 0.18s,color 0.18s;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                <span id="ae-toggle-label">View 3D Model</span>
+              </button>
             </div>
           </div>
           <!-- Right info panel -->
@@ -717,5 +733,33 @@
   <script>document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.getElementById('hmodal').style.display='none';}});</script>
 
   <script src="scripts.js"></script>
+  <script src="heart3d.js"></script>
+  <script>
+    window.toggleHeartView = function () {
+      var btn    = document.getElementById('ae-view-toggle-btn');
+      var label  = document.getElementById('ae-toggle-label');
+      var view2d = document.getElementById('ae-2d-view');
+      var view3d = document.getElementById('ae-3d-view');
+      var is3d   = view3d.style.display !== 'none';
+      if (is3d) {
+        view3d.style.display = 'none';
+        view2d.style.display = '';
+        label.textContent = 'View 3D Model';
+        btn.setAttribute('aria-pressed', 'false');
+        btn.style.color = '#64748b';
+        if (window.Heart3D) window.Heart3D.hide();
+      } else {
+        view2d.style.display = 'none';
+        view3d.style.display = '';
+        label.textContent = 'View 2D Diagram';
+        btn.setAttribute('aria-pressed', 'true');
+        btn.style.color = '#0A2342';
+        if (window.Heart3D) {
+          window.Heart3D.setCondition(window._ae3dCond || 'normal');
+          window.Heart3D.show();
+        }
+      }
+    };
+  </script>
 </body>
 </html>
