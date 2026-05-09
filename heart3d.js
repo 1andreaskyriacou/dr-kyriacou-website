@@ -33,14 +33,16 @@
   var bonesAtria = [];
   var bonesVents = [];
 
-  // Contraction amplitudes and durations
-  var ATRIA_ROT    = 0.32;  // radians — rotation applied at peak atrial contraction
-  var ATRIA_SCALE  = 0.18;  // fraction scale-down at peak (layered on top of rotation)
-  var ATRIA_DUR    = 140;   // ms
-  var ATRIA_AF_AMT = 0.40;  // AF quiver uses reduced rotation (× this fraction)
-  var VENTS_ROT    = 0.20;  // radians — peak ventricular contraction rotation
-  var VENTS_SCALE  = 0.22;  // fraction scale-down for ventricles
-  var VENTS_DUR    = 290;   // ms
+  // ── Contraction amplitudes ───────────────────────────────────────────────────
+  // Atria use rotation (visible regardless of skin weights) + scale compression
+  var ATRIA_ROT   = 0.30; // radians applied at peak — on both X and Z axes
+  var ATRIA_SCALE = 0.30; // fractional scale-down at peak
+  var ATRIA_DUR   = 140;  // ms
+  var ATRIA_AF    = 0.45; // AF quiver uses this fraction of full amplitude
+
+  var VENTS_ROT   = 0.20;
+  var VENTS_SCALE = 0.22;
+  var VENTS_DUR   = 290;
 
   // ── Contraction envelope: fast attack (20%), smooth decay (80%) ──────────────
   function contEnv(elMs, durMs) {
@@ -51,17 +53,13 @@
 
   // ── Active contractions pool ─────────────────────────────────────────────────
   var contractions = [];
-  var _aFireCount  = 0; // diagnostic counter
 
   function fire(tp, frac) {
-    // frac: 0–1 multiplier on the full amplitude (default 1)
     var f = (frac !== undefined) ? frac : 1;
     if (tp === 'a') {
-      _aFireCount++;
-      if (_aFireCount <= 6 || _aFireCount % 20 === 0) {
-        console.log('heart3d: atrial contraction #' + _aFireCount
-                    + '  cond=' + cond + '  frac=' + f.toFixed(2));
-      }
+      // Log every atrial contraction so it can be confirmed in the console
+      console.log('[heart3d] ATRIAL contraction — cond:', cond, '| frac:', f.toFixed(2),
+                  '| bonesAtria found:', bonesAtria.length);
     }
     contractions.push({ tp: tp, t0: performance.now(), frac: f });
   }
@@ -84,7 +82,7 @@
     // Atria: rotation on X and Z axes + scale compression
     bonesAtria.forEach(function (d) {
       var rot = ATRIA_ROT * aEnv;
-      var sc  = 1 - ATRIA_SCALE * aEnv;
+      var sc  = 1.0 - ATRIA_SCALE * aEnv;
       d.bone.rotation.x = d.restRot.x + rot;
       d.bone.rotation.z = d.restRot.z + rot;
       d.bone.scale.set(d.restScale.x * sc, d.restScale.y * sc, d.restScale.z * sc);
@@ -93,7 +91,7 @@
     // Ventricles + valves: rotation on X axis + scale compression
     bonesVents.forEach(function (d) {
       var rot = VENTS_ROT * vEnv;
-      var sc  = 1 - VENTS_SCALE * vEnv;
+      var sc  = 1.0 - VENTS_SCALE * vEnv;
       d.bone.rotation.x = d.restRot.x + rot;
       d.bone.scale.set(d.restScale.x * sc, d.restScale.y * sc, d.restScale.z * sc);
     });
@@ -129,30 +127,36 @@
     crt:     'CRT'
   };
 
-  function updateFsLabel() {
-    var el = document.getElementById('heart3d-fs-label');
-    if (el) el.textContent = COND_LABELS[cond] || cond;
-  }
-
   // ── Start / switch rhythm ─────────────────────────────────────────────────────
   function startRhythm(c) {
     cond = c;
     contractions = [];
-    _aFireCount  = 0;
-    updateFsLabel();
     var now = performance.now();
 
     switch (c) {
       case 'normal': case 'csp': case 'crt':
         nextA = now; nextV = now + 120; break;
+
       case 'flutter':
+        // Atria 300bpm (200ms); ventricles 150bpm (400ms), 2:1 block
         nextA = now; nextV = now; break;
+
+      case 'at':
+        // Atrial tachycardia: atria 180bpm (333ms); ventricles 150bpm (400ms)
+        nextA = now; nextV = now; break;
+
       case 'svt':
+        // 200bpm (300ms): all chambers simultaneously
         nextA = now; nextV = now; break;
+
       case 'vt':
+        // Ventricles 180bpm (333ms); atria 70bpm (857ms), dissociated
         nextV = now; nextA = now + rand(0, 800); break;
+
       case 'af':
+        // Atria quiver ~350ms ±40%; ventricles irregular 400–900ms
         nextA = now; nextV = now + rand(50, 300); break;
+
       case 'pvc':
         pvcQueue = []; pvcNextCycle = now; break;
     }
@@ -164,24 +168,36 @@
 
     switch (cond) {
       case 'normal': case 'csp': case 'crt':
-        if (now >= nextA) { fire('a');              nextA += 857; }
-        if (now >= nextV) { fire('v');              nextV += 857; }
+        if (now >= nextA) { fire('a'); nextA += 857; }
+        if (now >= nextV) { fire('v'); nextV += 857; }
         break;
+
       case 'flutter':
-        if (now >= nextA) { fire('a');              nextA += 200; }
-        if (now >= nextV) { fire('v');              nextV += 400; }
+        // Atria: 200ms (300bpm). Ventricles: 400ms (150bpm).
+        if (now >= nextA) { fire('a'); nextA += 200; }
+        if (now >= nextV) { fire('v'); nextV += 400; }
         break;
+
+      case 'at':
+        // Atria: 333ms (180bpm). Ventricles: 400ms (150bpm).
+        if (now >= nextA) { fire('a'); nextA += 333; }
+        if (now >= nextV) { fire('v'); nextV += 400; }
+        break;
+
       case 'svt':
-        if (now >= nextA) { fire('a'); fire('v');   nextA += 300; nextV = nextA; }
+        if (now >= nextA) { fire('a'); fire('v'); nextA += 300; nextV = nextA; }
         break;
+
       case 'vt':
-        if (now >= nextA) { fire('a');              nextA += 857; }
-        if (now >= nextV) { fire('v');              nextV += 333; }
+        if (now >= nextA) { fire('a'); nextA += 857; }
+        if (now >= nextV) { fire('v'); nextV += 333; }
         break;
+
       case 'af':
-        if (now >= nextA) { fire('a', ATRIA_AF_AMT); nextA += rand(210, 490); }
-        if (now >= nextV) { fire('v');                nextV += rand(400, 900); }
+        if (now >= nextA) { fire('a', ATRIA_AF); nextA += rand(210, 490); }
+        if (now >= nextV) { fire('v');            nextV += rand(400, 900); }
         break;
+
       case 'pvc':
         tickPvc(now); break;
     }
@@ -203,36 +219,40 @@
     pvcQueue = rem;
   }
 
-  // ── Fullscreen helpers ────────────────────────────────────────────────────────
-  function isFullscreen() {
-    return document.body.classList.contains('heart-fullscreen');
+  // ── Panel-expand helpers ──────────────────────────────────────────────────────
+  function getDualView() {
+    var wrap = document.getElementById('heart3d-canvas-wrap');
+    // wrap → .ae-3d-panel → .ae-dual-view
+    return wrap && wrap.parentElement && wrap.parentElement.parentElement;
+  }
+
+  function isExpanded() {
+    var dv = getDualView();
+    return !!(dv && dv.classList.contains('ae-3d-expanded'));
   }
 
   function resizeRenderer() {
-    if (!renderer) return;
-    if (isFullscreen()) {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight, false);
-    } else {
-      var wrap = document.getElementById('heart3d-canvas-wrap');
-      if (wrap && wrap.clientWidth > 0) {
-        camera.aspect = 1;
-        camera.updateProjectionMatrix();
-        renderer.setSize(wrap.clientWidth, wrap.clientWidth, false);
-      }
-    }
+    if (!renderer || !camera) return;
+    var wrap = document.getElementById('heart3d-canvas-wrap');
+    if (!wrap || !wrap.clientWidth) return;
+    var w = wrap.clientWidth;
+    // canvas-wrap always keeps aspect-ratio:1 (via CSS) so height = width
+    camera.aspect = 1;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, w, false);
   }
 
-  function enterFullscreen() {
-    document.body.classList.add('heart-fullscreen');
-    resizeRenderer();
-    updateFsLabel();
+  function enterExpanded() {
+    var dv = getDualView();
+    if (dv) dv.classList.add('ae-3d-expanded');
+    // Double-rAF: wait for two frames so CSS reflow completes before we read clientWidth
+    requestAnimationFrame(function () { requestAnimationFrame(resizeRenderer); });
   }
 
-  function exitFullscreen() {
-    document.body.classList.remove('heart-fullscreen');
-    resizeRenderer();
+  function exitExpanded() {
+    var dv = getDualView();
+    if (dv) dv.classList.remove('ae-3d-expanded');
+    requestAnimationFrame(function () { requestAnimationFrame(resizeRenderer); });
   }
 
   // ── Init ─────────────────────────────────────────────────────────────────────
@@ -278,16 +298,17 @@
     loader.load(
       'heart.glb',
       function (gltf) {
-        // Explicitly suppress any built-in animations
+        // IMPORTANT: AnimationMixer is deliberately NOT created.
+        // The timing engine below drives all bone motion directly.
         if (gltf.animations && gltf.animations.length > 0) {
-          console.log('heart3d: GLB has', gltf.animations.length,
-                      'built-in clip(s) — suppressed; timing engine drives all motion');
+          console.log('[heart3d] GLB has', gltf.animations.length,
+            'clip(s) — AnimationMixer NOT created; manual bone animation only');
         }
 
         modelGroup = new THREE.Group();
         var model  = gltf.scene;
 
-        // ── Centre and scale ─────────────────────────────────────────────────
+        // ── Centre + scale ───────────────────────────────────────────────────
         var box    = new THREE.Box3().setFromObject(model);
         var centre = new THREE.Vector3();
         box.getCenter(centre);
@@ -297,19 +318,21 @@
         model.scale.setScalar(s);
         model.position.copy(centre).multiplyScalar(-s);
 
-        // Camera distance from bounding sphere
         var halfDiag = 0.5 * Math.sqrt(sz.x*sz.x + sz.y*sz.y + sz.z*sz.z) * s;
         var fovHalf  = camera.fov * (Math.PI / 180) / 2;
         var dist     = Math.max(4.5, halfDiag / Math.tan(fovHalf) * 1.20);
         camera.position.set(0, halfDiag * 0.08, dist);
 
-        // ── Collect bones ────────────────────────────────────────────────────
+        // ── Collect bones + set shadows ──────────────────────────────────────
         model.traverse(function (node) {
           if (node.isMesh) { node.castShadow = true; node.receiveShadow = true; }
 
           function tryAdd(b) {
-            var d = { bone: b, restScale: b.scale.clone(),
-                      restRot: { x: b.rotation.x, y: b.rotation.y, z: b.rotation.z } };
+            var d = {
+              bone:      b,
+              restScale: b.scale.clone(),
+              restRot:   { x: b.rotation.x, y: b.rotation.y, z: b.rotation.z }
+            };
             if (ATRIA_NAMES.indexOf(b.name) !== -1) bonesAtria.push(d);
             if (VENTS_NAMES.indexOf(b.name) !== -1) bonesVents.push(d);
           }
@@ -328,8 +351,8 @@
         bonesAtria = dedupe(bonesAtria);
         bonesVents = dedupe(bonesVents);
 
-        console.log('heart3d: atria bones:', bonesAtria.map(function (d) { return d.bone.name; }));
-        console.log('heart3d: vent/valve bones:', bonesVents.map(function (d) { return d.bone.name; }));
+        console.log('[heart3d] atria bones:', bonesAtria.map(function (d) { return d.bone.name; }));
+        console.log('[heart3d] vent/valve bones:', bonesVents.map(function (d) { return d.bone.name; }));
 
         modelGroup.add(model);
         modelGroup.rotation.x = rotX;
@@ -366,15 +389,13 @@
     }, { passive: false });
     canvas.addEventListener('touchend', onUp);
 
-    // ── Fullscreen buttons ────────────────────────────────────────────────────
-    var btnExpand = document.getElementById('heart3d-expand');
-    var btnClose  = document.getElementById('heart3d-close');
-
-    if (btnExpand) btnExpand.addEventListener('click', enterFullscreen);
-    if (btnClose)  btnClose.addEventListener('click',  exitFullscreen);
-
+    // ── Expand / collapse button wiring ───────────────────────────────────────
+    var btnExpand   = document.getElementById('heart3d-expand');
+    var btnCollapse = document.getElementById('heart3d-collapse');
+    if (btnExpand)   btnExpand.addEventListener('click',   enterExpanded);
+    if (btnCollapse) btnCollapse.addEventListener('click',  exitExpanded);
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && isFullscreen()) exitFullscreen();
+      if (e.key === 'Escape' && isExpanded()) exitExpanded();
     });
 
     // ── Resize ────────────────────────────────────────────────────────────────
