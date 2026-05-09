@@ -4,7 +4,7 @@
 
   var THREE = window.THREE;
 
-  var W = 120, H_3D = 88, H_ECG = 32;
+  var W = 150, H_3D = 118, H_ECG = 42;
 
   // Animation state
   var scene, camera, renderer, clock;
@@ -129,7 +129,7 @@
     // Build widget DOM
     var widget = document.createElement('div');
     widget.style.cssText = [
-      'position:fixed', 'top:72px', 'right:14px',
+      'position:fixed', 'top:20px', 'right:30px',
       'width:' + W + 'px',
       'border-radius:10px', 'overflow:hidden',
       'box-shadow:0 4px 18px rgba(10,35,66,0.22),0 0 0 1px rgba(201,168,76,0.25)',
