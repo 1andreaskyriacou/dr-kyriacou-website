@@ -329,29 +329,64 @@
         var dist     = Math.max(4.5, halfDiag / Math.tan(fovHalf) * 1.20);
         camera.position.set(0, halfDiag * 0.08, dist);
 
-        // ── Bone-weight vertex colours ───────────────────────────────────────
-        // For each vertex, read the dominant bone from skinIndex/skinWeight
-        // and assign a colour: atria → #cc2222, valves → #f0ece0, muscle → #8b0000
+        // ── Bone-weight vertex colours + texture ─────────────────────────────
+        // Dominant bone per vertex drives colour; texture provides detail on top.
         model.traverse(function (node) {
           if (!node.isSkinnedMesh || !node.skeleton) return;
 
-          var bones     = node.skeleton.bones;
-          var siAttr    = node.geometry.attributes.skinIndex;
-          var swAttr    = node.geometry.attributes.skinWeight;
+          // Restore original texture with blue-only pixel fix
+          var orig   = node.material;
+          var texMap = (orig && orig.map) || null;
+          if (texMap && texMap.image) {
+            var img = texMap.image;
+            var cv  = document.createElement('canvas');
+            cv.width  = img.width  || img.naturalWidth  || 1024;
+            cv.height = img.height || img.naturalHeight || 1024;
+            var ctx = cv.getContext('2d');
+            ctx.drawImage(img, 0, 0, cv.width, cv.height);
+            var id = ctx.getImageData(0, 0, cv.width, cv.height);
+            var px = id.data;
+            for (var i = 0; i < px.length; i += 4) {
+              var r = px[i], g = px[i + 1], b = px[i + 2];
+              if (b > r + 40 && b > g + 20) {
+                px[i]     = Math.max(r, 160);
+                px[i + 1] = Math.round(g * 0.3);
+                px[i + 2] = 0;
+              }
+            }
+            ctx.putImageData(id, 0, 0);
+            var newTex      = new THREE.CanvasTexture(cv);
+            newTex.encoding = texMap.encoding;
+            newTex.wrapS    = texMap.wrapS;
+            newTex.wrapT    = texMap.wrapT;
+            newTex.flipY    = texMap.flipY;
+            texMap          = newTex;
+          }
+
+          var bones  = node.skeleton.bones;
+          var siAttr = node.geometry.attributes.skinIndex;
+          var swAttr = node.geometry.attributes.skinWeight;
           if (!siAttr || !swAttr) return;
 
-          // Pre-classify every bone index to an RGB triple
+          // Explicit pale-white set: all valve joints + vessels + chordae end joint
+          var PALE_NAMES = [
+            'right_pulmonary_valve_jnt9_9',  'left_pulmonary_valve_jnt11_11',
+            'left_mitral_valve_jnt15_15',    'right_mitral_valve_jnt16_16',
+            'aortic_valve_02_jnt17_17',      'aortic_valve_03_jnt19_19',
+            'aortic_valve_01_jnt21_21',      'left_tricuspid_valve_jnt23_23',
+            'right_tricuspid_valve_jnt24_24','cardiac_muscle_endjnt8_8'
+          ];
+
           var boneCol = bones.map(function (bone) {
             var n = bone.name;
-            if (ATRIA_NAMES.indexOf(n) !== -1)           return [0.800, 0.133, 0.133]; // #cc2222
-            if (n.toLowerCase().indexOf('valve') !== -1) return [0.941, 0.925, 0.878]; // #f0ece0
-            return [0.545, 0.000, 0.000];                                               // #8b0000
+            if (ATRIA_NAMES.indexOf(n) !== -1)  return [0.800, 0.133, 0.133]; // #cc2222
+            if (PALE_NAMES.indexOf(n)  !== -1)  return [0.941, 0.925, 0.878]; // #f0ece0
+            return [0.545, 0.000, 0.000];                                       // #8b0000
           });
 
           var count  = siAttr.count;
           var colArr = new Float32Array(count * 3);
           for (var vi = 0; vi < count; vi++) {
-            // Find the bone with the highest skin weight for this vertex
             var iw = [
               [siAttr.getX(vi), swAttr.getX(vi)],
               [siAttr.getY(vi), swAttr.getY(vi)],
@@ -368,11 +403,11 @@
 
           node.geometry.setAttribute('color', new THREE.BufferAttribute(colArr, 3));
           node.material = new THREE.MeshStandardMaterial({
+            map:          texMap,
             vertexColors: true,
             roughness:    0.9,
             metalness:    0.0
           });
-          console.log('[heart3d] vertex colours applied to', node.name);
         });
 
         // ── Collect bones + set shadows ──────────────────────────────────────
