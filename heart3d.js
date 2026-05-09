@@ -292,7 +292,7 @@
     scene.add(key);
     var fill = new THREE.DirectionalLight(0xffe0d8, 0.60);
     fill.position.set(-4, 1, 2); scene.add(fill);
-    var rim = new THREE.DirectionalLight(0xd0e4ff, 0.35);
+    var rim = new THREE.DirectionalLight(0xffcccc, 0.30);
     rim.position.set(0, -3, -4); scene.add(rim);
 
     // ── Load GLB ─────────────────────────────────────────────────────────────
@@ -325,9 +325,20 @@
         var dist     = Math.max(4.5, halfDiag / Math.tan(fovHalf) * 1.20);
         camera.position.set(0, halfDiag * 0.08, dist);
 
+        // ── Override all mesh materials → uniform deep red cardiac muscle ────
+        var heartMat = new THREE.MeshStandardMaterial({
+          color:     new THREE.Color(0xc0202a),
+          roughness: 0.58,
+          metalness: 0.04
+        });
+
         // ── Collect bones + set shadows ──────────────────────────────────────
         model.traverse(function (node) {
-          if (node.isMesh) { node.castShadow = true; node.receiveShadow = true; }
+          if (node.isMesh) {
+            node.castShadow    = true;
+            node.receiveShadow = true;
+            node.material      = heartMat;
+          }
 
           function tryAdd(b) {
             var d = {
