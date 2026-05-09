@@ -177,8 +177,8 @@
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 40px;
       align-items: start;
       position: relative;
       z-index: 1;

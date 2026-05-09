@@ -158,6 +158,7 @@
       <div class="hero-bg" aria-hidden="true"></div>
       <div class="container">
         <div class="hero-grid">
+          <!-- Left column: text -->
           <div>
             <p class="hero-eyebrow">Consultant Cardiologist &amp; Electrophysiologist</p>
             <h1 class="hero-title">
@@ -175,8 +176,11 @@
               20 years experience having performed 1000+ ablations and pacemakers/defibrillators. He is
               very active in research and has published avidly in high impact journals.
             </p>
-            <!-- compact 3D heart + ECG frame -->
-            <div class="hero-vitals-frame" aria-hidden="true" style="margin-top:22px;">
+          </div>
+
+          <!-- Middle column: 3D heart + ECG + appointment button -->
+          <div style="display:flex;flex-direction:column;align-items:center;gap:16px;align-self:center;">
+            <div class="hero-vitals-frame" aria-hidden="true">
               <div class="hero-heart-area">
                 <div id="heart3d-canvas-wrap" style="position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;">
                   <canvas id="heart3d-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%;display:block;"></canvas>
@@ -184,8 +188,15 @@
               </div>
               <canvas id="hero-ecg-canvas" class="hero-ecg-strip"></canvas>
             </div>
+            <div class="hero-actions" style="justify-content:center;">
+              <a href="contact.html" class="btn-primary">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.36 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.36 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.34 1.85.573 2.81.7A2 2 0 0 1 21.28 16z"/></svg>
+                Request Appointment
+              </a>
+            </div>
           </div>
 
+          <!-- Right column: photo + profile buttons -->
           <div>
             <div class="hero-photo-frame" role="img" aria-label="Dr Andreas Kyriacou">
               <img src="a.kyriacou.jpg" alt="Dr Andreas Kyriacou — Consultant Cardiologist &amp; Electrophysiologist" class="hero-photo" />
@@ -197,12 +208,6 @@
               <button class="bio-modal-btn" onclick="openResearchModal()" aria-haspopup="dialog" style="margin-top:0;">
                 📊 Research Profile
               </button>
-            </div>
-            <div class="hero-actions" style="justify-content:center;margin-top:12px;">
-              <a href="contact.html" class="btn-primary">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.36 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.36 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.34 1.85.573 2.81.7A2 2 0 0 1 21.28 16z"/></svg>
-                Request Appointment
-              </a>
             </div>
           </div>
         </div>
