@@ -100,7 +100,7 @@
     // Build widget DOM
     var widget = document.createElement('div');
     widget.id = 'hw-widget';
-    widget.style.cssText = 'overflow:hidden;background:#F9F9F9;';
+    widget.style.cssText = 'overflow:hidden;';
 
     var hCanvas = document.createElement('canvas');
     hCanvas.style.cssText = 'display:block;width:' + W + 'px;height:' + H_3D + 'px;';
@@ -110,12 +110,12 @@
 
     // Three.js scene
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xF9F9F9);
+    scene.background = null;
 
     camera = new THREE.PerspectiveCamera(35, W / H_3D, 0.01, 200);
     camera.position.set(0, 0.1, 5.0);
 
-    renderer = new THREE.WebGLRenderer({ canvas: hCanvas, antialias: true });
+    renderer = new THREE.WebGLRenderer({ canvas: hCanvas, antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(W, H_3D, false);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
