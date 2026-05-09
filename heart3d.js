@@ -325,17 +325,45 @@
         var dist     = Math.max(4.5, halfDiag / Math.tan(fovHalf) * 1.20);
         camera.position.set(0, halfDiag * 0.08, dist);
 
-        // ── Collect bones + set shadows; tint blue meshes only ───────────────
+        // ── Fix baked-in blue pixels on Object_30's texture ─────────────────
+        model.traverse(function (node) {
+          if (node.isMesh && node.name === 'Object_30') {
+            var mat = node.material;
+            var tex = mat && mat.map;
+            if (tex && tex.image) {
+              var img = tex.image;
+              var cv  = document.createElement('canvas');
+              cv.width  = img.width  || img.naturalWidth  || 1024;
+              cv.height = img.height || img.naturalHeight || 1024;
+              var ctx = cv.getContext('2d');
+              ctx.drawImage(img, 0, 0, cv.width, cv.height);
+              var id = ctx.getImageData(0, 0, cv.width, cv.height);
+              var px = id.data;
+              for (var i = 0; i < px.length; i += 4) {
+                var r = px[i], g = px[i + 1], b = px[i + 2];
+                if (b > r + 40 && b > g + 20) {
+                  px[i]     = b;
+                  px[i + 1] = Math.round(g * 0.3);
+                  px[i + 2] = 0;
+                }
+              }
+              ctx.putImageData(id, 0, 0);
+              var newTex      = new THREE.CanvasTexture(cv);
+              newTex.encoding = tex.encoding;
+              newTex.wrapS    = tex.wrapS;
+              newTex.wrapT    = tex.wrapT;
+              newTex.flipY    = tex.flipY;
+              mat.map         = newTex;
+              mat.needsUpdate = true;
+            }
+          }
+        });
+
+        // ── Collect bones + set shadows ──────────────────────────────────────
         model.traverse(function (node) {
           if (node.isMesh) {
             node.castShadow    = true;
             node.receiveShadow = true;
-            // Only recolour meshes whose base colour is blue-dominant.
-            // All other meshes keep their original material and textures untouched.
-            var c = node.material && node.material.color;
-            if (c && c.b > c.r * 1.2 && c.b > c.g * 1.2) {
-              node.material.color.set(0xc0202a);
-            }
           }
 
           function tryAdd(b) {
