@@ -325,22 +325,46 @@
         var dist     = Math.max(4.5, halfDiag / Math.tan(fovHalf) * 1.20);
         camera.position.set(0, halfDiag * 0.08, dist);
 
-        // ── Collect bones + set shadows; log + tint blue meshes only ────────
-        console.log('[heart3d] ── Mesh colour audit ──────────────────────────');
+        // ── Remap blue pixels in Object_30's texture to red ─────────────────
+        model.traverse(function (node) {
+          if (node.isMesh && node.name === 'Object_30') {
+            var mat = node.material;
+            var tex = mat && mat.map;
+            if (tex && tex.image) {
+              var img = tex.image;
+              var cv  = document.createElement('canvas');
+              cv.width  = img.width  || img.naturalWidth  || 1024;
+              cv.height = img.height || img.naturalHeight || 1024;
+              var ctx = cv.getContext('2d');
+              ctx.drawImage(img, 0, 0, cv.width, cv.height);
+              var id = ctx.getImageData(0, 0, cv.width, cv.height);
+              var px = id.data;
+              for (var i = 0; i < px.length; i += 4) {
+                var r = px[i], g = px[i + 1], b = px[i + 2];
+                if (b > r + 40 && b > g + 20) {
+                  px[i]     = b;                        // map blue strength → red
+                  px[i + 1] = Math.round(g * 0.4);     // suppress green
+                  px[i + 2] = Math.round(b * 0.05);    // nearly zero blue
+                }
+              }
+              ctx.putImageData(id, 0, 0);
+              var newTex      = new THREE.CanvasTexture(cv);
+              newTex.encoding = tex.encoding;
+              newTex.wrapS    = tex.wrapS;
+              newTex.wrapT    = tex.wrapT;
+              newTex.flipY    = tex.flipY;
+              mat.map         = newTex;
+              mat.needsUpdate = true;
+              console.log('[heart3d] Object_30 texture repainted: blue→red');
+            }
+          }
+        });
+
+        // ── Collect bones + set shadows ──────────────────────────────────────
         model.traverse(function (node) {
           if (node.isMesh) {
             node.castShadow    = true;
             node.receiveShadow = true;
-            var c = node.material && node.material.color;
-            var isBlue = c && c.b > c.r * 1.2 && c.b > c.g * 1.2;
-            console.log(
-              '[heart3d]', isBlue ? '🔵 BLUE' : '     ok',
-              '"' + node.name + '"',
-              c ? ('r=' + c.r.toFixed(3) + ' g=' + c.g.toFixed(3) + ' b=' + c.b.toFixed(3)) : 'no color'
-            );
-            if (isBlue) {
-              node.material.color.set(0xc0202a);
-            }
           }
 
           function tryAdd(b) {
