@@ -35,20 +35,22 @@
 
   // ── Contraction amplitudes ───────────────────────────────────────────────────
   // Atria use rotation (visible regardless of skin weights) + scale compression
-  var ATRIA_ROT   = 0.30; // radians applied at peak — on both X and Z axes
-  var ATRIA_SCALE = 0.30; // fractional scale-down at peak
-  var ATRIA_DUR   = 140;  // ms
+  var ATRIA_ROT   = 0.52; // radians applied at peak — on both X and Z axes
+  var ATRIA_SCALE = 0.38; // fractional scale-down at peak
+  var ATRIA_DUR   = 160;  // ms — slightly longer so the squeeze is visible
   var ATRIA_AF    = 0.45; // AF quiver uses this fraction of full amplitude
 
   var VENTS_ROT   = 0.20;
   var VENTS_SCALE = 0.22;
   var VENTS_DUR   = 290;
 
-  // ── Contraction envelope: fast attack (20%), smooth decay (80%) ──────────────
-  function contEnv(elMs, durMs) {
-    var t = elMs / durMs;
+  // ── Contraction envelope: attackRatio controls squeeze sharpness ─────────────
+  // attackRatio 0.10 = very snappy (10% of duration to peak, 90% relaxation)
+  function contEnv(elMs, durMs, attackRatio) {
+    var t  = elMs / durMs;
+    var ar = attackRatio !== undefined ? attackRatio : 0.20;
     if (t <= 0 || t >= 1) return 0;
-    return t < 0.20 ? t / 0.20 : 1.0 - (t - 0.20) / 0.80;
+    return t < ar ? t / ar : 1.0 - (t - ar) / (1.0 - ar);
   }
 
   // ── Active contractions pool ─────────────────────────────────────────────────
@@ -72,7 +74,9 @@
     contractions.forEach(function (c) {
       var dur = c.tp === 'a' ? ATRIA_DUR : VENTS_DUR;
       var el  = now - c.t0;
-      var e   = contEnv(el, dur) * c.frac;
+      // Atria: 10% attack (snappy squeeze), 90% relaxation
+      var e   = c.tp === 'a' ? contEnv(el, dur, 0.10) * c.frac
+                              : contEnv(el, dur)       * c.frac;
       if (el < dur) alive.push(c);
       if (c.tp === 'a') aEnv = Math.max(aEnv, e);
       else              vEnv = Math.max(vEnv, e);
