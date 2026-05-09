@@ -383,6 +383,26 @@
           if (node.isMesh) {
             node.castShadow    = true;
             node.receiveShadow = true;
+
+            // ── Geometry attribute audit (temporary diagnostic) ───────────
+            if (node.name === 'Object_30') {
+              var attrs = node.geometry.attributes;
+              console.log('[heart3d] Object_30 geometry attributes:', Object.keys(attrs));
+              if (attrs.color) {
+                console.log('[heart3d] vertex color attribute found! itemSize:', attrs.color.itemSize,
+                            'count:', attrs.color.count);
+                var cd = attrs.color.array;
+                var is = attrs.color.itemSize;
+                for (var vi = 0; vi < Math.min(20, attrs.color.count); vi++) {
+                  var base = vi * is;
+                  console.log('[heart3d] vtx color', vi, ': r=' + cd[base].toFixed(3),
+                              'g=' + cd[base+1].toFixed(3), 'b=' + cd[base+2].toFixed(3));
+                }
+              } else {
+                console.log('[heart3d] no vertex color attribute on Object_30');
+              }
+            }
+            // ─────────────────────────────────────────────────────────────
           }
 
           function tryAdd(b) {
