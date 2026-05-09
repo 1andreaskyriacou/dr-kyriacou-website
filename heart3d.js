@@ -325,41 +325,17 @@
         var dist     = Math.max(4.5, halfDiag / Math.tan(fovHalf) * 1.20);
         camera.position.set(0, halfDiag * 0.08, dist);
 
-        // ── Shader colour remap on Object_30 — texture untouched ────────────
-        // onBeforeCompile patches the fragment shader after texture sampling
-        // so lighting, normals and UV detail are fully preserved.
-        model.traverse(function (node) {
-          if (node.isMesh && node.name === 'Object_30') {
-            node.material.onBeforeCompile = function (shader) {
-              shader.fragmentShader = shader.fragmentShader.replace(
-                '#include <map_fragment>',
-                [
-                  '#ifdef USE_MAP',
-                  '  vec4 sampledDiffuseColor = texture2D( map, vUv );',
-                  '  sampledDiffuseColor = mapTexelToLinear( sampledDiffuseColor );',
-                  '  vec3 tc = sampledDiffuseColor.rgb;',
-                  '  vec3 remapped;',
-                  '  if (tc.r > 0.82 && tc.g > 0.82 && tc.b > 0.82) {',
-                  '    remapped = vec3(0.96, 0.94, 0.92);',          // valves / chordae
-                  '  } else if (tc.b > tc.r + 0.15) {',
-                  '    remapped = vec3(0.75, 0.08, 0.08);',          // blue → red
-                  '  } else {',
-                  '    remapped = vec3(tc.r * 0.9 + 0.1, tc.g * 0.2, tc.b * 0.15);', // muscle
-                  '  }',
-                  '  diffuseColor *= vec4(remapped, sampledDiffuseColor.a);',
-                  '#endif'
-                ].join('\n')
-              );
-            };
-            node.material.needsUpdate = true;
-          }
-        });
-
-        // ── Collect bones + set shadows ──────────────────────────────────────
+        // ── Collect bones + set shadows; tint blue meshes only ───────────────
         model.traverse(function (node) {
           if (node.isMesh) {
             node.castShadow    = true;
             node.receiveShadow = true;
+            // Only recolour meshes whose base colour is blue-dominant.
+            // All other meshes keep their original material and textures untouched.
+            var c = node.material && node.material.color;
+            if (c && c.b > c.r * 1.2 && c.b > c.g * 1.2) {
+              node.material.color.set(0xc0202a);
+            }
           }
 
           function tryAdd(b) {
