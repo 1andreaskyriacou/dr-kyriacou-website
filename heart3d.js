@@ -348,6 +348,11 @@
                   px[i]     = Math.max(r, 160);
                   px[i + 1] = Math.round(g * 0.3);
                   px[i + 2] = 0;
+                } else if (g > 140 && b > 130 && r > 180) {
+                  // Great vessels (aorta, IVC, SVC, pulmonary artery) → pale white
+                  px[i]     = 240;
+                  px[i + 1] = 235;
+                  px[i + 2] = 225;
                 } else if (g > 30 && b > 25) {
                   // Pale pink/beige valve and chordae → pale white
                   px[i]     = 240;
