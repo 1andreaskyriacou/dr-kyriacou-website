@@ -341,6 +341,13 @@
               ctx.drawImage(img, 0, 0, cv.width, cv.height);
               var id = ctx.getImageData(0, 0, cv.width, cv.height);
               var px = id.data;
+              // ── Temporary pixel sampler — remove after audit ──────────────
+              var totalPixels = px.length / 4;
+              for (var s = 0; s < 50; s++) {
+                var si = Math.floor(s / 49 * (totalPixels - 1)) * 4;
+                console.log('[heart3d] pixel sample ' + s + ': r=' + px[si] + ' g=' + px[si+1] + ' b=' + px[si+2]);
+              }
+              // ─────────────────────────────────────────────────────────────
               for (var i = 0; i < px.length; i += 4) {
                 var r = px[i], g = px[i + 1], b = px[i + 2];
                 if (b > r + 40 && b > g + 20) {
