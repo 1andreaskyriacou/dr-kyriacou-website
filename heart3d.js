@@ -286,14 +286,16 @@
 
     clock = new THREE.Clock();
 
-    scene.add(new THREE.AmbientLight(0xffffff, 1.8));
-    var key = new THREE.DirectionalLight(0xfff8f0, 1.0);
+    scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+    var key = new THREE.DirectionalLight(0xfff8f0, 2.2);
     key.position.set(3, 5, 4); key.castShadow = true; key.shadow.mapSize.set(512, 512);
     scene.add(key);
-    var fill = new THREE.DirectionalLight(0xffe0d8, 0.60);
+    var fill = new THREE.DirectionalLight(0xffe0d8, 1.1);
     fill.position.set(-4, 1, 2); scene.add(fill);
-    var rim = new THREE.DirectionalLight(0xffcccc, 0.30);
+    var rim = new THREE.DirectionalLight(0xffcccc, 0.55);
     rim.position.set(0, -3, -4); scene.add(rim);
+    var top = new THREE.DirectionalLight(0xffeedd, 1.4);
+    top.position.set(0, 8, 1); scene.add(top);
 
     // ── Load GLB ─────────────────────────────────────────────────────────────
     var loader = new THREE.GLTFLoader();
@@ -325,11 +327,12 @@
         var dist     = Math.max(4.5, halfDiag / Math.tan(fovHalf) * 1.20);
         camera.position.set(0, halfDiag * 0.08, dist);
 
-        // ── Override all mesh materials → uniform deep red cardiac muscle ────
-        var heartMat = new THREE.MeshStandardMaterial({
+        // ── Override blue materials → deep red Phong; preserve red/pink originals ─
+        var heartMat = new THREE.MeshPhongMaterial({
           color:     new THREE.Color(0xc0202a),
-          roughness: 0.58,
-          metalness: 0.04
+          specular:  new THREE.Color(0xff6666),
+          shininess: 40,
+          emissive:  new THREE.Color(0x1a0005)
         });
 
         // ── Collect bones + set shadows ──────────────────────────────────────
@@ -337,7 +340,24 @@
           if (node.isMesh) {
             node.castShadow    = true;
             node.receiveShadow = true;
-            node.material      = heartMat;
+            var orig = node.material;
+            var c    = (orig && orig.color) ? orig.color : null;
+            var isBlue = c && (c.b > c.r * 1.2) && (c.b > c.g * 1.2);
+            if (isBlue || !c) {
+              node.material = heartMat;
+            } else {
+              // Patch to red Phong while keeping original texture maps
+              var m = new THREE.MeshPhongMaterial({
+                color:     new THREE.Color(0xc0202a),
+                specular:  new THREE.Color(0xff6666),
+                shininess: 40,
+                emissive:  new THREE.Color(0x1a0005),
+                map:             orig.map             || null,
+                normalMap:       orig.normalMap       || null,
+                aoMap:           orig.aoMap           || null
+              });
+              node.material = m;
+            }
           }
 
           function tryAdd(b) {
