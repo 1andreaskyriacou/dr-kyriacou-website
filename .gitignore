@@ -1,0 +1,5 @@
+.vercel
+.env*.local
+node_modules/
+.claude/
+patch_ae.js
