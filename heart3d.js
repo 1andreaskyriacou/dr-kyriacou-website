@@ -325,43 +325,33 @@
         var dist     = Math.max(4.5, halfDiag / Math.tan(fovHalf) * 1.20);
         camera.position.set(0, halfDiag * 0.08, dist);
 
-        // ── Remap blue pixels in Object_30's texture to red ─────────────────
+        // ── Shader colour remap on Object_30 — texture untouched ────────────
+        // onBeforeCompile patches the fragment shader after texture sampling
+        // so lighting, normals and UV detail are fully preserved.
         model.traverse(function (node) {
           if (node.isMesh && node.name === 'Object_30') {
-            var mat = node.material;
-            var tex = mat && mat.map;
-            if (tex && tex.image) {
-              var img = tex.image;
-              var cv  = document.createElement('canvas');
-              cv.width  = img.width  || img.naturalWidth  || 1024;
-              cv.height = img.height || img.naturalHeight || 1024;
-              var ctx = cv.getContext('2d');
-              ctx.drawImage(img, 0, 0, cv.width, cv.height);
-              var id = ctx.getImageData(0, 0, cv.width, cv.height);
-              var px = id.data;
-              for (var i = 0; i < px.length; i += 4) {
-                var r = px[i], g = px[i + 1], b = px[i + 2];
-                if (r > 210 && g > 210 && b > 210) {
-                  // Valve / chordae — clean pale white
-                  px[i]     = 245;
-                  px[i + 1] = 240;
-                  px[i + 2] = 235;
-                } else {
-                  // Cardiac muscle — shift toward rich red
-                  px[i]     = Math.min(255, Math.round(r * 1.5 + 40));
-                  px[i + 1] = Math.round(g * 0.25);
-                  px[i + 2] = Math.round(b * 0.15);
-                }
-              }
-              ctx.putImageData(id, 0, 0);
-              var newTex      = new THREE.CanvasTexture(cv);
-              newTex.encoding = tex.encoding;
-              newTex.wrapS    = tex.wrapS;
-              newTex.wrapT    = tex.wrapT;
-              newTex.flipY    = tex.flipY;
-              mat.map         = newTex;
-              mat.needsUpdate = true;
-            }
+            node.material.onBeforeCompile = function (shader) {
+              shader.fragmentShader = shader.fragmentShader.replace(
+                '#include <map_fragment>',
+                [
+                  '#ifdef USE_MAP',
+                  '  vec4 sampledDiffuseColor = texture2D( map, vUv );',
+                  '  sampledDiffuseColor = mapTexelToLinear( sampledDiffuseColor );',
+                  '  vec3 tc = sampledDiffuseColor.rgb;',
+                  '  vec3 remapped;',
+                  '  if (tc.r > 0.82 && tc.g > 0.82 && tc.b > 0.82) {',
+                  '    remapped = vec3(0.96, 0.94, 0.92);',          // valves / chordae
+                  '  } else if (tc.b > tc.r + 0.15) {',
+                  '    remapped = vec3(0.75, 0.08, 0.08);',          // blue → red
+                  '  } else {',
+                  '    remapped = vec3(tc.r * 0.9 + 0.1, tc.g * 0.2, tc.b * 0.15);', // muscle
+                  '  }',
+                  '  diffuseColor *= vec4(remapped, sampledDiffuseColor.a);',
+                  '#endif'
+                ].join('\n')
+              );
+            };
+            node.material.needsUpdate = true;
           }
         });
 
