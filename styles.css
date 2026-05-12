@@ -893,7 +893,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: #f9f6f1;
+      background: #f8f9fa;
       border-right: 1px solid #e2e8f0;
       padding: 18px 14px 0;
     }
@@ -961,7 +961,7 @@
     .ae-ecg-wrap {
       margin-top: auto;
       padding-top: 14px;
-      border-top: 1px solid #e8e4de;
+      border-top: 1px solid #e2e8f0;
     }
     .ae-ecg-wrap canvas {
       width: 100%;
@@ -1019,7 +1019,7 @@
     }
     #heart-modal-box {
       position: relative;
-      background: #f9f6f1;
+      background: #f8f9fa;
       border-radius: 16px;
       padding: 52px 28px 24px;
       max-width: min(700px, 94vw);
@@ -1100,7 +1100,7 @@
 
     .bio-modal-box {
       position: relative;
-      background: #FDFAF5;
+      background: #ffffff;
       border-radius: 14px;
       padding: 52px 40px 40px;
       max-width: 720px;
