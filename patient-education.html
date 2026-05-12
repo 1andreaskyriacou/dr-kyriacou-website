@@ -937,40 +937,54 @@
                 </g>
 
                 <!-- ── Step 4: Pulmonary Vein Isolation ── -->
+                <!-- PA view: patient's right = image left, patient's left = image right -->
+                <!-- LA centre ≈ (408,295), rx=88, ry=75 → corners at x=320/496, y=220/370 -->
                 <g id="ablation-2d-step-4" class="ablation-2d-overlay" style="opacity:0;">
                   <!-- LA outline highlight -->
                   <ellipse cx="408" cy="292" rx="90" ry="78"
                            fill="none" stroke="#FF5500" stroke-width="3" opacity="0.4"
                            stroke-dasharray="10,6"/>
-                  <!-- 4 PV pulsing ablation circles -->
-                  <!-- LSPV: upper-left -->
-                  <circle cx="370" cy="228" r="17"
+
+                  <!-- RSPV — Right Superior PV: image LEFT, upper (patient's right side) -->
+                  <circle cx="334" cy="232" r="17"
                           fill="rgba(255,85,0,0.28)" stroke="#FF5500" stroke-width="4.5"
                           filter="url(#abl-glow)">
                     <animate attributeName="r" values="11;25;11" dur="1.3s" repeatCount="indefinite"/>
                     <animate attributeName="opacity" values="0.5;1;0.5" dur="1.3s" repeatCount="indefinite"/>
                   </circle>
-                  <!-- RSPV: upper-right -->
-                  <circle cx="454" cy="228" r="17"
-                          fill="rgba(255,85,0,0.28)" stroke="#FF5500" stroke-width="4.5"
-                          filter="url(#abl-glow)">
-                    <animate attributeName="r" values="11;25;11" dur="1.3s" begin="0.32s" repeatCount="indefinite"/>
-                    <animate attributeName="opacity" values="0.5;1;0.5" dur="1.3s" begin="0.32s" repeatCount="indefinite"/>
-                  </circle>
-                  <!-- LIPV: lower-left -->
-                  <circle cx="366" cy="350" r="17"
+                  <text x="334" y="213" text-anchor="middle" font-size="11"
+                        font-weight="700" fill="#CC3300" font-family="Arial,sans-serif">RSPV</text>
+
+                  <!-- RIPV — Right Inferior PV: image LEFT, lower -->
+                  <circle cx="334" cy="354" r="17"
                           fill="rgba(255,85,0,0.28)" stroke="#FF5500" stroke-width="4.5"
                           filter="url(#abl-glow)">
                     <animate attributeName="r" values="11;25;11" dur="1.3s" begin="0.65s" repeatCount="indefinite"/>
                     <animate attributeName="opacity" values="0.5;1;0.5" dur="1.3s" begin="0.65s" repeatCount="indefinite"/>
                   </circle>
-                  <!-- RIPV: lower-right -->
-                  <circle cx="454" cy="348" r="17"
+                  <text x="334" y="378" text-anchor="middle" font-size="11"
+                        font-weight="700" fill="#CC3300" font-family="Arial,sans-serif">RIPV</text>
+
+                  <!-- LSPV — Left Superior PV: image RIGHT, upper (patient's left side) -->
+                  <circle cx="478" cy="232" r="17"
+                          fill="rgba(255,85,0,0.28)" stroke="#FF5500" stroke-width="4.5"
+                          filter="url(#abl-glow)">
+                    <animate attributeName="r" values="11;25;11" dur="1.3s" begin="0.32s" repeatCount="indefinite"/>
+                    <animate attributeName="opacity" values="0.5;1;0.5" dur="1.3s" begin="0.32s" repeatCount="indefinite"/>
+                  </circle>
+                  <text x="478" y="213" text-anchor="middle" font-size="11"
+                        font-weight="700" fill="#CC3300" font-family="Arial,sans-serif">LSPV</text>
+
+                  <!-- LIPV — Left Inferior PV: image RIGHT, lower -->
+                  <circle cx="478" cy="354" r="17"
                           fill="rgba(255,85,0,0.28)" stroke="#FF5500" stroke-width="4.5"
                           filter="url(#abl-glow)">
                     <animate attributeName="r" values="11;25;11" dur="1.3s" begin="0.98s" repeatCount="indefinite"/>
                     <animate attributeName="opacity" values="0.5;1;0.5" dur="1.3s" begin="0.98s" repeatCount="indefinite"/>
                   </circle>
+                  <text x="478" y="378" text-anchor="middle" font-size="11"
+                        font-weight="700" fill="#CC3300" font-family="Arial,sans-serif">LIPV</text>
+
                   <!-- Label bubble -->
                   <rect x="92" y="178" width="260" height="36" rx="7"
                         fill="#CC3300" opacity="0.9"/>

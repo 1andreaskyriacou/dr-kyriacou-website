@@ -10,55 +10,62 @@
   var cathGeom   = null;
   var ringMeshes = [];
 
-  var ablStep  = 1;      // 1–4
+  var ablStep   = 1;
   var isPlaying = true;
-  var stepMs   = 0;      // elapsed ms in current step
+  var stepMs    = 0;
 
-  // Duration (ms) each step stays before auto-advancing
-  var STEP_DUR = [4500, 3500, 3500, 6000];
-
-  // How much of the catheter path is revealed at the start/end of each step
+  var STEP_DUR    = [4500, 3500, 3500, 6000]; // ms per step
   var REVEAL_FROM = [0.00, 0.48, 0.72, 0.92];
   var REVEAL_TO   = [0.48, 0.72, 0.92, 0.92];
+  var cathReveal  = 0;
 
-  var cathReveal = 0;
+  // Fixed camera angle — matches heart3d.js starting view, no auto-rotation
+  var FIXED_ROT_X = 0.12;
+  var FIXED_ROT_Y = 0.5;
 
-  // Camera / rotation state
-  var rotY  = 1.0;   // slightly posterior view to show LA/PV region
-  var rotX  = 0.15;
-
-  // Heartbeat state (simple scale pulse, 50 bpm)
-  var beatT      = 0;
+  // Heartbeat (50 bpm simple scale)
+  var beatT       = 0;
   var BEAT_PERIOD = 1200; // ms
 
-  // ── Catheter waypoints ────────────────────────────────────────────────────────
-  // Heart is auto-scaled to ~3 units, centred at origin.
-  // Anatomical orientation (approximate):
-  //   RA: slightly right (+x), anterior (+z)
-  //   LA: slightly left (−x), posterior (−z)
-  //   IVC: enters RA from below (−y)
+  // ── Catheter waypoints — model-local space ────────────────────────────────────
+  // Heart is scaled to 3 units and centred at origin inside modelGroup.
+  // All waypoints stay well within ±0.9 units of centre — inside the heart walls.
+  // Path: IVC/RA junction → RA → interatrial septum → LA.
   var CATH_WPS = [
-    new THREE.Vector3( 0.22, -2.50,  0.15),  // IVC, far below heart
-    new THREE.Vector3( 0.20, -1.80,  0.12),
-    new THREE.Vector3( 0.17, -1.10,  0.08),  // entering IVC
-    new THREE.Vector3( 0.14, -0.45,  0.03),  // RA inlet
-    new THREE.Vector3( 0.10,  0.10,  0.00),  // mid RA          ← step 1 end
-    new THREE.Vector3( 0.04,  0.26, -0.08),  // approaching septum
-    new THREE.Vector3(-0.02,  0.34, -0.18),  // at septum        ← step 2 end
-    new THREE.Vector3(-0.13,  0.30, -0.28),  // crossing into LA
-    new THREE.Vector3(-0.26,  0.22, -0.40),  // LA tip           ← step 3 end / 4
+    new THREE.Vector3( 0.16, -0.82,  0.05),   // IVC/RA inlet — bottom of RA
+    new THREE.Vector3( 0.13, -0.52,  0.04),   // ascending IVC
+    new THREE.Vector3( 0.10, -0.20,  0.02),   // entering RA
+    new THREE.Vector3( 0.06,  0.10,  0.00),   // mid RA                ← step 1 end
+    new THREE.Vector3( 0.02,  0.24, -0.05),   // upper RA, pre-septal
+    new THREE.Vector3(-0.01,  0.30, -0.11),   // at interatrial septum ← step 2 end
+    new THREE.Vector3(-0.10,  0.26, -0.21),   // crossing into LA
+    new THREE.Vector3(-0.20,  0.18, -0.30),   // LA body               ← step 3 / 4
   ];
 
-  // Ablation ring positions — posterior surface near PV ostia
+  // Ablation ring positions — model-local, on the posterior-left LA wall
+  // near the four pulmonary vein ostia
   var PV_POS = [
-    new THREE.Vector3(-0.30,  0.38, -0.54),  // upper-left PV (LSPV)
-    new THREE.Vector3( 0.06,  0.40, -0.50),  // upper-right PV (RSPV)
-    new THREE.Vector3(-0.34, -0.02, -0.52),  // lower-left PV (LIPV)
-    new THREE.Vector3( 0.02, -0.06, -0.46),  // lower-right PV (RIPV)
+    new THREE.Vector3(-0.25,  0.30, -0.40),   // LSPV upper-left
+    new THREE.Vector3( 0.04,  0.32, -0.36),   // RSPV upper-right
+    new THREE.Vector3(-0.27, -0.00, -0.38),   // LIPV lower-left
+    new THREE.Vector3( 0.03,  0.00, -0.33),   // RIPV lower-right
   ];
-  var PV_PHASES = [0, 0.5, 0.25, 0.75]; // stagger animation
+  var PV_PHASES = [0, 0.5, 0.25, 0.75];
 
-  // ── UI cache ──────────────────────────────────────────────────────────────────
+  // ── Valve bone names (same as heart3d.js) ─────────────────────────────────────
+  var PALE_BONE_NAMES = [
+    'left_mitral_valve_jnt15_15',       'right_mitral_valve_jnt16_16',
+    'aortic_valve_01_jnt21_21',         'aortic_valve_02_jnt17_17',
+    'aortic_valve_03_jnt19_19',         'left_tricuspid_valve_jnt23_23',
+    'right_tricuspid_valve_jnt24_24',
+    'right_pulmonary_valve_jnt9_9',     'right_pulmonary_valve_endjnt10_10',
+    'left_pulmonary_valve_jnt11_11',    'left_pulmonary_valve_endjnt12_12',
+    'cardiac_muscle_endjnt8_8',
+    'aortic_valve_02_endjnt18_18',      'aortic_valve_03_endjnt20_20',
+    'aortic_valve_01_endjnt22_22'
+  ];
+
+  // ── UI refs ───────────────────────────────────────────────────────────────────
   var ui = {};
 
   function cacheUI() {
@@ -84,23 +91,129 @@
     ablStep    = Math.max(1, Math.min(4, s));
     stepMs     = 0;
     cathReveal = REVEAL_FROM[ablStep - 1];
-    // Rings only visible in step 4
     ringMeshes.forEach(function (r) { r.visible = (ablStep === 4); });
     applyUI();
   }
 
   function applyUI() {
-    if (ui.counter)   ui.counter.textContent   = 'Step ' + ablStep + ' of 4';
+    if (ui.counter)   ui.counter.textContent  = 'Step ' + ablStep + ' of 4';
     if (ui.stepLabel) ui.stepLabel.textContent = STEP_LABELS[ablStep - 1];
-
     ui.descs && ui.descs.forEach(function (el) {
-      var match = parseInt(el.dataset.step, 10) === ablStep;
-      el.style.display = match ? 'block' : 'none';
+      el.style.display = (parseInt(el.dataset.step, 10) === ablStep) ? 'block' : 'none';
+    });
+    ui.overlays && ui.overlays.forEach(function (el, i) {
+      if (el) el.style.opacity = (i + 1 === ablStep) ? '1' : '0';
+    });
+  }
+
+  // ── Full material setup (exact copy from heart3d.js) ─────────────────────────
+  function applyHeartMaterial(model) {
+    model.traverse(function (node) {
+      if (!node.isSkinnedMesh || !node.skeleton) return;
+
+      // Blue pixel fix on texture
+      var orig   = node.material;
+      var texMap = (orig && orig.map) || null;
+      if (texMap && texMap.image) {
+        var img = texMap.image;
+        var cv  = document.createElement('canvas');
+        cv.width  = img.width  || img.naturalWidth  || 1024;
+        cv.height = img.height || img.naturalHeight || 1024;
+        var ctx = cv.getContext('2d');
+        ctx.drawImage(img, 0, 0, cv.width, cv.height);
+        var id = ctx.getImageData(0, 0, cv.width, cv.height);
+        var px = id.data;
+        for (var i = 0; i < px.length; i += 4) {
+          var r = px[i], g = px[i + 1], b = px[i + 2];
+          if (b > r + 40 && b > g + 20) {
+            px[i]     = Math.max(r, 160);
+            px[i + 1] = Math.round(g * 0.3);
+            px[i + 2] = 0;
+          }
+        }
+        ctx.putImageData(id, 0, 0);
+        var newTex      = new THREE.CanvasTexture(cv);
+        newTex.encoding = texMap.encoding;
+        newTex.wrapS    = texMap.wrapS;
+        newTex.wrapT    = texMap.wrapT;
+        newTex.flipY    = texMap.flipY;
+        texMap          = newTex;
+      }
+
+      // Resolve valve bone indices by name
+      var paleIdxs = [];
+      node.skeleton.bones.forEach(function (bone, idx) {
+        if (PALE_BONE_NAMES.indexOf(bone.name) !== -1) paleIdxs.push(idx);
+      });
+
+      var gl2 = paleIdxs.length
+        ? paleIdxs.map(function (i) {
+            return '_si.x==' + i + '||_si.y==' + i + '||_si.z==' + i + '||_si.w==' + i;
+          }).join('||')
+        : 'false';
+      var gl1 = paleIdxs.length
+        ? paleIdxs.map(function (i) {
+            var f = i + '.0';
+            return 'abs(skinIndex.x-' + f + ')<0.5||abs(skinIndex.y-' + f + ')<0.5||abs(skinIndex.z-' + f + ')<0.5||abs(skinIndex.w-' + f + ')<0.5';
+          }).join('||')
+        : 'false';
+
+      var mat = new THREE.MeshStandardMaterial({
+        map:       texMap,
+        color:     new THREE.Color(0.85, 0.15, 0.10),
+        roughness: 0.9,
+        metalness: 0.0
+      });
+
+      mat.onBeforeCompile = function (shader) {
+        shader.vertexShader   = 'varying float vIsValve;\n' + shader.vertexShader;
+        shader.fragmentShader = 'varying float vIsValve;\n' + shader.fragmentShader;
+
+        shader.vertexShader = shader.vertexShader.replace(
+          '#include <skinning_vertex>',
+          [
+            '#include <skinning_vertex>',
+            '{',
+            '  vec4 _sw = skinWeight;',
+            '  float _mw = _sw.x;',
+            '#ifdef WEBGL2',
+            '  ivec4 _si = skinIndex;',
+            '  int _dom = _si.x;',
+            '  if(_sw.y>_mw){_mw=_sw.y;_dom=_si.y;}',
+            '  if(_sw.z>_mw){_mw=_sw.z;_dom=_si.z;}',
+            '  if(_sw.w>_mw){_mw=_sw.w;_dom=_si.w;}',
+            '  vIsValve = (' + gl2 + ') ? 1.0 : 0.0;',
+            '#else',
+            '  float _domF = skinIndex.x;',
+            '  if(_sw.y>_mw){_mw=_sw.y;_domF=skinIndex.y;}',
+            '  if(_sw.z>_mw){_mw=_sw.z;_domF=skinIndex.z;}',
+            '  if(_sw.w>_mw){_mw=_sw.w;_domF=skinIndex.w;}',
+            '  vIsValve = (' + gl1 + ') ? 1.0 : 0.0;',
+            '#endif',
+            '}'
+          ].join('\n')
+        );
+
+        shader.fragmentShader = shader.fragmentShader.replace(
+          '#include <map_fragment>',
+          [
+            '#include <map_fragment>',
+            'if (vIsValve > 0.5) {',
+            '  diffuseColor.rgb = vec3(0.92, 0.82, 0.45);',
+            '}'
+          ].join('\n')
+        );
+      };
+
+      node.material = mat;
     });
 
-    ui.overlays && ui.overlays.forEach(function (el, i) {
-      if (!el) return;
-      el.style.opacity = (i + 1 === ablStep) ? '1' : '0';
+    // Shadows on all meshes
+    model.traverse(function (node) {
+      if (node.isMesh) {
+        node.castShadow    = true;
+        node.receiveShadow = true;
+      }
     });
   }
 
@@ -119,24 +232,29 @@
     var w = wrap.clientWidth || 380;
 
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0xEEF2F7);
+    scene.background = new THREE.Color(0xF9F9F9);
 
     camera = new THREE.PerspectiveCamera(35, 1, 0.01, 200);
 
     renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(w, w, false);
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type    = THREE.PCFSoftShadowMap;
+    renderer.toneMapping       = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.05;
     if (THREE.sRGBEncoding) renderer.outputEncoding = THREE.sRGBEncoding;
 
     clock = new THREE.Clock();
 
-    scene.add(new THREE.AmbientLight(0xffffff, 1.1));
-    var key = new THREE.DirectionalLight(0xffffff, 0.9);
+    // Identical lighting to heart3d.js
+    scene.add(new THREE.AmbientLight(0xffffff, 1.0));
+    var key = new THREE.DirectionalLight(0xffffff, 0.8);
     key.position.set(3, 5, 4);
+    key.castShadow = true;
+    key.shadow.mapSize.set(512, 512);
     scene.add(key);
-    var fill = new THREE.DirectionalLight(0xffffff, 0.5);
+    var fill = new THREE.DirectionalLight(0xffffff, 0.4);
     fill.position.set(-4, 1, 2);
     scene.add(fill);
     var rim = new THREE.DirectionalLight(0xffffff, 0.2);
@@ -145,7 +263,7 @@
 
     var loader = new THREE.GLTFLoader();
     loader.load('heart.glb', onLoaded, undefined, function (e) {
-      console.error('af-ablation heart.glb load error:', e);
+      console.error('af-ablation heart.glb error:', e);
     });
 
     window.addEventListener('resize', onResize);
@@ -168,6 +286,7 @@
     modelGroup = new THREE.Group();
     var model  = gltf.scene;
 
+    // Centre + scale (same as heart3d.js)
     var box = new THREE.Box3().setFromObject(model);
     var ctr = new THREE.Vector3();
     box.getCenter(ctr);
@@ -177,27 +296,21 @@
     model.scale.setScalar(s);
     model.position.copy(ctr).multiplyScalar(-s);
 
-    var hd  = 0.5 * sz.length() * s;
-    var fh  = camera.fov * (Math.PI / 180) / 2;
-    var dist = Math.max(3.8, hd / Math.tan(fh));
-    camera.position.set(0, hd * 0.08, dist);
+    var halfDiag = 0.5 * Math.sqrt(sz.x*sz.x + sz.y*sz.y + sz.z*sz.z) * s;
+    var fovHalf  = camera.fov * (Math.PI / 180) / 2;
+    var dist     = Math.max(3.8, halfDiag / Math.tan(fovHalf) * 1.00);
+    camera.position.set(0, halfDiag * 0.08, dist);
 
-    model.traverse(function (n) {
-      if (!n.isMesh) return;
-      n.material = new THREE.MeshStandardMaterial({
-        color:     new THREE.Color(0.82, 0.14, 0.09),
-        roughness: 0.9,
-        metalness: 0.0,
-      });
-      n.castShadow    = true;
-      n.receiveShadow = true;
-    });
+    // Full material with canvas pixel-fix + valve shader
+    applyHeartMaterial(model);
 
-    modelGroup.rotation.x = rotX;
-    modelGroup.rotation.y = rotY;
+    // Fixed rotation — no auto-rotate
+    modelGroup.rotation.x = FIXED_ROT_X;
+    modelGroup.rotation.y = FIXED_ROT_Y;
     modelGroup.add(model);
     scene.add(modelGroup);
 
+    // Catheter and rings live inside modelGroup → always move with the heart
     buildCatheter();
     buildRings();
     goStep(1);
@@ -213,12 +326,12 @@
       roughness: 0.35,
       metalness: 0.15,
     }));
-    scene.add(cathMesh);
+    modelGroup.add(cathMesh); // inside modelGroup — stays inside the heart
   }
 
   function buildRings() {
-    PV_POS.forEach(function (pos, i) {
-      var geom = new THREE.TorusGeometry(0.11, 0.018, 8, 32);
+    PV_POS.forEach(function (pos) {
+      var geom = new THREE.TorusGeometry(0.10, 0.016, 8, 32);
       var mat  = new THREE.MeshStandardMaterial({
         color:       0xFF5500,
         emissive:    new THREE.Color(0.75, 0.18, 0.0),
@@ -228,8 +341,8 @@
       var mesh = new THREE.Mesh(geom, mat);
       mesh.position.copy(pos);
       mesh.rotation.x = Math.PI / 2;
-      mesh.visible = false;
-      scene.add(mesh);
+      mesh.visible    = false;
+      modelGroup.add(mesh); // inside modelGroup → attached to heart
       ringMeshes.push(mesh);
     });
   }
@@ -237,18 +350,16 @@
   function tick(dt) {
     if (!modelGroup) return;
 
-    // Simple scale heartbeat at 50 bpm
+    // Scale heartbeat (50 bpm)
     beatT += dt * 1000;
     if (beatT >= BEAT_PERIOD) beatT -= BEAT_PERIOD;
-    var bp = beatT / BEAT_PERIOD;
+    var bp  = beatT / BEAT_PERIOD;
     var bsq = bp < 0.08 ? (1.0 - 0.07 * (bp / 0.08))
             : bp < 0.38 ? (1.0 - 0.07 * (1.0 - (bp - 0.08) / 0.30))
             : 1.0;
     modelGroup.scale.setScalar(bsq);
 
-    // Slow auto-rotate so camera orbits, showing different sides
-    rotY += dt * 0.12;
-    modelGroup.rotation.y = rotY;
+    // No auto-rotation — heart stays at FIXED_ROT_X / FIXED_ROT_Y
 
     if (!isPlaying) return;
 
@@ -256,7 +367,7 @@
     var dur = STEP_DUR[ablStep - 1];
 
     // Advance catheter reveal
-    var t  = Math.min(1.0, stepMs / (dur * 0.80));
+    var t = Math.min(1.0, stepMs / (dur * 0.80));
     cathReveal = REVEAL_FROM[ablStep - 1] + t * (REVEAL_TO[ablStep - 1] - REVEAL_FROM[ablStep - 1]);
     if (cathGeom) {
       cathGeom.setDrawRange(0, Math.floor(cathReveal * cathGeom.index.count));
