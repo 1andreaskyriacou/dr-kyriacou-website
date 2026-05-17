@@ -6,6 +6,8 @@
 
   var scene, camera, renderer, clock;
   var modelGroup = null;
+  var frozen = !!window.heart3dFrozen;
+  var drag = false, pm = { x: 0, y: 0 };
   var rotX = 0.12, rotY = 0.5;
 
   // ── Bone groups (exact names, no dot separator) ───────────────────────────────
@@ -494,6 +496,32 @@
       function (err) { console.error('heart.glb load error:', err); }
     );
 
+    // ── Drag rotation (skipped when frozen) ──────────────────────────────────
+    if (!frozen) {
+      function onDown(cx, cy) { drag = true; pm.x = cx; pm.y = cy; }
+      function onMove(cx, cy) {
+        if (!drag || !modelGroup) return;
+        rotY += (cx - pm.x) * 0.012;
+        rotX += (cy - pm.y) * 0.009;
+        rotX  = Math.max(-1.2, Math.min(1.2, rotX));
+        pm.x  = cx; pm.y = cy;
+      }
+      function onUp() { drag = false; }
+
+      canvas.addEventListener('mousedown',  function (e) { onDown(e.clientX, e.clientY); });
+      window.addEventListener('mousemove',  function (e) { onMove(e.clientX, e.clientY); });
+      window.addEventListener('mouseup',    onUp);
+      canvas.addEventListener('touchstart', function (e) {
+        if (e.touches.length === 1) onDown(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+      canvas.addEventListener('touchmove', function (e) {
+        if (!drag || !modelGroup || e.touches.length !== 1) return;
+        e.preventDefault();
+        onMove(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: false });
+      canvas.addEventListener('touchend', onUp);
+    }
+
     // ── Expand / collapse button wiring ───────────────────────────────────────
     var btnExpand   = document.getElementById('heart3d-expand');
     var btnCollapse = document.getElementById('heart3d-collapse');
@@ -509,8 +537,13 @@
     // ── Render loop ───────────────────────────────────────────────────────────
     (function loop() {
       requestAnimationFrame(loop);
-      clock.getDelta();
+      var dt = clock.getDelta();
       if (modelGroup) {
+        if (!frozen) {
+          if (!drag) rotY += dt * 0.15;
+          modelGroup.rotation.x = rotX;
+          modelGroup.rotation.y = rotY;
+        }
         tickRhythm();
         applyContractions();
       }
