@@ -103,7 +103,7 @@
         '#hw-widget{',
         opts.hideMobile
           ? 'display:none!important;'
-          : 'transform:scale(0.55)!important;transform-origin:top right!important;top:72px!important;right:4px!important;',
+          : 'transform:scale(0.55)!important;transform-origin:top right!important;top:160px!important;right:4px!important;',
         '}}'
       ].join('');
       document.head.appendChild(styleTag);
