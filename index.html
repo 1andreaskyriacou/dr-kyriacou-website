@@ -124,9 +124,40 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,400&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="styles.css">
+  <style>
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 300;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      margin-bottom: 18px;
+      line-height: 1;
+    }
+    .hero-dr-name {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 400;
+      font-style: italic;
+      display: block;
+      line-height: 1.2;
+      letter-spacing: 0.01em;
+    }
+    .hero-title strong {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(4rem, 9vw, 7.5rem);
+      font-weight: 900;
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      display: block;
+    }
+  </style>
   <title>Home | Dr Andreas Kyriacou</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="shortcut icon" href="favicon.svg">
@@ -162,7 +193,7 @@
           <div>
             <p class="hero-eyebrow">Consultant Cardiologist &amp; Electrophysiologist</p>
             <h1 class="hero-title">
-              Dr Andreas<br />
+              <span class="hero-dr-name">Dr Andreas</span>
               <strong>Kyriacou</strong>
             </h1>
             <p class="hero-subtitle">MBChB &middot; PhD &middot; FRCP &middot; FESC &middot; FEHRA</p>

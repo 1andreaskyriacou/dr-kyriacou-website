@@ -101,7 +101,7 @@
       font-family: var(--font-serif);
       font-size: 1.15rem;
       font-weight: 500;
-      color: #FFFFFF;
+      color: var(--gold);
       text-decoration: none;
       letter-spacing: 0.02em;
     }
