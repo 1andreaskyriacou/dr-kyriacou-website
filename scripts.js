@@ -32,9 +32,9 @@
     var navbar = document.getElementById('navbar');
     window.addEventListener('scroll', function() {
       if (window.scrollY > 40) {
-        navbar.style.background = 'rgba(46,52,64,1)';
+        navbar.style.background = '#2e3440';
       } else {
-        navbar.style.background = 'rgba(46,52,64,0.97)';
+        navbar.style.background = '#2e3440';
       }
     });
 

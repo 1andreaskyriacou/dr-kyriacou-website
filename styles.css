@@ -83,7 +83,7 @@
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
-      background: rgba(46,52,64,0.97) !important;
+      background: #2e3440 !important;
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
     }
