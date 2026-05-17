@@ -16,8 +16,8 @@
       --border:       rgba(10,35,66,0.12);
       --border-hover: rgba(201,168,76,0.55);
       --radius:       4px;
-      --font-serif:   'Cormorant Garamond', Georgia, serif;
-      --font-sans:    'Inter', system-ui, sans-serif;
+      --font-serif:   'Inter Tight', system-ui, sans-serif;
+      --font-sans:    'Lato', system-ui, sans-serif;
       --max-w:        1160px;
       --section-gap: 100px;
     }
