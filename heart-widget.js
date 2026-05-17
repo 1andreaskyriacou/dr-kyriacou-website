@@ -84,42 +84,39 @@
 
     var opts = window.hwWidgetOptions || {};
 
-    var styleTag = document.createElement('style');
-    styleTag.textContent = [
-      '#hw-widget{',
-      (opts.fixed ? 'position:fixed' : 'position:absolute') + '!important;',
-      'top:80px!important;',
-      'right:30px!important;',
-      'z-index:' + (opts.fixed ? '999' : '10') + '!important;',
-      'width:' + W + 'px!important;',
-      'pointer-events:none!important;',
-      '}',
-      '@media(max-width:768px){',
-      '#hw-widget{',
-      opts.hideMobile
-        ? 'display:none!important;'
-        : 'transform:scale(0.55)!important;transform-origin:top right!important;top:72px!important;right:4px!important;',
-      '}}'
-    ].join('');
-    document.head.appendChild(styleTag);
+    // If the widget element was pre-placed in HTML, use it directly —
+    // this guarantees position:fixed is resolved at stylesheet-parse time
+    // with no JS cascade race. Otherwise, create and inject it.
+    var widget = document.getElementById('hw-widget');
+    if (!widget) {
+      var styleTag = document.createElement('style');
+      styleTag.textContent = [
+        '#hw-widget{',
+        (opts.fixed ? 'position:fixed' : 'position:absolute') + '!important;',
+        'top:80px!important;',
+        'right:30px!important;',
+        'z-index:' + (opts.fixed ? '999' : '10') + '!important;',
+        'width:' + W + 'px!important;',
+        'pointer-events:none!important;',
+        '}',
+        '@media(max-width:768px){',
+        '#hw-widget{',
+        opts.hideMobile
+          ? 'display:none!important;'
+          : 'transform:scale(0.55)!important;transform-origin:top right!important;top:72px!important;right:4px!important;',
+        '}}'
+      ].join('');
+      document.head.appendChild(styleTag);
 
-    // Build widget DOM
-    var widget = document.createElement('div');
-    widget.id = 'hw-widget';
-    widget.style.cssText = 'overflow:hidden;';
+      widget = document.createElement('div');
+      widget.id = 'hw-widget';
+      document.body.appendChild(widget);
+    }
+    widget.style.overflow = 'hidden';
 
     var hCanvas = document.createElement('canvas');
     hCanvas.style.cssText = 'display:block;width:' + W + 'px;height:' + H_3D + 'px;';
-
     widget.appendChild(hCanvas);
-    document.body.appendChild(widget);
-
-    if (opts.fixed) {
-      widget.style.setProperty('position', 'fixed', 'important');
-      widget.style.setProperty('top', '80px', 'important');
-      widget.style.setProperty('right', '30px', 'important');
-      widget.style.setProperty('z-index', '999', 'important');
-    }
 
     // Three.js scene
     scene = new THREE.Scene();
