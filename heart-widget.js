@@ -114,6 +114,13 @@
     widget.appendChild(hCanvas);
     document.body.appendChild(widget);
 
+    if (opts.fixed) {
+      widget.style.setProperty('position', 'fixed', 'important');
+      widget.style.setProperty('top', '80px', 'important');
+      widget.style.setProperty('right', '30px', 'important');
+      widget.style.setProperty('z-index', '999', 'important');
+    }
+
     // Three.js scene
     scene = new THREE.Scene();
     scene.background = null;
