@@ -82,24 +82,23 @@
   function init() {
     if (!THREE || !THREE.GLTFLoader) return;
 
-    // Inject a stylesheet to lock position — absolute so it stays in place
-    // at the top-right of the page content and scrolls away naturally
+    var opts = window.hwWidgetOptions || {};
+
     var styleTag = document.createElement('style');
     styleTag.textContent = [
       '#hw-widget{',
-      'position:absolute!important;',
+      (opts.fixed ? 'position:fixed' : 'position:absolute') + '!important;',
       'top:80px!important;',
       'right:30px!important;',
-      'z-index:10!important;',
+      'z-index:' + (opts.fixed ? '999' : '10') + '!important;',
       'width:' + W + 'px!important;',
       'pointer-events:none!important;',
       '}',
       '@media(max-width:768px){',
       '#hw-widget{',
-      'transform:scale(0.55)!important;',
-      'transform-origin:top right!important;',
-      'top:72px!important;',
-      'right:4px!important;',
+      opts.hideMobile
+        ? 'display:none!important;'
+        : 'transform:scale(0.55)!important;transform-origin:top right!important;top:72px!important;right:4px!important;',
       '}}'
     ].join('');
     document.head.appendChild(styleTag);

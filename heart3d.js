@@ -541,7 +541,7 @@
       var dt = clock.getDelta();
       if (modelGroup) {
         if (!frozen) {
-          if (!drag) rotY += dt * 0.15;
+          if (!drag) rotY += dt * 0.04;
           modelGroup.rotation.x = rotX;
           modelGroup.rotation.y = rotY;
         }
