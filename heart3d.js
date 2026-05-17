@@ -8,7 +8,7 @@
   var modelGroup = null;
   var frozen = !!window.heart3dFrozen;
   var drag = false, pm = { x: 0, y: 0 };
-  var rotX = 0.12, rotY = 0.5;
+  var rotX = -0.1, rotY = -0.3, rotZ = 0.18;
 
   // ── Bone groups (exact names, no dot separator) ───────────────────────────────
   var ATRIA_NAMES = [
@@ -488,6 +488,7 @@
         modelGroup.add(model);
         modelGroup.rotation.x = rotX;
         modelGroup.rotation.y = rotY;
+        modelGroup.rotation.z = rotZ;
         scene.add(modelGroup);
 
         startRhythm(cond);
