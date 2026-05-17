@@ -105,7 +105,7 @@
       text-decoration: none;
       letter-spacing: 0.02em;
     }
-    .nav-brand span { color: var(--gold); }
+    .nav-brand span { color: #FFFFFF; }
 
     .nav-links {
       display: flex;
@@ -117,8 +117,7 @@
     .nav-links a {
       font-size: 16px;
       font-weight: 400;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
+      letter-spacing: 0.02em;
       color: rgba(255,255,255,0.75);
       text-decoration: none;
       transition: color 0.2s;
@@ -1454,7 +1453,7 @@
       color: #FFFFFF;
       margin-bottom: 12px;
     }
-    .footer-brand span { color: var(--gold); }
+    .footer-brand span { color: #FFFFFF; }
 
     .footer-tagline {
       font-size: 13px;
