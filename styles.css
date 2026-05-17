@@ -86,7 +86,6 @@
       background: rgba(46,52,64,0.97) !important;
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border-bottom: 3px solid red !important;
     }
 
     .nav-inner {
