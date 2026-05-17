@@ -81,10 +81,8 @@
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
-      background: rgba(10,35,66,0.97);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(201,168,76,0.22);
+      background: #ffffff;
+      border-bottom: 1px solid #e8e8e8;
     }
 
     .nav-inner {
@@ -101,11 +99,11 @@
       font-family: var(--font-serif);
       font-size: 1.15rem;
       font-weight: 500;
-      color: var(--gold);
+      color: #1a2c5b;
       text-decoration: none;
       letter-spacing: 0.02em;
     }
-    .nav-brand span { color: var(--gold); }
+    .nav-brand span { color: #c0202a; }
 
     .nav-links {
       display: flex;
@@ -119,25 +117,25 @@
       font-weight: 400;
       letter-spacing: 0.04em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.75);
+      color: #1a2c5b;
       text-decoration: none;
       transition: color 0.2s;
     }
-    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover { color: #c0202a; }
 
-    .nav-links a.nav-active { color: var(--gold); border-bottom: 2px solid var(--gold); }
+    .nav-links a.nav-active { color: #c0202a; border-bottom: 2px solid #c0202a; }
 
     .nav-cta {
-      background: transparent !important;
-      border: 1px solid var(--gold) !important;
-      color: var(--gold) !important;
-      padding: 7px 18px !important;
-      border-radius: var(--radius) !important;
-      transition: background 0.2s, color 0.2s !important;
+      background: #c0202a !important;
+      border: none !important;
+      color: #ffffff !important;
+      padding: 7px 22px !important;
+      border-radius: 24px !important;
+      transition: background 0.2s !important;
     }
     .nav-cta:hover {
-      background: var(--gold) !important;
-      color: #FFFFFF !important;
+      background: #a01820 !important;
+      color: #ffffff !important;
     }
 
     .hamburger {
@@ -153,7 +151,7 @@
       display: block;
       width: 22px;
       height: 1.5px;
-      background: #FFFFFF;
+      background: #1a2c5b;
       transition: transform 0.3s, opacity 0.3s;
     }
 
@@ -1505,8 +1503,8 @@
         flex-direction: column;
         position: fixed;
         top: 64px; left: 0; right: 0;
-        background: #0A2342;
-        border-bottom: 1px solid rgba(201,168,76,0.22);
+        background: #ffffff;
+        border-bottom: 1px solid #e8e8e8;
         padding: 20px 24px;
         gap: 18px;
         z-index: 99;
