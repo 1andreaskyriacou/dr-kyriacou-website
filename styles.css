@@ -81,7 +81,7 @@
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
-      background: rgba(42,74,127,0.97);
+      background: rgba(10,35,66,0.97);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(201,168,76,0.22);
@@ -101,11 +101,11 @@
       font-family: var(--font-serif);
       font-size: 1.15rem;
       font-weight: 500;
-      color: #FFFFFF;
+      color: var(--gold);
       text-decoration: none;
       letter-spacing: 0.02em;
     }
-    .nav-brand span { color: #FFFFFF; }
+    .nav-brand span { color: var(--gold); }
 
     .nav-links {
       display: flex;
@@ -1505,7 +1505,7 @@
         flex-direction: column;
         position: fixed;
         top: 64px; left: 0; right: 0;
-        background: #2a4a7f;
+        background: #0A2342;
         border-bottom: 1px solid rgba(201,168,76,0.22);
         padding: 20px 24px;
         gap: 18px;
