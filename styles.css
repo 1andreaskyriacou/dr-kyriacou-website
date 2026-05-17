@@ -1706,6 +1706,20 @@
       background: var(--dark-2);
     }
 
+    /* ===== SCROLL REVEAL ===== */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(20px) scale(0.97);
+      transition: opacity 0.55s ease-out, transform 0.55s ease-out;
+    }
+    [data-reveal].revealed {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      [data-reveal] { opacity: 1; transform: none; transition: none; }
+    }
+
     /* Square heart area — Three.js renders into this */
     .hero-heart-area {
       width: 100%;
