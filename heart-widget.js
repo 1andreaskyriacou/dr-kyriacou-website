@@ -92,10 +92,10 @@
       var styleTag = document.createElement('style');
       styleTag.textContent = [
         '#hw-widget{',
-        (opts.fixed ? 'position:fixed' : 'position:absolute') + '!important;',
+        'position:fixed!important;',
         'top:80px!important;',
         'right:30px!important;',
-        'z-index:' + (opts.fixed ? '999' : '10') + '!important;',
+        'z-index:999!important;',
         'width:' + W + 'px!important;',
         'pointer-events:none!important;',
         '}',
@@ -103,7 +103,7 @@
         '#hw-widget{',
         opts.hideMobile
           ? 'display:none!important;'
-          : 'transform:scale(0.55)!important;transform-origin:top right!important;top:160px!important;right:4px!important;',
+          : 'transform:scale(0.55)!important;transform-origin:top right!important;top:80px!important;right:30px!important;',
         '}}'
       ].join('');
       document.head.appendChild(styleTag);
