@@ -1522,7 +1522,7 @@
       section[style*="padding-top: 7rem"] { padding-top: 5rem !important; }
 
       /* --- Typography scaling --- */
-      .section-title { font-size: clamp(1.5rem, 6vw, 2rem); margin-bottom: 12px; }
+      .section-title { font-size: clamp(1.1rem, 5.5vw, 1.75rem); margin-bottom: 12px; }
       .hero-eyebrow { font-size: 0.9rem; letter-spacing: 0.05em; }
       .hero-title { font-size: clamp(2.2rem, 9vw, 3rem); }
       .hero-subtitle { font-size: 1rem; }
