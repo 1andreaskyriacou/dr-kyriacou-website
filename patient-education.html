@@ -734,15 +734,6 @@
     </section>
   </main>
 
-  <!-- Fixed heart widget: placed as a direct body child so position:fixed
-       is resolved by the browser's style engine at parse time, before any
-       JS runs — this sidesteps any CSS cascade / !important timing race. -->
-  <style>
-    #hw-widget { position: fixed; top: 80px; right: 30px; z-index: 999; width: 150px; overflow: hidden; pointer-events: none; }
-    @media (max-width: 768px) { #hw-widget { display: none; } }
-  </style>
-  <div id="hw-widget"></div>
-
   <!-- ===== FOOTER ===== -->
   <footer role="contentinfo">
     <div class="container">
@@ -817,7 +808,6 @@
   <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/loaders/GLTFLoader.js"></script>
   <script src="heart3d.js"></script>
-  <script>window.hwWidgetOptions = { fixed: true, hideMobile: true };</script>
   <script src="heart-widget.js"></script>
   <script src="page-transition.js"></script>
   <script src="scroll-reveal.js"></script>
