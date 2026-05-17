@@ -1726,13 +1726,13 @@
       to   { opacity: 1; transform: scale(1); }
     }
     main {
-      animation: pageIn 0.4s ease both;
+      animation: pageIn 0.2s ease both;
     }
     main.page-exit {
       animation: none;
       opacity: 0;
       transform: scale(0.98);
-      transition: opacity 0.3s ease, transform 0.3s ease;
+      transition: opacity 0.15s ease, transform 0.15s ease;
     }
     @media (prefers-reduced-motion: reduce) {
       main { animation: none; }

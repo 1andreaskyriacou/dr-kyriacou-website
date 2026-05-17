@@ -20,6 +20,6 @@
 
     setTimeout(function () {
       window.location.href = href;
-    }, 300);
+    }, 150);
   });
 }());
