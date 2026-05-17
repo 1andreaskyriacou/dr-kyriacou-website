@@ -42,7 +42,7 @@
     <!-- ===== ABOUT ===== -->
     <section id="about" aria-label="About Dr Kyriacou" style="padding-top: 7rem; padding-bottom: 2rem;">
       <div class="container">
-        <div class="about-grid">
+        <div class="about-grid reveal">
           <div>
             <p class="section-label">About</p>
             <h2 class="section-title">A Career Built on<br />Clinical Excellence</h2>
@@ -101,23 +101,23 @@
             <h3 class="section-title" style="font-size:clamp(1.5rem,3vw,2rem);">Credentials &amp;<br />Fellowships</h3>
             <div class="divider" aria-hidden="true"></div>
             <ul class="qualifications-list" aria-label="Professional qualifications">
-              <li class="qual-item">
+              <li class="qual-item reveal">
                 <span class="qual-badge">MBChB</span>
                 <span class="qual-desc">Bachelor of Medicine and Bachelor of Surgery, University of Edinburgh 1996–2001</span>
               </li>
-              <li class="qual-item">
+              <li class="qual-item reveal">
                 <span class="qual-badge">PhD</span>
                 <span class="qual-desc">Doctor of Philosophy, National Heart and Lung Institute, Imperial College London</span>
               </li>
-              <li class="qual-item">
+              <li class="qual-item reveal">
                 <span class="qual-badge">FRCP</span>
                 <span class="qual-desc">Fellow of the Royal College of Physicians (London)</span>
               </li>
-              <li class="qual-item">
+              <li class="qual-item reveal">
                 <span class="qual-badge">FESC</span>
                 <span class="qual-desc">Fellow of the European Society of Cardiology</span>
               </li>
-              <li class="qual-item">
+              <li class="qual-item reveal">
                 <span class="qual-badge">FEHRA</span>
                 <span class="qual-desc">Fellow of the European Heart Rhythm Association</span>
               </li>
@@ -141,7 +141,7 @@
           <div class="divider" aria-hidden="true"></div>
           <div class="locations-grid" style="grid-template-columns:1fr 1fr; margin-top:16px; gap:32px; align-items:stretch;">
 
-            <article class="location-card" itemscope itemtype="https://schema.org/MedicalOrganization" style="display:flex;flex-direction:column;">
+            <article class="location-card reveal" itemscope itemtype="https://schema.org/MedicalOrganization" style="display:flex;flex-direction:column;">
               <p class="location-country">United Kingdom</p>
               <h3 class="location-name" itemprop="name" style="display:flex;align-items:center;gap:10px;">
                 <span style="font-size:1.8rem;line-height:1;" aria-label="United Kingdom flag">🇬🇧</span> Sheffield, South Yorkshire
@@ -167,7 +167,7 @@
               </a>
             </article>
 
-            <article class="location-card" itemscope itemtype="https://schema.org/MedicalOrganization" style="display:flex;flex-direction:column;">
+            <article class="location-card reveal" itemscope itemtype="https://schema.org/MedicalOrganization" style="display:flex;flex-direction:column;">
               <p class="location-country">Cyprus</p>
               <h3 class="location-name" itemprop="name" style="display:flex;align-items:center;gap:10px;">
                 <span style="font-size:1.8rem;line-height:1;" aria-label="Cyprus flag">🇨🇾</span> Limassol, Cyprus
@@ -300,5 +300,7 @@
   <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/loaders/GLTFLoader.js"></script>
   <script src="heart-widget.js"></script>
+  <script src="page-transition.js"></script>
+  <script src="scroll-reveal.js"></script>
 </body>
 </html>

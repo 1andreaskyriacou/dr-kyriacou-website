@@ -1707,17 +1707,36 @@
     }
 
     /* ===== SCROLL REVEAL ===== */
-    [data-reveal] {
+    .reveal {
       opacity: 0;
       transform: translateY(20px) scale(0.97);
       transition: opacity 0.55s ease-out, transform 0.55s ease-out;
     }
-    [data-reveal].revealed {
+    .reveal.revealed {
       opacity: 1;
       transform: translateY(0) scale(1);
     }
     @media (prefers-reduced-motion: reduce) {
-      [data-reveal] { opacity: 1; transform: none; transition: none; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* ===== PAGE TRANSITIONS ===== */
+    @keyframes pageIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    main {
+      animation: pageIn 0.4s ease both;
+    }
+    main.page-exit {
+      animation: none;
+      opacity: 0;
+      transform: scale(0.98);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      main { animation: none; }
+      main.page-exit { transition: none; }
     }
 
     /* Square heart area — Three.js renders into this */

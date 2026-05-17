@@ -107,7 +107,7 @@
         <p class="section-label">Patient Education</p>
         <h2 class="section-title">Understanding Your<br />Heart Rhythm</h2>
         <div class="divider" aria-hidden="true"></div>
-        <p class="edu-intro">Each animation below shows the characteristic ECG pattern for common conditions treated by Dr Kyriacou. Click any card to learn more.</p>
+        <p class="edu-intro reveal">Each animation below shows the characteristic ECG pattern for common conditions treated by Dr Kyriacou. Click any card to learn more.</p>
 
 
         <svg style="display:none" aria-hidden="true">
@@ -118,7 +118,7 @@
             </filter>
           </defs>
         </svg>
-        <div class="ae-panel" id="ae-panel">
+        <div class="ae-panel reveal" id="ae-panel">
           <!-- Sidebar -->
           <nav class="ae-sidebar" aria-label="Select condition">
             <button class="ae-btn" data-cond="normal"  onclick="aeSwitch('normal')">Normal Rhythm</button>
@@ -541,7 +541,7 @@
         <div class="edu-grid">
 
           <!-- Normal Sinus Rhythm -->
-          <article class="edu-card" aria-label="Normal Sinus Rhythm">
+          <article class="edu-card reveal" aria-label="Normal Sinus Rhythm">
             <div class="ecg-display" aria-hidden="true">
               <canvas class="ecg-canvas" data-ecg-type="normal"></canvas>
               <span class="ecg-bpm-badge">60–100 bpm</span>
@@ -562,7 +562,7 @@
           </article>
 
           <!-- SVT -->
-          <article class="edu-card" aria-label="Supraventricular Tachycardia">
+          <article class="edu-card reveal" aria-label="Supraventricular Tachycardia">
             <div class="ecg-display" aria-hidden="true">
               <canvas class="ecg-canvas" data-ecg-type="svt"></canvas>
               <span class="ecg-bpm-badge">150–250 bpm</span>
@@ -583,7 +583,7 @@
           </article>
 
           <!-- Atrial Flutter -->
-          <article class="edu-card" aria-label="Atrial Flutter">
+          <article class="edu-card reveal" aria-label="Atrial Flutter">
             <div class="ecg-display" aria-hidden="true">
               <canvas class="ecg-canvas" data-ecg-type="flutter"></canvas>
               <span class="ecg-bpm-badge">250–300 bpm flutter</span>
@@ -604,7 +604,7 @@
           </article>
 
           <!-- Atrial Fibrillation -->
-          <article class="edu-card" aria-label="Atrial Fibrillation">
+          <article class="edu-card reveal" aria-label="Atrial Fibrillation">
             <div class="ecg-display" aria-hidden="true">
               <canvas class="ecg-canvas" data-ecg-type="af"></canvas>
               <span class="ecg-bpm-badge">Irregular</span>
@@ -625,7 +625,7 @@
           </article>
 
           <!-- Ventricular Tachycardia -->
-          <article class="edu-card" aria-label="Ventricular Tachycardia">
+          <article class="edu-card reveal" aria-label="Ventricular Tachycardia">
             <div class="ecg-display" aria-hidden="true">
               <canvas class="ecg-canvas" data-ecg-type="vt"></canvas>
               <span class="ecg-bpm-badge">150–250 bpm</span>
@@ -646,7 +646,7 @@
           </article>
 
           <!-- Ventricular Ectopics -->
-          <article class="edu-card" aria-label="Ventricular Ectopics">
+          <article class="edu-card reveal" aria-label="Ventricular Ectopics">
             <div class="ecg-display" aria-hidden="true">
               <canvas class="ecg-canvas" data-ecg-type="pvc"></canvas>
               <span class="ecg-bpm-badge">Occasional ectopics</span>
@@ -667,7 +667,7 @@
           </article>
 
           <!-- Conduction System Pacing -->
-          <article class="edu-card" aria-label="Conduction System Physiological Pacing">
+          <article class="edu-card reveal" aria-label="Conduction System Physiological Pacing">
             <div class="ecg-display" aria-hidden="true">
               <canvas class="ecg-canvas" data-ecg-type="csp"></canvas>
               <span class="ecg-bpm-badge">Physiological pacing</span>
@@ -688,7 +688,7 @@
           </article>
 
           <!-- Cardiac Resynchronisation Therapy -->
-          <article class="edu-card" aria-label="Cardiac Resynchronisation Therapy">
+          <article class="edu-card reveal" aria-label="Cardiac Resynchronisation Therapy">
             <div class="ecg-display" aria-hidden="true">
               <canvas class="ecg-canvas" data-ecg-type="crt"></canvas>
               <span class="ecg-bpm-badge">Biventricular pacing</span>
@@ -709,7 +709,7 @@
           </article>
 
           <!-- Pacemakers -->
-          <article class="edu-card" aria-label="Cardiac Pacemakers">
+          <article class="edu-card reveal" aria-label="Cardiac Pacemakers">
             <div class="ecg-display" aria-hidden="true">
               <canvas class="ecg-canvas" data-ecg-type="paced"></canvas>
               <span class="ecg-bpm-badge">Paced</span>
@@ -808,5 +808,7 @@
   <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/loaders/GLTFLoader.js"></script>
   <script src="heart3d.js"></script>
+  <script src="page-transition.js"></script>
+  <script src="scroll-reveal.js"></script>
 </body>
 </html>
