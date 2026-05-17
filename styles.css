@@ -82,7 +82,7 @@
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
-      background: rgba(56,60,66,0.97) !important;
+      background: rgba(46,52,64,0.97) !important;
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(201,168,76,0.22);
@@ -1435,7 +1435,7 @@
 
     /* ===== FOOTER ===== */
     footer {
-      background: #383c42 !important;
+      background: #2e3440 !important;
       border-top: 1px solid rgba(201,168,76,0.22);
       padding: 48px 0 32px;
     }
@@ -1505,7 +1505,7 @@
         flex-direction: column;
         position: fixed;
         top: 64px; left: 0; right: 0;
-        background: #383c42 !important;
+        background: #2e3440 !important;
         border-bottom: 1px solid rgba(201,168,76,0.22);
         padding: 20px 24px;
         gap: 18px;
