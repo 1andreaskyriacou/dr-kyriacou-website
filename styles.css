@@ -1,3 +1,4 @@
+    /* v2 */
     /* cache-bust: 2026-05-17 */
     /* ===== CSS RESET & VARIABLES ===== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -85,7 +86,7 @@
       background: rgba(46,52,64,0.97) !important;
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(201,168,76,0.22);
+      border-bottom: 3px solid red !important;
     }
 
     .nav-inner {
