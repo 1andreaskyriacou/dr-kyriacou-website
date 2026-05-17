@@ -29,7 +29,8 @@
       color: var(--text);
       font-family: var(--font-sans);
       font-size: 18px;
-      line-height: 1.7;
+      font-weight: 400;
+      line-height: 1.75;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -229,8 +230,8 @@
     }
 
     .hero-desc {
-      font-size: 15px;
-      line-height: 1.8;
+      font-size: 18px;
+      line-height: 1.75;
       color: var(--text-muted);
       max-width: 480px;
       margin-bottom: 40px;
@@ -402,9 +403,9 @@
     }
 
     .about-body {
-      font-size: 15px;
+      font-size: 18px;
       color: var(--text-muted);
-      line-height: 1.9;
+      line-height: 1.75;
     }
     .about-body p + p { margin-top: 20px; }
     .about-body strong { color: var(--text); font-weight: 500; }
@@ -632,7 +633,7 @@
     }
 
     .edu-intro {
-      font-size: 15px;
+      font-size: 18px;
       color: var(--text-muted);
       max-width: 580px;
       line-height: 1.8;
@@ -1283,9 +1284,9 @@
     }
 
     .research-body {
-      font-size: 15px;
+      font-size: 18px;
       color: var(--text-muted);
-      line-height: 1.9;
+      line-height: 1.75;
     }
     .research-body p + p { margin-top: 20px; }
     .research-body strong { color: var(--text); }
@@ -1523,7 +1524,7 @@
       .hero-eyebrow { font-size: 0.9rem; letter-spacing: 0.05em; }
       .hero-title { font-size: clamp(2.2rem, 9vw, 3rem); }
       .hero-subtitle { font-size: 1rem; }
-      .hero-desc { font-size: 14px; margin-bottom: 28px; max-width: 100%; }
+      .hero-desc { font-size: 16px; margin-bottom: 28px; max-width: 100%; }
 
       /* --- Hero: stack text then photo --- */
       .hero-grid { grid-template-columns: 1fr; gap: 28px; }
@@ -1575,9 +1576,9 @@
 
     /* ===== FAQ ACCORDION ===== */
     .faq-intro {
-      font-size: 15px;
+      font-size: 18px;
       color: var(--text-muted);
-      line-height: 1.8;
+      line-height: 1.75;
       max-width: 680px;
       margin-bottom: 48px;
     }
@@ -1683,9 +1684,9 @@
     }
 
     .faq-answer-inner p {
-      font-size: 14px;
+      font-size: 18px;
       color: var(--text-muted);
-      line-height: 1.85;
+      line-height: 1.75;
       margin-bottom: 10px;
     }
 
