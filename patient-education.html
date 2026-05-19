@@ -79,6 +79,196 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="shortcut icon" href="favicon.svg">
   <meta property="og:image" content="https://www.drandreaskyriacou.com/logo.svg">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "MedicalCondition",
+        "name": "Atrial Fibrillation",
+        "alternateName": "AF",
+        "description": "Chaotic electrical activation passes through the upper chambers, causing the atria to fibrillate rather than contract. Results in an irregular pulse and reduced pumping efficiency. Symptoms include breathlessness and fatigue. AF increases stroke risk, manageable with anticoagulation. Catheter ablation success is 70–85% for paroxysmal AF and 55–65% for persistent AF.",
+        "associatedAnatomy": {
+          "@type": "AnatomicalStructure",
+          "name": "Heart — atria (upper chambers)"
+        },
+        "signOrSymptom": [
+          { "@type": "MedicalSymptom", "name": "Irregular pulse" },
+          { "@type": "MedicalSymptom", "name": "Palpitations" },
+          { "@type": "MedicalSymptom", "name": "Breathlessness" },
+          { "@type": "MedicalSymptom", "name": "Fatigue" },
+          { "@type": "MedicalSymptom", "name": "Dizziness" }
+        ],
+        "possibleTreatment": [
+          { "@type": "MedicalTherapy", "name": "Pulmonary vein isolation catheter ablation" },
+          { "@type": "MedicalTherapy", "name": "Anticoagulation (DOACs)" },
+          { "@type": "MedicalTherapy", "name": "Rate control medication" },
+          { "@type": "MedicalTherapy", "name": "Rhythm control medication" }
+        ],
+        "url": "https://www.drandreaskyriacou.com/patient-education.html"
+      },
+      {
+        "@type": "MedicalCondition",
+        "name": "Atrial Flutter",
+        "description": "An electrical circuit revolves repeatedly around the right atrium at 250–300 beats per minute. The ventricles respond at a regular fraction of this rate, typically 2:1. Common in older patients, causing breathlessness, palpitations, and fatigue. Curable with catheter ablation in over 90% of cases.",
+        "associatedAnatomy": {
+          "@type": "AnatomicalStructure",
+          "name": "Heart — right atrium"
+        },
+        "signOrSymptom": [
+          { "@type": "MedicalSymptom", "name": "Palpitations" },
+          { "@type": "MedicalSymptom", "name": "Breathlessness" },
+          { "@type": "MedicalSymptom", "name": "Fatigue" }
+        ],
+        "possibleTreatment": [
+          { "@type": "MedicalTherapy", "name": "Cavotricuspid isthmus (CTI) catheter ablation" },
+          { "@type": "MedicalTherapy", "name": "Anticoagulation" },
+          { "@type": "MedicalTherapy", "name": "Rate control medication" }
+        ],
+        "url": "https://www.drandreaskyriacou.com/patient-education.html"
+      },
+      {
+        "@type": "MedicalCondition",
+        "name": "Atrial Tachycardia",
+        "description": "A fast heart rhythm originating from a focal point in one of the upper chambers, not involving the AV node. Can cause persistent or paroxysmal palpitations and, if untreated long-term, may occasionally affect heart function. Catheter ablation is an effective treatment.",
+        "associatedAnatomy": {
+          "@type": "AnatomicalStructure",
+          "name": "Heart — atria (upper chambers)"
+        },
+        "signOrSymptom": [
+          { "@type": "MedicalSymptom", "name": "Palpitations" },
+          { "@type": "MedicalSymptom", "name": "Rapid heart rate" },
+          { "@type": "MedicalSymptom", "name": "Breathlessness" }
+        ],
+        "possibleTreatment": [
+          { "@type": "MedicalTherapy", "name": "Catheter ablation" },
+          { "@type": "MedicalTherapy", "name": "Antiarrhythmic medication" }
+        ],
+        "url": "https://www.drandreaskyriacou.com/patient-education.html"
+      },
+      {
+        "@type": "MedicalCondition",
+        "name": "Supraventricular Tachycardia",
+        "alternateName": "SVT",
+        "description": "A common condition mostly affecting younger, otherwise healthy people. An extra electrical connection causes the heart to beat rapidly at 150–250 times per minute. Patients experience sudden onset of palpitations which may last minutes to hours. Curable with catheter ablation with success rates greater than 90%.",
+        "associatedAnatomy": {
+          "@type": "AnatomicalStructure",
+          "name": "Heart — supraventricular (upper chambers and AV node)"
+        },
+        "signOrSymptom": [
+          { "@type": "MedicalSymptom", "name": "Sudden rapid palpitations (150–250 bpm)" },
+          { "@type": "MedicalSymptom", "name": "Breathlessness" },
+          { "@type": "MedicalSymptom", "name": "Dizziness" },
+          { "@type": "MedicalSymptom", "name": "Chest tightness" }
+        ],
+        "possibleTreatment": [
+          { "@type": "MedicalTherapy", "name": "Catheter ablation" },
+          { "@type": "MedicalTherapy", "name": "Antiarrhythmic medication" },
+          { "@type": "MedicalTherapy", "name": "Vagal manoeuvres" }
+        ],
+        "url": "https://www.drandreaskyriacou.com/patient-education.html"
+      },
+      {
+        "@type": "MedicalCondition",
+        "name": "Ventricular Tachycardia",
+        "alternateName": "VT",
+        "description": "A fast rhythm originating from the lower chambers of the heart, producing wide abnormal beats on the ECG. Can cause palpitations, dizziness, breathlessness, or blackouts. In patients with underlying heart disease VT can be life-threatening and may require an implantable defibrillator (ICD). Catheter ablation can be highly effective in reducing VT episodes and ICD shocks.",
+        "associatedAnatomy": {
+          "@type": "AnatomicalStructure",
+          "name": "Heart — ventricles (lower chambers)"
+        },
+        "signOrSymptom": [
+          { "@type": "MedicalSymptom", "name": "Palpitations" },
+          { "@type": "MedicalSymptom", "name": "Dizziness" },
+          { "@type": "MedicalSymptom", "name": "Breathlessness" },
+          { "@type": "MedicalSymptom", "name": "Blackouts (syncope)" }
+        ],
+        "possibleTreatment": [
+          { "@type": "MedicalTherapy", "name": "VT catheter ablation" },
+          { "@type": "MedicalDevice", "name": "Implantable Cardioverter Defibrillator (ICD)" },
+          { "@type": "MedicalTherapy", "name": "Antiarrhythmic medication" }
+        ],
+        "url": "https://www.drandreaskyriacou.com/patient-education.html"
+      },
+      {
+        "@type": "MedicalCondition",
+        "name": "Ventricular Ectopics",
+        "alternateName": ["PVCs", "Premature Ventricular Contractions"],
+        "description": "Premature beats originating from the ventricles that interrupt an otherwise regular rhythm. Extremely common and usually benign in people with a structurally normal heart. Patients often describe a missed beat, thud, or flip in the chest. In some patients with very frequent ectopics, they can cause fatigue or breathlessness, and in rare cases may affect heart function.",
+        "associatedAnatomy": {
+          "@type": "AnatomicalStructure",
+          "name": "Heart — ventricles (lower chambers)"
+        },
+        "signOrSymptom": [
+          { "@type": "MedicalSymptom", "name": "Skipped beat sensation" },
+          { "@type": "MedicalSymptom", "name": "Thud or flip in the chest" },
+          { "@type": "MedicalSymptom", "name": "Fatigue" }
+        ],
+        "possibleTreatment": [
+          { "@type": "MedicalTherapy", "name": "Reassurance and lifestyle modification" },
+          { "@type": "MedicalTherapy", "name": "Catheter ablation" },
+          { "@type": "MedicalTherapy", "name": "Antiarrhythmic medication" }
+        ],
+        "url": "https://www.drandreaskyriacou.com/patient-education.html"
+      },
+      {
+        "@type": "MedicalProcedure",
+        "name": "Conduction System Physiological Pacing",
+        "alternateName": ["His bundle pacing", "Left bundle branch pacing", "CSP"],
+        "description": "His bundle or left bundle branch pacing delivers impulses directly to the heart's natural wiring system, producing a narrow, physiological QRS — preserving coordinated contraction of both ventricles. Avoids the unnatural contraction pattern caused by traditional right ventricular apex pacing.",
+        "associatedAnatomy": {
+          "@type": "AnatomicalStructure",
+          "name": "Heart — His-Purkinje conduction system"
+        },
+        "url": "https://www.drandreaskyriacou.com/patient-education.html"
+      },
+      {
+        "@type": "MedicalProcedure",
+        "name": "Cardiac Resynchronisation Therapy",
+        "alternateName": ["CRT", "CRT-P", "CRT-D", "Biventricular pacing"],
+        "description": "CRT uses three pacing leads to coordinate the timing of both ventricles in patients with heart failure and electrical conduction delay, improving the heart's pumping efficiency. By resynchronising ventricular contraction, CRT can significantly improve symptoms, exercise capacity, and quality of life.",
+        "associatedAnatomy": {
+          "@type": "AnatomicalStructure",
+          "name": "Heart — both ventricles"
+        },
+        "url": "https://www.drandreaskyriacou.com/patient-education.html"
+      }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Patient Education | Dr Andreas Kyriacou",
+    "description": "Patient education resources from Dr Andreas Kyriacou — understand your heart rhythm, arrhythmias, and cardiac conditions with interactive ECG animations and explanations.",
+    "url": "https://www.drandreaskyriacou.com/patient-education.html",
+    "isPartOf": {
+      "@type": "WebSite",
+      "url": "https://www.drandreaskyriacou.com"
+    },
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.drandreaskyriacou.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Patient Education",
+          "item": "https://www.drandreaskyriacou.com/patient-education.html"
+        }
+      ]
+    }
+  }
+  </script>
 </head>
 
 <body>
