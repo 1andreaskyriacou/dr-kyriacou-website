@@ -400,7 +400,7 @@
 
           var mat = new THREE.MeshStandardMaterial({
             map:      texMap,
-            color:    new THREE.Color(0.85, 0.15, 0.10),
+            color:    new THREE.Color(0x8b1a1a),
             roughness: 0.9,
             metalness: 0.0
           });
