@@ -1750,3 +1750,18 @@
       flex-shrink: 0;
     }
 
+    /* ===== ECG SECTION DIVIDER ===== */
+    .ecg-divider {
+      width: 100%;
+      height: 30px;
+      line-height: 0;
+      overflow: hidden;
+      pointer-events: none;
+      margin: 8px 0;
+    }
+    .ecg-divider svg {
+      display: block;
+      width: 100%;
+      height: 30px;
+    }
+
