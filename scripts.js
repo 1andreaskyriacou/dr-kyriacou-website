@@ -373,6 +373,29 @@
       });
     });
 
+    // ── professional statement modal ────────────────────────────────────────
+    window.openStatementModal = function () {
+      var overlay = document.getElementById('statement-modal');
+      if (!overlay) return;
+      overlay.style.display = 'flex';
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    };
+    document.addEventListener('DOMContentLoaded', function () {
+      var overlay = document.getElementById('statement-modal');
+      if (!overlay) return;
+      function closeStatement() {
+        overlay.classList.remove('active');
+        overlay.style.display = '';
+        document.body.style.overflow = '';
+      }
+      document.getElementById('statement-modal-close').addEventListener('click', closeStatement);
+      overlay.addEventListener('click', function (e) { if (e.target === overlay) closeStatement(); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('active')) closeStatement();
+      });
+    });
+
     // ── arrhythmia explorer ────────────────────────────────────────────────
     (function () {
       var ECG_MAP = {
