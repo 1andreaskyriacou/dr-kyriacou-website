@@ -529,23 +529,41 @@
 
     /* ===== DIAGNOSTIC INVESTIGATION BUTTONS ===== */
     .inv-btn {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       width: 100%;
-      padding: 9px 14px;
+      padding: 10px 14px;
       background: #0A2342;
       color: var(--gold);
-      border: 1px solid var(--gold-dim);
-      border-radius: 6px;
+      border: 1px solid rgba(201,168,76,0.28);
+      border-radius: 8px;
       font-size: 12px;
       font-weight: 500;
       font-family: var(--font-sans);
       text-align: left;
       cursor: pointer;
-      transition: background 0.2s, border-color 0.2s;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+      transition: background 0.18s, border-color 0.18s, box-shadow 0.18s, transform 0.18s;
+    }
+    .inv-btn::after {
+      content: '›';
+      font-size: 17px;
+      line-height: 1;
+      flex-shrink: 0;
+      margin-left: 10px;
+      opacity: 0.55;
+      transition: opacity 0.18s, transform 0.18s;
     }
     .inv-btn:hover {
       background: #0d2d56;
       border-color: var(--gold);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.26);
+      transform: translateY(-1px);
+    }
+    .inv-btn:hover::after {
+      opacity: 1;
+      transform: translateX(3px);
     }
 
     /* ===== DIAGNOSTIC INVESTIGATION MODAL ===== */
