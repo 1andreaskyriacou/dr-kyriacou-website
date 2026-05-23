@@ -288,33 +288,13 @@
       align-items: stretch;
       align-self: flex-start;
     }
-    .hero-photo-frame::before {
-      content: '';
-      position: absolute;
-      inset: -3px;
-      border-radius: 10px;
-      background: linear-gradient(135deg, #E4E6E8 0%, rgba(228,230,232,0.4) 50%, #E4E6E8 100%);
-      z-index: 0;
-    }
-    .hero-photo-frame::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 8px;
-      box-shadow: 0 20px 60px rgba(10,35,66,0.18);
-      z-index: 2;
-      pointer-events: none;
-    }
     .hero-photo {
       width: 100%;
       height: 100%;
       min-height: 480px;
       object-fit: cover;
       object-position: center top;
-      border-radius: 8px;
       display: block;
-      position: relative;
-      z-index: 1;
     }
 
     .hero-locations {
