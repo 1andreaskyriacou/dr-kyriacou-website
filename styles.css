@@ -8,7 +8,7 @@
       --gold-light:   #D4A843;
       --gold-dim:     #8B6E2E;
       --dark:         #FFFFFF;
-      --dark-2:       #f9f9f9;
+      --dark-2:       #f7f7f8;
       --dark-3:       #FFFFFF;
       --dark-4:       #E8EAED;
       --dark-5:       #DDE1E7;
@@ -759,7 +759,7 @@
     /* ===== HEART SCHEMATICS ===== */
     .heart-schematic {
       padding: 14px 20px 0;
-      background: #f9f9f9;
+      background: #f7f7f8;
       border-bottom: 1px solid var(--border);
     }
     .heart-schematic svg {
@@ -805,7 +805,7 @@
     .schematic-modal.active { display: flex; }
     .schematic-modal-box {
       position: relative;
-      background: #f9f9f9;
+      background: #f7f7f8;
       border-radius: 14px;
       padding: 56px 28px 28px;
       max-width: 90vw;
@@ -895,7 +895,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: #f9f9f9;
+      background: #f7f7f8;
       border-right: 1px solid #e2e8f0;
       padding: 18px 14px 0;
     }
@@ -1021,7 +1021,7 @@
     }
     #heart-modal-box {
       position: relative;
-      background: #f9f9f9;
+      background: #f7f7f8;
       border-radius: 16px;
       padding: 52px 28px 24px;
       max-width: min(700px, 94vw);
