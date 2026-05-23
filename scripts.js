@@ -405,3 +405,46 @@
       });
     }());
 
+    // ── Animated stat counters ───────────────────────────────────────────────
+    (function () {
+      if (!('IntersectionObserver' in window)) return;
+      document.addEventListener('DOMContentLoaded', function () {
+        var nums = document.querySelectorAll('.stat-number[data-target]');
+        if (!nums.length) return;
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            var el = entry.target;
+            var target = parseInt(el.getAttribute('data-target'), 10);
+            var suffix = el.getAttribute('data-suffix') || '';
+            var duration = 1400;
+            var start = null;
+            function step(ts) {
+              if (!start) start = ts;
+              var progress = Math.min((ts - start) / duration, 1);
+              var ease = 1 - Math.pow(1 - progress, 3);
+              el.textContent = Math.round(ease * target) + suffix;
+              if (progress < 1) requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+            io.unobserve(el);
+          });
+        }, { threshold: 0.4 });
+        nums.forEach(function (el) { io.observe(el); });
+      });
+    }());
+
+    // ── Hero parallax (index.html only) ─────────────────────────────────────
+    (function () {
+      var hero = document.getElementById('hero');
+      if (!hero) return;
+      var heroBg = hero.querySelector('.hero-bg');
+      if (!heroBg) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      heroBg.style.willChange = 'transform';
+      function onScroll() {
+        heroBg.style.transform = 'translateY(' + Math.round(window.scrollY * 0.28) + 'px)';
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+    }());
+
