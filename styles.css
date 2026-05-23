@@ -1832,26 +1832,26 @@
 
     /* ===== CAREER TIMELINE ===== */
     .timeline-section {
-      padding: 2.5rem 0;
+      padding: 1.25rem 0;
     }
     .timeline {
       position: relative;
-      padding-left: 54px;
-      margin-top: 32px;
+      padding-left: 44px;
+      margin-top: 20px;
       max-width: 660px;
     }
     .timeline::before {
       content: '';
       position: absolute;
-      left: 15px;
-      top: 6px;
-      bottom: 6px;
+      left: 12px;
+      top: 4px;
+      bottom: 4px;
       width: 2px;
       background: linear-gradient(180deg, #c9a84c 0%, rgba(201,168,76,0.1) 100%);
     }
     .timeline-item {
       position: relative;
-      margin-bottom: 34px;
+      margin-bottom: 18px;
       transition: transform 0.2s ease;
     }
     .timeline-item:last-child { margin-bottom: 0; }
@@ -1859,34 +1859,34 @@
     .timeline-item::before {
       content: '';
       position: absolute;
-      left: -46px;
+      left: -38px;
       top: 4px;
-      width: 12px;
-      height: 12px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
       background: #c9a84c;
-      border: 2.5px solid #f6f6f8;
-      box-shadow: 0 0 0 3px rgba(201,168,76,0.2);
+      border: 2px solid #f6f6f8;
+      box-shadow: 0 0 0 2px rgba(201,168,76,0.2);
     }
     .timeline-year {
-      font-size: 0.71rem;
+      font-size: 0.67rem;
       font-weight: 700;
       color: #c9a84c;
       letter-spacing: 0.11em;
       text-transform: uppercase;
-      margin: 0 0 3px 0;
+      margin: 0 0 2px 0;
     }
     .timeline-title {
-      font-size: 0.95rem;
+      font-size: 0.88rem;
       font-weight: 700;
       color: #0A2342;
-      margin: 0 0 5px 0;
+      margin: 0 0 3px 0;
       font-family: 'Inter Tight', system-ui, sans-serif;
     }
     .timeline-desc {
-      font-size: 0.83rem;
+      font-size: 0.78rem;
       color: #4A5568;
-      line-height: 1.65;
+      line-height: 1.55;
       margin: 0;
     }
 
