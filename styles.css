@@ -1449,6 +1449,35 @@
       align-self: flex-start;
     }
 
+    /* ===== PROFILE LINK PILLS ===== */
+    .profile-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .profile-link-btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 14px;
+      border: 1px solid #c9a84c;
+      border-radius: 999px;
+      color: #c9a84c;
+      background: transparent;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+
+    .profile-link-btn:hover {
+      background: #c9a84c;
+      color: #ffffff;
+    }
+
     /* ===== FOOTER ===== */
     footer {
       background: #3d4451 !important;
