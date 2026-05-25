@@ -166,7 +166,7 @@
       position: relative;
       overflow: hidden;
       padding-top: 128px;
-      background: var(--dark-2) url('hero-bg.jpg') center / cover no-repeat;
+      background: var(--dark-2);
     }
 
     .hero-bg {
@@ -174,7 +174,6 @@
       inset: 0;
       pointer-events: none;
       background:
-        linear-gradient(rgba(10,20,40,0.45), rgba(10,20,40,0.45)),
         radial-gradient(ellipse 70% 60% at 80% 50%, rgba(201,168,76,0.08) 0%, transparent 60%),
         radial-gradient(ellipse 50% 50% at 10% 90%, rgba(10,35,66,0.04) 0%, transparent 55%);
     }
@@ -203,7 +202,7 @@
       font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #ffffff;
+      color: #0A2342;
       margin-bottom: 20px;
       line-height: 1.3;
     }
@@ -213,7 +212,7 @@
       font-size: clamp(2.8rem, 6vw, 4.375rem);
       font-weight: 500;
       line-height: 1.2;
-      color: #ffffff;
+      color: var(--text);
       margin-bottom: 12px;
     }
     .hero-title strong {
@@ -225,7 +224,7 @@
       font-family: var(--font-serif);
       font-size: clamp(1.1rem, 2vw, 1.35rem);
       font-weight: bold;
-      color: #ffffff;
+      color: var(--gold-dim);
       letter-spacing: 0.03em;
       margin-bottom: 28px;
       font-style: italic;
@@ -234,7 +233,7 @@
     .hero-desc {
       font-size: 18px;
       line-height: 1.75;
-      color: rgba(255,255,255,0.88);
+      color: var(--text-muted);
       max-width: 480px;
       margin-bottom: 40px;
     }
