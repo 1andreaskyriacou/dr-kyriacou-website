@@ -246,8 +246,8 @@
     .hero-subtitle {
       font-family: var(--font-serif);
       font-size: clamp(1.1rem, 2vw, 1.35rem);
-      font-weight: bold;
-      color: var(--gold-dim);
+      font-weight: 600;
+      color: #c9a84c;
       letter-spacing: 0.03em;
       margin-bottom: 28px;
       font-style: italic;
