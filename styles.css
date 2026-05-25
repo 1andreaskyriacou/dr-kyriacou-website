@@ -166,7 +166,7 @@
       position: relative;
       overflow: hidden;
       padding-top: 128px;
-      background: var(--dark-2) url('hero-bg.jpg') center / cover no-repeat fixed;
+      background: var(--dark-2) url('hero-bg.jpg') center / cover no-repeat;
     }
 
     .hero-bg {
@@ -174,7 +174,7 @@
       inset: 0;
       pointer-events: none;
       background:
-        linear-gradient(rgba(10,20,40,0.65), rgba(10,20,40,0.65)),
+        linear-gradient(rgba(10,20,40,0.45), rgba(10,20,40,0.45)),
         radial-gradient(ellipse 70% 60% at 80% 50%, rgba(201,168,76,0.08) 0%, transparent 60%),
         radial-gradient(ellipse 50% 50% at 10% 90%, rgba(10,35,66,0.04) 0%, transparent 55%);
     }
