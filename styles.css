@@ -160,15 +160,32 @@
 
     /* ===== HERO ===== */
     #hero {
+      min-height: 100vh;
       display: flex;
       align-items: center;
       position: relative;
       overflow: hidden;
       padding-top: 128px;
+      background: var(--dark-2);
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 60% at 80% 50%, rgba(201,168,76,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 10% 90%, rgba(10,35,66,0.04) 0%, transparent 55%);
+    }
+
+    #hero-inner {
+      position: relative;
+      overflow: hidden;
+      padding: 48px 40px;
       background: url('hero-bg.jpg') center / cover no-repeat;
     }
 
-    #hero::before {
+    #hero-inner::before {
       content: '';
       position: absolute;
       top: 0;
@@ -179,17 +196,7 @@
       z-index: 0;
     }
 
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 1;
-      background:
-        radial-gradient(ellipse 70% 60% at 80% 50%, rgba(201,168,76,0.08) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 50% at 10% 90%, rgba(10,35,66,0.04) 0%, transparent 55%);
-    }
-
-    #hero > .container {
+    #hero-inner > * {
       position: relative;
       z-index: 1;
     }
