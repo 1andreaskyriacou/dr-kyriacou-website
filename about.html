@@ -276,16 +276,22 @@
   <nav id="navbar" role="navigation" aria-label="Main navigation">
     <div class="nav-inner">
       <a href="index.html" class="nav-brand"><img src="favicon.svg" alt="" width="32" height="32" style="margin-right:8px;vertical-align:middle;">Dr. <span>Andreas Kyriacou</span></a>
-      <ul class="nav-links" id="nav-menu">
+      <div class="nav-right">
+        <ul class="nav-links" id="nav-menu">
         <li><a href="about.html" class="nav-active">About</a></li>
         <li><a href="expertise.html">Expertise</a></li>
         <li><a href="patient-education.html">Patient Education</a></li>
         <li><a href="faq.html">FAQs</a></li>
         <li><a href="contact.html" class="nav-cta">Contact</a></li>
       </ul>
-      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+        <div class="lang-toggle notranslate" id="lang-toggle" translate="no" role="group" aria-label="Select language">
+          <button type="button" class="lang-btn active" data-lang="en" aria-pressed="true">🇬🇧 EN</button>
+          <button type="button" class="lang-btn" data-lang="el" aria-pressed="false">🇬🇷 GR</button>
+        </div>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
     </div>
   </nav>
 
