@@ -1,6 +1,15 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Flash guard: hide instantly (pre-paint) on Greek pages; scripts.js reveals once Google Translate applies -->
+  <script>
+  (function(){
+    var greek = document.cookie.split(';').some(function(c){ return c.trim().indexOf('googtrans=/en/el') !== -1; });
+    if(greek){
+      document.documentElement.style.visibility = 'hidden';
+    }
+  })();
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dr Andreas Kyriacou | Consultant Cardiologist &amp; Electrophysiologist | Sheffield &amp; Cyprus</title>

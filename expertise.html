@@ -1,6 +1,15 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Flash guard: hide instantly (pre-paint) on Greek pages; scripts.js reveals once Google Translate applies -->
+  <script>
+  (function(){
+    var greek = document.cookie.split(';').some(function(c){ return c.trim().indexOf('googtrans=/en/el') !== -1; });
+    if(greek){
+      document.documentElement.style.visibility = 'hidden';
+    }
+  })();
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Dr Andreas Kyriacou's specialist areas of clinical practice — catheter ablation, atrial fibrillation, ventricular tachycardia, cardiac devices, and complex arrhythmia management." />
