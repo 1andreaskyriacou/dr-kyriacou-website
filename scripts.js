@@ -1,23 +1,19 @@
-    // Prevent a flash of English on Greek pages: the instant this script runs,
-    // hide the whole document with a <style> tag (visibility:hidden on <html>
-    // is stronger and earlier than a body class), then reveal it the moment
-    // Google Translate applies its "translated-*" class — with a 1.5s safety
-    // timeout so the page can never get stuck hidden.
+    // On Greek pages the document is hidden pre-paint by an inline script in
+    // <head> (document.documentElement.style.visibility = 'hidden') to prevent
+    // a flash of English. Reveal it the moment Google Translate applies its
+    // "translated-*" class, with a 1.5s safety timeout so it can never stay
+    // hidden.
     (function () {
       if (!/googtrans=\/[^/]*\/el/.test(document.cookie)) return;
-      var guard = document.createElement('style');
-      guard.id = 'gt-flash-guard';
-      guard.textContent = 'html { visibility: hidden !important; }';
-      (document.head || document.documentElement).appendChild(guard);
-
       var done = false;
       function reveal() {
         if (done) return;
         done = true;
-        var g = document.getElementById('gt-flash-guard');
-        if (g && g.parentNode) g.parentNode.removeChild(g);
+        document.documentElement.style.visibility = '';
       }
-      if (window.MutationObserver) {
+      if (/translated-ltr|translated-rtl|translated/.test(document.documentElement.className)) {
+        reveal();
+      } else if (window.MutationObserver) {
         var obs = new MutationObserver(function () {
           if (/translated-ltr|translated-rtl|translated/.test(document.documentElement.className)) {
             obs.disconnect();
