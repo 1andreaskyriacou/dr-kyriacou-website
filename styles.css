@@ -182,7 +182,10 @@
     .goog-te-balloon-frame { display: none !important; }
     .skiptranslate { display: none !important; }
     body { top: 0 !important; }
-    .goog-te-highlight, .goog-text-highlight, [class*="goog-te"], font[class*="goog"] { background: none !important; background-color: transparent !important; box-shadow: none !important; border-bottom: none !important; }
+    .goog-te-highlight, .goog-text-highlight, [class*="goog"], font[class*="goog"], .goog-te-banner-frame, #goog-gt-tt, .goog-tooltip, .goog-tooltip-hover { background: none !important; background-color: transparent !important; box-shadow: none !important; border-bottom: none !important; border: none !important; outline: none !important; text-decoration: none !important; }
+    /* Scoped to Google Translate elements (not the whole site) so visitors can
+       still select and copy page content. */
+    [class*="goog"], font[class*="goog"] { -webkit-user-select: none; user-select: none; }
 
     /* Hide the page until Google Translate has finished, to avoid a flash
        of English when navigating between pages with Greek selected. */

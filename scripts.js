@@ -669,6 +669,10 @@
           for (i = 0; i < TEXT_FIXES.length; i++) nt = nt.replace(TEXT_FIXES[i][0], TEXT_FIXES[i][1]);
           if (nt !== t) node.nodeValue = nt;
         }
+        // Strip Google's inline hover styling from any injected goog elements.
+        document.querySelectorAll('[class*="goog"]').forEach(function (el) {
+          el.style.cssText += 'background:none!important;background-color:transparent!important;box-shadow:none!important;border:none!important;';
+        });
       }
 
       // Run the fixes after each batch of Google Translate DOM changes.
