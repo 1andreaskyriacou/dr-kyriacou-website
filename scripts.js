@@ -528,7 +528,7 @@
       // so neighbouring translated words don't butt up against them
       // (e.g. "...είναι Ειδικός..." not "...είναιΕιδικός...").
       var OVERRIDES = {
-        'Cardiac Electrophysiologist': ' Καρδιακός Ηλεκτροφυσιολόγος ',
+        'Cardiac Electrophysiologist': ' Ηλεκτροφυσιολόγος ',
         'Consultant Cardiologist':     ' Ειδικός Καρδιολόγος ',
         'Electrophysiologist':         ' Ηλεκτροφυσιολόγος ',
         'Electrophysiology':           ' Ηλεκτροφυσιολογία '
@@ -622,11 +622,77 @@
         combo.dispatchEvent(new Event('change'));
         return true;
       }
+      function isTranslated() {
+        return /translated/.test(document.documentElement.className);
+      }
+
+      // Fix 3: Google sometimes doesn't pick up the combo change straight away.
+      // If the page still isn't translated 1s after pressing GR, re-fire the
+      // combo, retrying up to 3 times at 800ms intervals.
+      function ensureTranslated() {
+        var n = 0;
+        (function check() {
+          if (isTranslated()) return;
+          if (n++ >= 3) return;
+          applyCombo('el');
+          setTimeout(check, 800);
+        }());
+      }
+
+      // Fix 4: correct cardiology terms in Google's Greek output. Google renders
+      // "ablations" as "καταστολές" (suppressions); the correct term is
+      // "καταλύσεις". These run ONLY on already-translated text (guarded by
+      // isTranslated) so the English page and the revert to English are never
+      // touched.
+      var TEXT_FIXES = [
+        [/καταστολές/g, 'καταλύσεις'],
+        [/\bablation\b/gi, 'καταλύσεις']
+      ];
+      var fixObs = null, fixScheduled = false;
+
+      function applyTextFixes() {
+        if (!isTranslated()) return;
+        var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+          acceptNode: function (node) {
+            if (!node.nodeValue) return NodeFilter.FILTER_REJECT;
+            var p = node.parentNode;
+            if (!p) return NodeFilter.FILTER_REJECT;
+            var tag = p.nodeName;
+            if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'NOSCRIPT' || tag === 'TEXTAREA') return NodeFilter.FILTER_REJECT;
+            if (p.closest && p.closest('.i18n-term, .i18n-keep, .lang-toggle, #google_translate_element')) return NodeFilter.FILTER_REJECT;
+            return NodeFilter.FILTER_ACCEPT;
+          }
+        });
+        var node;
+        while ((node = walker.nextNode())) {
+          var t = node.nodeValue, nt = t, i;
+          for (i = 0; i < TEXT_FIXES.length; i++) nt = nt.replace(TEXT_FIXES[i][0], TEXT_FIXES[i][1]);
+          if (nt !== t) node.nodeValue = nt;
+        }
+      }
+
+      // Run the fixes after each batch of Google Translate DOM changes.
+      function startGreekFixes() {
+        applyTextFixes();
+        if (window.MutationObserver && !fixObs) {
+          fixObs = new MutationObserver(function () {
+            if (fixScheduled) return;
+            fixScheduled = true;
+            setTimeout(function () { fixScheduled = false; applyTextFixes(); }, 150);
+          });
+          fixObs.observe(document.body, { childList: true, subtree: true, characterData: true });
+        }
+      }
+      function stopGreekFixes() {
+        if (fixObs) { fixObs.disconnect(); fixObs = null; }
+      }
+
       function selectLang(lang) {
         if (lang === 'el') {
           setCookie('/en/el');
         } else {
           clearCookie();
+          stopGreekFixes();
         }
         updateButtons(lang);
         var tries = 0;
@@ -636,6 +702,10 @@
           // Combo never appeared (e.g. switching back to EN) — reload to reset
           if (lang === 'en') window.location.reload();
         }());
+        if (lang === 'el') {
+          setTimeout(ensureTranslated, 1000);
+          startGreekFixes();
+        }
       }
 
       btns.forEach(function (b) {
@@ -667,6 +737,7 @@
           obs.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
         }
         setTimeout(reveal, 2000);
+        startGreekFixes();
       } else {
         document.body.classList.remove('translating');
       }

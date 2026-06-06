@@ -182,11 +182,7 @@
     .goog-te-balloon-frame { display: none !important; }
     .skiptranslate { display: none !important; }
     body { top: 0 !important; }
-    .goog-te-highlight { background: none !important; }
-    .goog-text-highlight {
-      background: none !important;
-      box-shadow: none !important;
-    }
+    .goog-te-highlight, .goog-text-highlight, [class*="goog-te"], font[class*="goog"] { background: none !important; background-color: transparent !important; box-shadow: none !important; border-bottom: none !important; }
 
     /* Hide the page until Google Translate has finished, to avoid a flash
        of English when navigating between pages with Greek selected. */
