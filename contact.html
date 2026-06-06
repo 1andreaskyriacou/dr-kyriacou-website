@@ -6,7 +6,7 @@
   (function(){
     var greek = document.cookie.split(';').some(function(c){ return c.trim().indexOf('googtrans=/en/el') !== -1; });
     if(greek){
-      document.documentElement.style.visibility = 'hidden';
+      document.documentElement.classList.add('gt-hiding');
     }
   })();
   </script>

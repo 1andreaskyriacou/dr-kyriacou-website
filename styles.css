@@ -192,6 +192,11 @@
     .goog-te-balloon-frame { display: none !important; }
     font { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }
 
+    /* Greek-navigation flash guard: the <head> inline script adds .gt-hiding to
+       <html> before paint; scripts.js removes it once translation is applied. */
+    html { transition: opacity 0.1s; }
+    html.gt-hiding { opacity: 0; }
+
     .hamburger {
       display: none;
       flex-direction: column;

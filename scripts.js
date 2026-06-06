@@ -1,6 +1,6 @@
     // On Greek pages the document is hidden pre-paint by an inline script in
-    // <head> (document.documentElement.style.visibility = 'hidden') to prevent
-    // a flash of English. Reveal it the moment Google Translate applies its
+    // <head> (adds .gt-hiding to <html>, which sets opacity:0) to prevent a
+    // flash of English. Reveal it the moment Google Translate applies its
     // "translated-*" class, with a 1.5s safety timeout so it can never stay
     // hidden.
     (function () {
@@ -9,7 +9,7 @@
       function reveal() {
         if (done) return;
         done = true;
-        document.documentElement.style.visibility = '';
+        document.documentElement.classList.remove('gt-hiding');
       }
       if (/translated-ltr|translated-rtl|translated/.test(document.documentElement.className)) {
         reveal();
@@ -768,6 +768,24 @@
           selectLang(b.getAttribute('data-lang'));
         });
       });
+
+      // Re-assert the Greek cookie when navigating to another internal page, so
+      // it is guaranteed present before the next page's <head> flash guard runs.
+      // (The cookie already persists with path=/, so this is belt-and-braces.)
+      // We do NOT call preventDefault — navigation proceeds normally — so this
+      // cannot break links, new-tab/modified clicks, downloads or externals.
+      document.addEventListener('click', function (e) {
+        if (currentLang() !== 'el') return;
+        if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        var a = e.target.closest ? e.target.closest('a[href]') : null;
+        if (!a) return;
+        if (a.target && a.target !== '_self') return;
+        if (a.hasAttribute('download')) return;
+        var url;
+        try { url = new URL(a.href, window.location.href); } catch (err) { return; }
+        if (url.origin !== window.location.origin) return; // internal only
+        setCookie('/en/el');
+      }, true);
 
       // Real-time hover interception: the moment Google highlights a segment,
       // flatten the hovered <font> wrapper (where the highlight lives) and clean
