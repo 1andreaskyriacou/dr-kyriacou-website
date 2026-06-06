@@ -507,7 +507,60 @@
           b.classList.toggle('active', on);
           b.setAttribute('aria-pressed', on ? 'true' : 'false');
         });
+        applyTitleLang(lang);
       }
+
+      // ── Custom term handling ────────────────────────────────────────────
+      // 1. Keep the credential line ("MBChB · PhD · FRCP · FESC · FEHRA") out
+      //    of Google Translate entirely.
+      // 2. Google renders "Consultant Cardiologist" as "Σύμβουλος Καρδιολόγος";
+      //    the correct medical term is "Ειδικός Καρδιολόγος". We wrap each
+      //    visible occurrence in a translate="no" span and swap its text
+      //    ourselves on language change.
+      var TITLE_EN = 'Consultant Cardiologist';
+      var TITLE_EL = 'Ειδικός Καρδιολόγος';
+
+      // Wrap every visible occurrence of `phrase` in a <span translate="no">
+      // so Google Translate leaves it alone. `className` marks the spans.
+      function wrapPhrase(phrase, className) {
+        var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+          acceptNode: function (node) {
+            if (!node.nodeValue || node.nodeValue.indexOf(phrase) === -1) return NodeFilter.FILTER_REJECT;
+            var p = node.parentNode;
+            if (!p) return NodeFilter.FILTER_REJECT;
+            var tag = p.nodeName;
+            if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'NOSCRIPT' || tag === 'TEXTAREA') return NodeFilter.FILTER_REJECT;
+            if (p.closest && p.closest('.' + className + ', #google_translate_element, .lang-toggle')) return NodeFilter.FILTER_REJECT;
+            return NodeFilter.FILTER_ACCEPT;
+          }
+        });
+        var targets = [];
+        while (walker.nextNode()) targets.push(walker.currentNode);
+        targets.forEach(function (node) {
+          var text = node.nodeValue, frag = document.createDocumentFragment(), idx, last = 0;
+          while ((idx = text.indexOf(phrase, last)) !== -1) {
+            if (idx > last) frag.appendChild(document.createTextNode(text.slice(last, idx)));
+            var span = document.createElement('span');
+            span.className = className + ' notranslate';
+            span.setAttribute('translate', 'no');
+            span.textContent = phrase;
+            frag.appendChild(span);
+            last = idx + phrase.length;
+          }
+          if (last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+          node.parentNode.replaceChild(frag, node);
+        });
+      }
+
+      function applyTitleLang(lang) {
+        var txt = (lang === 'el') ? TITLE_EL : TITLE_EN;
+        document.querySelectorAll('.i18n-title').forEach(function (el) { el.textContent = txt; });
+      }
+
+      // Wrap now, before the Google Translate library loads and processes the page.
+      wrapPhrase(TITLE_EN, 'i18n-title');                                              // job title (text swapped per language)
+      wrapPhrase('MBChB · PhD · FRCP · FESC · FEHRA', 'i18n-keep'); // hero credential line (with middots)
+      wrapPhrase('MBChB PhD FRCP FESC FEHRA', 'i18n-keep');                            // credential line (cards/footer)
 
       // Hidden container for the Google Translate gadget
       if (!document.getElementById('google_translate_element')) {
