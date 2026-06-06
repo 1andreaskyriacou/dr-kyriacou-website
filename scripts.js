@@ -1,3 +1,13 @@
+    // Hide the page immediately on Greek pages so visitors don't see a flash
+    // of English before Google Translate runs. The language toggle below
+    // reveals it once translation is applied; this timeout is the safety net.
+    (function () {
+      if (document.body && /googtrans=\/[^/]*\/el/.test(document.cookie)) {
+        document.body.classList.add('translating');
+        setTimeout(function () { document.body.classList.remove('translating'); }, 2500);
+      }
+    }());
+
     // Year
     document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -507,22 +517,35 @@
           b.classList.toggle('active', on);
           b.setAttribute('aria-pressed', on ? 'true' : 'false');
         });
-        applyTitleLang(lang);
+        applyOverrides(lang);
       }
 
       // ── Custom term handling ────────────────────────────────────────────
-      // 1. Keep the credential line ("MBChB · PhD · FRCP · FESC · FEHRA") out
-      //    of Google Translate entirely.
-      // 2. Google renders "Consultant Cardiologist" as "Σύμβουλος Καρδιολόγος";
-      //    the correct medical term is "Ειδικός Καρδιολόγος". We wrap each
-      //    visible occurrence in a translate="no" span and swap its text
-      //    ourselves on language change.
-      var TITLE_EN = 'Consultant Cardiologist';
-      var TITLE_EL = 'Ειδικός Καρδιολόγος';
+      // Google mistranslates several cardiology terms (e.g. "Consultant
+      // Cardiologist" → "Σύμβουλος Καρδιολόγος"). We wrap each English term in a
+      // translate="no" span so Google leaves it alone, then swap the text to
+      // our own Greek on language change. Greek values are padded with spaces
+      // so neighbouring translated words don't butt up against them
+      // (e.g. "...είναι Ειδικός..." not "...είναιΕιδικός...").
+      var OVERRIDES = {
+        'Cardiac Electrophysiologist': ' Καρδιακός Ηλεκτροφυσιολόγος ',
+        'Consultant Cardiologist':     ' Ειδικός Καρδιολόγος ',
+        'Electrophysiologist':         ' Ηλεκτροφυσιολόγος ',
+        'Electrophysiology':           ' Ηλεκτροφυσιολογία '
+      };
 
-      // Wrap every visible occurrence of `phrase` in a <span translate="no">
-      // so Google Translate leaves it alone. `className` marks the spans.
-      function wrapPhrase(phrase, className) {
+      // Acronyms / credential line that must always stay in English.
+      var KEEP_TERMS = [
+        'MBChB · PhD · FRCP · FESC · FEHRA',
+        'MBChB PhD FRCP FESC FEHRA',
+        'MBChB', 'PhD', 'FRCP', 'FESC', 'FEHRA'
+      ];
+
+      // Wrap every visible occurrence of `phrase` in a <span translate="no"> so
+      // Google Translate leaves it alone. When `greek` is given the span is a
+      // swappable term (class i18n-term) carrying its texts in data-* attrs;
+      // otherwise it is simply kept in English (class i18n-keep).
+      function wrapPhrase(phrase, className, greek) {
         var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
           acceptNode: function (node) {
             if (!node.nodeValue || node.nodeValue.indexOf(phrase) === -1) return NodeFilter.FILTER_REJECT;
@@ -530,7 +553,7 @@
             if (!p) return NodeFilter.FILTER_REJECT;
             var tag = p.nodeName;
             if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'NOSCRIPT' || tag === 'TEXTAREA') return NodeFilter.FILTER_REJECT;
-            if (p.closest && p.closest('.' + className + ', #google_translate_element, .lang-toggle')) return NodeFilter.FILTER_REJECT;
+            if (p.closest && p.closest('.i18n-term, .i18n-keep, #google_translate_element, .lang-toggle')) return NodeFilter.FILTER_REJECT;
             return NodeFilter.FILTER_ACCEPT;
           }
         });
@@ -544,6 +567,10 @@
             span.className = className + ' notranslate';
             span.setAttribute('translate', 'no');
             span.textContent = phrase;
+            if (greek) {
+              span.setAttribute('data-en', phrase);
+              span.setAttribute('data-el', greek);
+            }
             frag.appendChild(span);
             last = idx + phrase.length;
           }
@@ -552,15 +579,19 @@
         });
       }
 
-      function applyTitleLang(lang) {
-        var txt = (lang === 'el') ? TITLE_EL : TITLE_EN;
-        document.querySelectorAll('.i18n-title').forEach(function (el) { el.textContent = txt; });
+      function applyOverrides(lang) {
+        document.querySelectorAll('.i18n-term').forEach(function (el) {
+          el.textContent = (lang === 'el') ? el.getAttribute('data-el') : el.getAttribute('data-en');
+        });
       }
 
-      // Wrap now, before the Google Translate library loads and processes the page.
-      wrapPhrase(TITLE_EN, 'i18n-title');                                              // job title (text swapped per language)
-      wrapPhrase('MBChB · PhD · FRCP · FESC · FEHRA', 'i18n-keep'); // hero credential line (with middots)
-      wrapPhrase('MBChB PhD FRCP FESC FEHRA', 'i18n-keep');                            // credential line (cards/footer)
+      // Wrap now, before the Google Translate library loads and processes the
+      // page. Longer phrases first so a substring (e.g. "Electrophysiologist"
+      // inside "Cardiac Electrophysiologist") isn't wrapped prematurely.
+      Object.keys(OVERRIDES)
+        .sort(function (a, b) { return b.length - a.length; })
+        .forEach(function (en) { wrapPhrase(en, 'i18n-term', OVERRIDES[en]); });
+      KEEP_TERMS.forEach(function (t) { wrapPhrase(t, 'i18n-keep'); });
 
       // Hidden container for the Google Translate gadget
       if (!document.getElementById('google_translate_element')) {
@@ -615,5 +646,29 @@
 
       // Reflect the persisted choice (cookie carries across pages)
       updateButtons(currentLang());
+
+      // Reveal the page once Google Translate has applied (it adds a
+      // "translated-*" class to <html>), or after a safety timeout. This
+      // pairs with body.translating set at the top of this file to hide the
+      // flash of English on Greek page loads.
+      if (currentLang() === 'el') {
+        var revealed = false;
+        var reveal = function () {
+          if (revealed) return;
+          revealed = true;
+          document.body.classList.remove('translating');
+        };
+        if (/translated/.test(document.documentElement.className)) {
+          reveal();
+        } else if (window.MutationObserver) {
+          var obs = new MutationObserver(function () {
+            if (/translated/.test(document.documentElement.className)) { obs.disconnect(); reveal(); }
+          });
+          obs.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+        }
+        setTimeout(reveal, 2000);
+      } else {
+        document.body.classList.remove('translating');
+      }
     }());
 
