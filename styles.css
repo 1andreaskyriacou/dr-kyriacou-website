@@ -186,6 +186,11 @@
     /* Scoped to Google Translate elements (not the whole site) so visitors can
        still select and copy page content. */
     [class*="goog"], font[class*="goog"] { -webkit-user-select: none; user-select: none; }
+    /* Tooltip popup (the source of the hover highlight) and the translated-text
+       <font> wrappers Google injects. The site uses no <font> tags of its own. */
+    #goog-gt-tt { display: none !important; visibility: hidden !important; }
+    .goog-te-balloon-frame { display: none !important; }
+    font { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }
 
     /* Hide the page until Google Translate has finished, to avoid a flash
        of English when navigating between pages with Greek selected. */

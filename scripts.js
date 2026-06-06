@@ -753,16 +753,21 @@
       });
 
       // Real-time hover interception: the moment Google highlights a segment,
-      // strip its inline highlight styles from the hovered font/goog element
-      // (and its nearest goog/font ancestor). Guarded by isTranslated so it
-      // does nothing on the English page.
+      // flatten the hovered <font> wrapper (where the highlight lives) and clean
+      // up any goog-classed element under the cursor. Guarded by isTranslated so
+      // it does nothing on the English page.
       document.addEventListener('mouseover', function (e) {
         if (!isTranslated()) return;
         var el = e.target;
         if (!el || el.nodeType !== 1) return;
-        stripGoog(el);
+        var font = (el.nodeName === 'FONT') ? el : (el.closest ? el.closest('font') : null);
+        if (font) {
+          font.style.backgroundColor = 'transparent';
+          font.style.background = 'none';
+          font.style.boxShadow = 'none';
+        }
         if (el.closest) {
-          var anc = el.closest('font, [class*="goog"]');
+          var anc = el.closest('[class*="goog"]');
           if (anc) stripGoog(anc);
         }
       }, true);
