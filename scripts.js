@@ -1,11 +1,32 @@
-    // Hide the page immediately on Greek pages so visitors don't see a flash
-    // of English before Google Translate runs. The language toggle below
-    // reveals it once translation is applied; this timeout is the safety net.
+    // Prevent a flash of English on Greek pages: the instant this script runs,
+    // hide the whole document with a <style> tag (visibility:hidden on <html>
+    // is stronger and earlier than a body class), then reveal it the moment
+    // Google Translate applies its "translated-*" class — with a 1.5s safety
+    // timeout so the page can never get stuck hidden.
     (function () {
-      if (document.body && /googtrans=\/[^/]*\/el/.test(document.cookie)) {
-        document.body.classList.add('translating');
-        setTimeout(function () { document.body.classList.remove('translating'); }, 2500);
+      if (!/googtrans=\/[^/]*\/el/.test(document.cookie)) return;
+      var guard = document.createElement('style');
+      guard.id = 'gt-flash-guard';
+      guard.textContent = 'html { visibility: hidden !important; }';
+      (document.head || document.documentElement).appendChild(guard);
+
+      var done = false;
+      function reveal() {
+        if (done) return;
+        done = true;
+        var g = document.getElementById('gt-flash-guard');
+        if (g && g.parentNode) g.parentNode.removeChild(g);
       }
+      if (window.MutationObserver) {
+        var obs = new MutationObserver(function () {
+          if (/translated-ltr|translated-rtl|translated/.test(document.documentElement.className)) {
+            obs.disconnect();
+            reveal();
+          }
+        });
+        obs.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+      }
+      setTimeout(reveal, 1500); // safety: never stay hidden
     }());
 
     // Year
@@ -775,29 +796,11 @@
       // Reflect the persisted choice (cookie carries across pages)
       updateButtons(currentLang());
 
-      // Reveal the page once Google Translate has applied (it adds a
-      // "translated-*" class to <html>), or after a safety timeout. This
-      // pairs with body.translating set at the top of this file to hide the
-      // flash of English on Greek page loads.
+      // Apply the Greek term/ablation corrections on Greek page loads. Hiding
+      // and revealing the page is handled by the flash guard at the top of
+      // this file.
       if (currentLang() === 'el') {
-        var revealed = false;
-        var reveal = function () {
-          if (revealed) return;
-          revealed = true;
-          document.body.classList.remove('translating');
-        };
-        if (/translated/.test(document.documentElement.className)) {
-          reveal();
-        } else if (window.MutationObserver) {
-          var obs = new MutationObserver(function () {
-            if (/translated/.test(document.documentElement.className)) { obs.disconnect(); reveal(); }
-          });
-          obs.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-        }
-        setTimeout(reveal, 2000);
         startGreekFixes();
-      } else {
-        document.body.classList.remove('translating');
       }
     }());
 

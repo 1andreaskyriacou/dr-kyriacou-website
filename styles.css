@@ -192,10 +192,6 @@
     .goog-te-balloon-frame { display: none !important; }
     font { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }
 
-    /* Hide the page until Google Translate has finished, to avoid a flash
-       of English when navigating between pages with Greek selected. */
-    body.translating { opacity: 0; }
-
     .hamburger {
       display: none;
       flex-direction: column;
