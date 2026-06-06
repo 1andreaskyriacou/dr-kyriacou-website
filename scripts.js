@@ -648,7 +648,33 @@
         [/καταστολές/g, 'καταλύσεις'],
         [/\bablation\b/gi, 'καταλύσεις']
       ];
-      var fixObs = null, fixScheduled = false;
+      var fixObs = null, fixScheduled = false, styleObs = null;
+
+      // Google's hover highlight is injected as inline style on its OWN <font>
+      // wrappers / goog-classed elements. We strip only those — never the site's
+      // own elements — so legitimate inline backgrounds (cards, modal overlays,
+      // alert boxes) are preserved.
+      function isGoog(el) {
+        if (!el || el.nodeType !== 1) return false;
+        if (el.nodeName === 'FONT') return true;
+        var c = el.className;
+        return typeof c === 'string' && c.indexOf('goog') !== -1;
+      }
+      function stripGoog(el) {
+        if (!isGoog(el)) return;
+        var s = el.style;
+        if (s.background || s.backgroundColor || s.boxShadow) {
+          s.removeProperty('background');
+          s.removeProperty('background-color');
+          s.removeProperty('box-shadow');
+        }
+      }
+      function sweepGoog(root) {
+        if (!root || !root.querySelectorAll) return;
+        stripGoog(root);
+        var els = root.querySelectorAll('font, [class*="goog"]'), i;
+        for (i = 0; i < els.length; i++) stripGoog(els[i]);
+      }
 
       function applyTextFixes() {
         if (!isTranslated()) return;
@@ -670,14 +696,13 @@
           if (nt !== t) node.nodeValue = nt;
         }
         // Strip Google's inline hover styling from any injected goog elements.
-        document.querySelectorAll('[class*="goog"]').forEach(function (el) {
-          el.style.cssText += 'background:none!important;background-color:transparent!important;box-shadow:none!important;border:none!important;';
-        });
+        sweepGoog(document.body);
       }
 
       // Run the fixes after each batch of Google Translate DOM changes.
       function startGreekFixes() {
         applyTextFixes();
+        sweepGoog(document.body);
         if (window.MutationObserver && !fixObs) {
           fixObs = new MutationObserver(function () {
             if (fixScheduled) return;
@@ -686,9 +711,18 @@
           });
           fixObs.observe(document.body, { childList: true, subtree: true, characterData: true });
         }
+        // Watch inline style changes on every element and strip the highlight
+        // the instant Google injects it on its own font/goog elements (hover).
+        if (window.MutationObserver && !styleObs) {
+          styleObs = new MutationObserver(function (muts) {
+            for (var i = 0; i < muts.length; i++) stripGoog(muts[i].target);
+          });
+          styleObs.observe(document.body, { attributes: true, subtree: true, attributeFilter: ['style'] });
+        }
       }
       function stopGreekFixes() {
         if (fixObs) { fixObs.disconnect(); fixObs = null; }
+        if (styleObs) { styleObs.disconnect(); styleObs = null; }
       }
 
       function selectLang(lang) {
@@ -717,6 +751,21 @@
           selectLang(b.getAttribute('data-lang'));
         });
       });
+
+      // Real-time hover interception: the moment Google highlights a segment,
+      // strip its inline highlight styles from the hovered font/goog element
+      // (and its nearest goog/font ancestor). Guarded by isTranslated so it
+      // does nothing on the English page.
+      document.addEventListener('mouseover', function (e) {
+        if (!isTranslated()) return;
+        var el = e.target;
+        if (!el || el.nodeType !== 1) return;
+        stripGoog(el);
+        if (el.closest) {
+          var anc = el.closest('font, [class*="goog"]');
+          if (anc) stripGoog(anc);
+        }
+      }, true);
 
       // Reflect the persisted choice (cookie carries across pages)
       updateButtons(currentLang());
