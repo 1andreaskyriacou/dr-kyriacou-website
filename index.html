@@ -259,9 +259,7 @@
       display: block;
     }
     /* ===== Facts Carousel ===== */
-    .hero-desc { margin-bottom: 12px; }
-    .hero-vitals-row { margin-top: 20px !important; }
-    .fc-section { padding: 10px 0 0; }
+    .fc-section { padding: 28px 0 0; }
     .fc-with-arrows { display: flex; align-items: center; gap: 10px; }
     .fc-arrow {
       flex-shrink: 0;
@@ -282,14 +280,11 @@
     .fc-arrow:hover { background: var(--gold); border-color: var(--gold); color: #0A2342; }
     .fc-row {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1fr;
       gap: 14px;
-      margin-top: 0;
       flex: 1;
       min-width: 0;
     }
-    @media (max-width: 899px) { .fc-row { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 559px) { .fc-row { grid-template-columns: 1fr; } }
     .fc-slot {
       background: var(--dark-3);
       border: 1px solid var(--border);
@@ -404,7 +399,7 @@
             </p>
           </div>
 
-          <!-- Right column: photo + profile buttons -->
+          <!-- Right column: photo + profile buttons + facts carousel -->
           <div>
             <div class="hero-photo-frame" role="img" aria-label="Dr Andreas Kyriacou">
               <img src="a.kyriacou.jpg" alt="Dr Andreas Kyriacou — Consultant Cardiologist &amp; Electrophysiologist" class="hero-photo" />
@@ -420,21 +415,20 @@
                 <span style="font-size:1.35em;margin-right:6px;vertical-align:middle;">💬</span>Dr Andreas Kyriacou — Professional Statement
               </button>
             </div>
-          </div>
-        </div>
-
-        <!-- Facts carousel -->
-        <div class="fc-section">
-          <div class="fc-with-arrows">
-            <button class="fc-arrow" id="fc-prev" aria-label="Previous facts">&#10094;</button>
-            <div class="fc-row" id="fc-row">
-              <article class="fc-slot" id="fc-slot-0"></article>
-              <article class="fc-slot" id="fc-slot-1"></article>
-              <article class="fc-slot" id="fc-slot-2"></article>
+            <!-- Facts carousel — fills gap below profile buttons -->
+            <div class="fc-section">
+              <div class="fc-with-arrows">
+                <button class="fc-arrow" id="fc-prev" aria-label="Previous facts">&#10094;</button>
+                <div class="fc-row" id="fc-row">
+                  <article class="fc-slot" id="fc-slot-0"></article>
+                  <article class="fc-slot" id="fc-slot-1"></article>
+                  <article class="fc-slot" id="fc-slot-2"></article>
+                </div>
+                <button class="fc-arrow" id="fc-next" aria-label="Next facts">&#10095;</button>
+              </div>
+              <div class="fc-dots" id="fc-dots" role="group" aria-label="Carousel navigation"></div>
             </div>
-            <button class="fc-arrow" id="fc-next" aria-label="Next facts">&#10095;</button>
           </div>
-          <div class="fc-dots" id="fc-dots" role="group" aria-label="Carousel navigation"></div>
         </div>
 
         <!-- Heart/ECG panel + appointment button — centred below the main grid -->
@@ -623,7 +617,7 @@
     var INTERVAL = 5000;
     var cur = 0, timer = null;
 
-    function vis() { return window.innerWidth >= 900 ? 3 : window.innerWidth >= 560 ? 2 : 1; }
+    function vis() { return 1; }
     function pages(v) { return Math.ceil(FACTS.length / v); }
     function fmtN(n) { return n >= 10000 ? n.toLocaleString('en-GB') : String(n); }
 
