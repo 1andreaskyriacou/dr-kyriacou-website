@@ -259,7 +259,7 @@
       display: block;
     }
     /* ===== Facts Carousel ===== */
-    .fc-section { padding: 28px 0 0; }
+    .fc-section { padding: 60px 0; }
     .fc-with-arrows { display: flex; align-items: center; gap: 10px; }
     .fc-arrow {
       flex-shrink: 0;
@@ -397,7 +397,7 @@
             </p>
           </div>
 
-          <!-- Right column: photo + profile buttons + facts carousel -->
+          <!-- Right column: photo + profile buttons + stats -->
           <div>
             <div class="hero-photo-frame" role="img" aria-label="Dr Andreas Kyriacou">
               <img src="a.kyriacou.jpg" alt="Dr Andreas Kyriacou — Consultant Cardiologist &amp; Electrophysiologist" class="hero-photo" />
@@ -413,18 +413,22 @@
                 <span style="font-size:1.35em;margin-right:6px;vertical-align:middle;">💬</span>Dr Andreas Kyriacou — Professional Statement
               </button>
             </div>
-            <!-- Facts carousel — fills gap below profile buttons -->
-            <div class="fc-section">
-              <div class="fc-with-arrows">
-                <button class="fc-arrow" id="fc-prev" aria-label="Previous facts">&#10094;</button>
-                <div class="fc-row" id="fc-row">
-                  <article class="fc-slot" id="fc-slot-0"></article>
-                  <article class="fc-slot" id="fc-slot-1"></article>
-                  <article class="fc-slot" id="fc-slot-2"></article>
-                </div>
-                <button class="fc-arrow" id="fc-next" aria-label="Next facts">&#10095;</button>
+            <div class="stats-grid" style="margin-top:28px;">
+              <div class="stat-item reveal">
+                <span class="stat-number" data-target="20" data-suffix="+">0</span>
+                <span class="stat-label">Years Experience</span>
               </div>
-              <div class="fc-dots" id="fc-dots" role="group" aria-label="Carousel navigation"></div>
+              <div class="stat-item reveal">
+                <span class="stat-number" data-target="1000" data-suffix="+">0</span>
+                <span class="stat-label">Procedures</span>
+              </div>
+              <div class="stat-item reveal">
+                <span class="stat-number" data-target="50" data-suffix="+">0</span>
+                <span class="stat-label">Publications</span>
+              </div>
+              <div class="stat-item reveal">
+                <span class="stat-label">National &amp; International Awards</span>
+              </div>
             </div>
           </div>
         </div>
@@ -446,25 +450,19 @@
       </div>
     </section>
 
-    <section id="stats" class="stats-section" aria-label="Career highlights">
+    <!-- ===== FACTS CAROUSEL ===== -->
+    <section id="facts-carousel" class="fc-section" aria-label="Cardiac arrhythmia facts">
       <div class="container">
-        <div class="stats-grid">
-          <div class="stat-item reveal">
-            <span class="stat-number" data-target="20" data-suffix="+">0</span>
-            <span class="stat-label">Years Experience</span>
+        <div class="fc-with-arrows">
+          <button class="fc-arrow" id="fc-prev" aria-label="Previous facts">&#10094;</button>
+          <div class="fc-row" id="fc-row">
+            <article class="fc-slot" id="fc-slot-0"></article>
+            <article class="fc-slot" id="fc-slot-1"></article>
+            <article class="fc-slot" id="fc-slot-2"></article>
           </div>
-          <div class="stat-item reveal">
-            <span class="stat-number" data-target="1000" data-suffix="+">0</span>
-            <span class="stat-label">Procedures</span>
-          </div>
-          <div class="stat-item reveal">
-            <span class="stat-number" data-target="50" data-suffix="+">0</span>
-            <span class="stat-label">Publications</span>
-          </div>
-          <div class="stat-item reveal">
-            <span class="stat-label">National &amp; International Awards</span>
-          </div>
+          <button class="fc-arrow" id="fc-next" aria-label="Next facts">&#10095;</button>
         </div>
+        <div class="fc-dots" id="fc-dots" role="group" aria-label="Carousel navigation"></div>
       </div>
     </section>
 
