@@ -225,6 +225,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet" />
 
+  <!-- Tabler Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.31.0/dist/tabler-icons.min.css" />
+
   <link rel="stylesheet" href="styles.css?v=20260517g">
   <style>
     .hero-eyebrow {
@@ -255,6 +258,80 @@
       letter-spacing: 0.01em;
       display: block;
     }
+    /* ===== Facts Carousel ===== */
+    .fc-section { padding: 80px 0 60px; background: var(--dark-2); }
+    .fc-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 40px;
+    }
+    @media (max-width: 899px) { .fc-row { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 559px) { .fc-row { grid-template-columns: 1fr; } }
+    .fc-slot {
+      background: var(--dark-3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 28px 24px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 220px;
+    }
+    .fc-slot.fc-out { opacity: 0; transform: translateY(8px); transition: opacity 0.28s ease, transform 0.28s ease; }
+    .fc-slot.fc-in { animation: fcIn 0.38s ease forwards; }
+    @keyframes fcIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .fc-icon { font-size: 1.75rem; color: var(--gold); line-height: 1; }
+    .fc-cat {
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .fc-stat {
+      font-size: clamp(1.85rem, 3.5vw, 2.55rem);
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+    .fc-text {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      flex: 1;
+    }
+    .fc-link {
+      display: inline-block;
+      color: var(--gold);
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+      margin-top: 4px;
+      align-self: flex-start;
+    }
+    .fc-link:hover { border-bottom-color: var(--gold); }
+    .fc-prog-track {
+      height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      margin: 16px 0 20px;
+      overflow: hidden;
+    }
+    .fc-prog-fill { height: 100%; background: var(--gold); width: 0; border-radius: 2px; }
+    @keyframes fcProg { from { width: 0%; } to { width: 100%; } }
+    .fc-prog-go { animation: fcProg 3s linear forwards; }
+    .fc-dots { display: flex; gap: 8px; justify-content: center; }
+    .fc-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--border); border: 1.5px solid var(--gold-dim);
+      cursor: pointer; padding: 0;
+      transition: background 0.22s, transform 0.22s;
+    }
+    .fc-dot.fc-dot-on { background: var(--gold); transform: scale(1.3); }
   </style>
   <title>Αρχική | Δρ Ανδρέας Κυριάκου</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -371,6 +448,25 @@
           <div class="stat-item reveal">
             <span class="stat-label">Εθνικά &amp; Διεθνή Βραβεία</span>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FACTS CAROUSEL ===== -->
+    <section id="facts-carousel" class="fc-section" aria-label="Στατιστικά καρδιακών αρρυθμιών">
+      <div class="container">
+        <p class="section-label">Γνωρίζατε ότι;</p>
+        <h2 class="section-title">Βασικά Στοιχεία για τις Καρδιακές Αρρυθμίες</h2>
+        <div class="reveal">
+          <div class="fc-row" id="fc-row">
+            <article class="fc-slot" id="fc-slot-0"></article>
+            <article class="fc-slot" id="fc-slot-1"></article>
+            <article class="fc-slot" id="fc-slot-2"></article>
+          </div>
+          <div class="fc-prog-track" aria-hidden="true">
+            <div class="fc-prog-fill" id="fc-prog-fill"></div>
+          </div>
+          <div class="fc-dots" id="fc-dots" role="group" aria-label="Πλοήγηση καρουσέλ"></div>
         </div>
       </div>
     </section>
@@ -503,6 +599,141 @@
   <script src="heart3d.js"></script>
   <script src="page-transition.js"></script>
   <script src="scroll-reveal.js"></script>
+
+  <script>
+  (function () {
+    var FACTS = [
+      { cat: 'ΚΟΛΠΙΚΗ ΜΑΡΜΑΡΥΓΗ',        icon: 'ti-heart',        stat: '2%',             num: 2,      sfx: '%',  pfx: '', text: 'Η κολπική μαρμαρυγή προσβάλλει το 2% του ευρωπαϊκού πληθυσμού — πάνω από 10 εκατομμύρια άνθρωποι',         link: 'patient-education-el.html#atrial-fibrillation' },
+      { cat: 'ΚΟΛΠΙΚΗ ΜΑΡΜΑΡΥΓΗ',        icon: 'ti-heart',        stat: '1 στους 4',      num: null,                     text: 'ενήλικες άνω των 40 θα αναπτύξουν κολπική μαρμαρυγή στη διάρκεια της ζωής τους',                             link: 'patient-education-el.html#atrial-fibrillation' },
+      { cat: 'ΚΟΛΠΙΚΗ ΜΑΡΜΑΡΥΓΗ',        icon: 'ti-heart',        stat: '5×',        num: 5,      sfx: '×', pfx: '', text: 'Η ΚΜ αυξάνει κατά πέντε φορές τον κίνδυνο εγκεφαλικού',                                                          link: 'patient-education-el.html#atrial-fibrillation' },
+      { cat: 'ΚΟΛΠΙΚΗ ΜΑΡΜΑΡΥΓΗ',        icon: 'ti-heart',        stat: '30%',            num: 30,     sfx: '%',  pfx: '', text: 'των εγκεφαλικών επεισοδίων προκαλούνται από σιωπηλή, αδιάγνωστη κολπική μαρμαρυγή',                         link: 'patient-education-el.html#atrial-fibrillation' },
+      { cat: 'SVT',                        icon: 'ti-bolt',         stat: 'Άνω του 90%',    num: null,                     text: 'μακροπρόθεσμο ποσοστό επιτυχίας κατάλυσης με καθετήρα για SVT',                                              link: 'patient-education-el.html#svt' },
+      { cat: 'ΑΙΣΘΗΜΑ ΠΑΛΜΩΝ',            icon: 'ti-activity',     stat: '40%',            num: 40,     sfx: '%',  pfx: '', text: 'του αισθήματος παλμών οφείλεται σε καρδιακή αρρυθμία',                                                      link: 'patient-education-el.html' },
+      { cat: 'ΑΙΦΝΙΔΙΟΣ ΚΑΡΔΙΑΚΟΣ ΘΑΝΑΤΟΣ', icon: 'ti-bolt',      stat: '400.000',        num: 400000, sfx: '',   pfx: '', text: 'ζωές χάνονται ετησίως στην Ευρώπη από αιφνίδιο καρδιακό θάνατο',                                          link: 'patient-education-el.html#ventricular-tachycardia' },
+      { cat: 'ΚΟΙΛΙΑΚΕΣ ΑΡΡΥΘΜΙΕΣ',      icon: 'ti-bolt',         stat: '80%',            num: 80,     sfx: '%',  pfx: '', text: 'των αιφνίδιων καρδιακών θανάτων οφείλονται σε κοιλιακές αρρυθμίες',                                        link: 'patient-education-el.html#ventricular-tachycardia' },
+      { cat: 'ΒΗΜΑΤΟΔΟΤΕΣ',               icon: 'ti-device-heart', stat: '820 ανά εκ.',    num: null,                     text: 'βηματοδότες τοποθετούνται ετησίως ανά εκατομμύριο κατοίκους στην Ευρώπη',                                   link: 'patient-education-el.html#conduction-system-pacing' },
+      { cat: 'ICD',                        icon: 'ti-device-heart', stat: '400 ανά εκ.',    num: null,                     text: 'ICD τοποθετούνται ετησίως στην Ευρώπη — 7πλάσια αύξηση σε 15 χρόνια',                                      link: 'patient-education-el.html#conduction-system-pacing' },
+      { cat: 'ICD',                        icon: 'ti-device-heart', stat: '66%',            num: 66,     sfx: '%',  pfx: '', text: 'των ICD τοποθετούνται για πρωτογενή πρόληψη αιφνίδιου καρδιακού θανάτου',                                  link: 'patient-education-el.html#conduction-system-pacing' }
+    ];
+    var INTERVAL = 3000;
+    var cur = 0, timer = null;
+
+    function vis() { return window.innerWidth >= 900 ? 3 : window.innerWidth >= 560 ? 2 : 1; }
+    function pages(v) { return Math.ceil(FACTS.length / v); }
+    function fmtN(n) { return n >= 10000 ? n.toLocaleString('el-GR') : String(n); }
+
+    function countUp(el, target, sfx, pfx) {
+      var dur = 1100, t0 = performance.now();
+      (function tick(now) {
+        var p = Math.min((now - t0) / dur, 1), e = 1 - Math.pow(1 - p, 3);
+        el.textContent = pfx + fmtN(Math.round(e * target)) + sfx;
+        if (p < 1) requestAnimationFrame(tick);
+      })(t0);
+    }
+
+    function fillSlot(slot, fact) {
+      slot.innerHTML =
+        '<div class="fc-icon"><i class="ti ' + fact.icon + '" aria-hidden="true"></i></div>' +
+        '<p class="fc-cat">' + fact.cat + '</p>' +
+        '<p class="fc-stat">' + fact.stat + '</p>' +
+        '<p class="fc-text">' + fact.text + '</p>' +
+        '<a href="' + fact.link + '" class="fc-link">Μάθετε Περισσότερα &#x2192;</a>';
+      if (fact.num !== null) {
+        countUp(slot.querySelector('.fc-stat'), fact.num, fact.sfx || '', fact.pfx || '');
+      }
+    }
+
+    function render(page) {
+      var v = vis(), n = pages(v);
+      cur = ((page % n) + n) % n;
+      var slots = document.querySelectorAll('.fc-slot');
+      var base = cur * v;
+      slots.forEach(function (s, i) {
+        if (i < v) {
+          s.style.display = '';
+          fillSlot(s, FACTS[(base + i) % FACTS.length]);
+        } else {
+          s.style.display = 'none';
+        }
+      });
+      document.querySelectorAll('.fc-dot').forEach(function (d, i) {
+        d.classList.toggle('fc-dot-on', i === cur);
+        d.setAttribute('aria-pressed', i === cur ? 'true' : 'false');
+      });
+    }
+
+    function buildDots() {
+      var el = document.getElementById('fc-dots');
+      if (!el) return;
+      var n = pages(vis());
+      el.innerHTML = '';
+      for (var i = 0; i < n; i++) {
+        var b = document.createElement('button');
+        b.className = 'fc-dot' + (i === 0 ? ' fc-dot-on' : '');
+        b.setAttribute('aria-label', 'Σελίδα ' + (i + 1));
+        b.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
+        (function (idx) {
+          b.addEventListener('click', function () { stopAuto(); render(idx); startProg(); startAuto(); });
+        })(i);
+        el.appendChild(b);
+      }
+    }
+
+    function startProg() {
+      var f = document.getElementById('fc-prog-fill');
+      if (!f) return;
+      f.classList.remove('fc-prog-go');
+      void f.offsetWidth;
+      f.classList.add('fc-prog-go');
+    }
+
+    function advance() {
+      var slots = document.querySelectorAll('.fc-slot');
+      slots.forEach(function (s) { s.classList.add('fc-out'); });
+      setTimeout(function () {
+        render(cur + 1);
+        slots = document.querySelectorAll('.fc-slot');
+        slots.forEach(function (s) { s.classList.remove('fc-out'); s.classList.add('fc-in'); });
+        setTimeout(function () {
+          document.querySelectorAll('.fc-slot').forEach(function (s) { s.classList.remove('fc-in'); });
+        }, 400);
+        startProg();
+      }, 280);
+    }
+
+    function startAuto() { stopAuto(); timer = setInterval(advance, INTERVAL); }
+    function stopAuto() { clearInterval(timer); timer = null; }
+
+    function init() {
+      buildDots(); render(0); startProg(); startAuto();
+      var row = document.getElementById('fc-row');
+      if (row) {
+        row.addEventListener('mouseenter', function () {
+          stopAuto();
+          var f = document.getElementById('fc-prog-fill');
+          if (f) f.style.animationPlayState = 'paused';
+        });
+        row.addEventListener('mouseleave', function () {
+          var f = document.getElementById('fc-prog-fill');
+          if (f) f.style.animationPlayState = '';
+          startProg(); startAuto();
+        });
+      }
+      var rt;
+      window.addEventListener('resize', function () {
+        clearTimeout(rt);
+        rt = setTimeout(function () {
+          var n = pages(vis());
+          if (cur >= n) cur = 0;
+          buildDots(); render(cur);
+        }, 150);
+      });
+    }
+
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+    else init();
+  })();
+  </script>
 
 </body>
 </html>
