@@ -259,74 +259,63 @@
       display: block;
     }
     /* ===== Facts Carousel ===== */
-    .fc-section { padding: 80px 0 60px; background: var(--dark-2); }
+    .fc-section { padding: 28px 0 0; }
     .fc-row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin-top: 40px;
+      gap: 14px;
+      margin-top: 16px;
     }
     @media (max-width: 899px) { .fc-row { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 559px) { .fc-row { grid-template-columns: 1fr; } }
     .fc-slot {
       background: var(--dark-3);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 28px 24px 22px;
+      border-radius: 6px;
+      padding: 14px 16px 12px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      min-height: 220px;
+      gap: 6px;
     }
-    .fc-slot.fc-out { opacity: 0; transform: translateY(8px); transition: opacity 0.28s ease, transform 0.28s ease; }
+    .fc-slot.fc-out { opacity: 0; transform: translateY(6px); transition: opacity 0.28s ease, transform 0.28s ease; }
     .fc-slot.fc-in { animation: fcIn 0.38s ease forwards; }
-    @keyframes fcIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-    .fc-icon { font-size: 1.75rem; color: var(--gold); line-height: 1; }
+    @keyframes fcIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    .fc-icon { font-size: 1.25rem; color: var(--gold); line-height: 1; }
     .fc-cat {
-      font-size: 0.67rem;
+      font-size: 0.61rem;
       font-weight: 700;
       letter-spacing: 0.13em;
       text-transform: uppercase;
       color: var(--gold);
     }
     .fc-stat {
-      font-size: clamp(1.85rem, 3.5vw, 2.55rem);
+      font-size: clamp(1.35rem, 2.2vw, 1.65rem);
       font-weight: 800;
       color: var(--text);
       line-height: 1;
       letter-spacing: -0.02em;
     }
     .fc-text {
-      font-size: 0.875rem;
+      font-size: 0.79rem;
       color: var(--text-muted);
-      line-height: 1.55;
+      line-height: 1.5;
       flex: 1;
     }
     .fc-link {
       display: inline-block;
       color: var(--gold);
-      font-size: 0.8rem;
+      font-size: 0.74rem;
       font-weight: 600;
       text-decoration: none;
       border-bottom: 1px solid transparent;
       transition: border-color 0.2s;
-      margin-top: 4px;
+      margin-top: 2px;
       align-self: flex-start;
     }
     .fc-link:hover { border-bottom-color: var(--gold); }
-    .fc-prog-track {
-      height: 3px;
-      background: var(--border);
-      border-radius: 2px;
-      margin: 16px 0 20px;
-      overflow: hidden;
-    }
-    .fc-prog-fill { height: 100%; background: var(--gold); width: 0; border-radius: 2px; }
-    @keyframes fcProg { from { width: 0%; } to { width: 100%; } }
-    .fc-prog-go { animation: fcProg 3s linear forwards; }
-    .fc-dots { display: flex; gap: 8px; justify-content: center; }
+    .fc-dots { display: flex; gap: 7px; justify-content: center; margin-top: 12px; }
     .fc-dot {
-      width: 8px; height: 8px; border-radius: 50%;
+      width: 7px; height: 7px; border-radius: 50%;
       background: var(--border); border: 1.5px solid var(--gold-dim);
       cursor: pointer; padding: 0;
       transition: background 0.22s, transform 0.22s;
@@ -413,6 +402,16 @@
           </div>
         </div>
 
+        <!-- Facts carousel -->
+        <div class="fc-section">
+          <div class="fc-row" id="fc-row">
+            <article class="fc-slot" id="fc-slot-0"></article>
+            <article class="fc-slot" id="fc-slot-1"></article>
+            <article class="fc-slot" id="fc-slot-2"></article>
+          </div>
+          <div class="fc-dots" id="fc-dots" role="group" aria-label="Πλοήγηση καρουσέλ"></div>
+        </div>
+
         <!-- Heart/ECG panel + appointment button — centred below the main grid -->
         <div class="hero-vitals-row reveal">
           <div class="hero-vitals-frame" aria-hidden="true">
@@ -448,25 +447,6 @@
           <div class="stat-item reveal">
             <span class="stat-label">Εθνικά &amp; Διεθνή Βραβεία</span>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== FACTS CAROUSEL ===== -->
-    <section id="facts-carousel" class="fc-section" aria-label="Στατιστικά καρδιακών αρρυθμιών">
-      <div class="container">
-        <p class="section-label">Γνωρίζατε ότι;</p>
-        <h2 class="section-title">Βασικά Στοιχεία για τις Καρδιακές Αρρυθμίες</h2>
-        <div class="reveal">
-          <div class="fc-row" id="fc-row">
-            <article class="fc-slot" id="fc-slot-0"></article>
-            <article class="fc-slot" id="fc-slot-1"></article>
-            <article class="fc-slot" id="fc-slot-2"></article>
-          </div>
-          <div class="fc-prog-track" aria-hidden="true">
-            <div class="fc-prog-fill" id="fc-prog-fill"></div>
-          </div>
-          <div class="fc-dots" id="fc-dots" role="group" aria-label="Πλοήγηση καρουσέλ"></div>
         </div>
       </div>
     </section>
@@ -673,18 +653,10 @@
         b.setAttribute('aria-label', 'Σελίδα ' + (i + 1));
         b.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
         (function (idx) {
-          b.addEventListener('click', function () { stopAuto(); render(idx); startProg(); startAuto(); });
+          b.addEventListener('click', function () { stopAuto(); render(idx); startAuto(); });
         })(i);
         el.appendChild(b);
       }
-    }
-
-    function startProg() {
-      var f = document.getElementById('fc-prog-fill');
-      if (!f) return;
-      f.classList.remove('fc-prog-go');
-      void f.offsetWidth;
-      f.classList.add('fc-prog-go');
     }
 
     function advance() {
@@ -697,7 +669,6 @@
         setTimeout(function () {
           document.querySelectorAll('.fc-slot').forEach(function (s) { s.classList.remove('fc-in'); });
         }, 400);
-        startProg();
       }, 280);
     }
 
@@ -705,19 +676,11 @@
     function stopAuto() { clearInterval(timer); timer = null; }
 
     function init() {
-      buildDots(); render(0); startProg(); startAuto();
+      buildDots(); render(0); startAuto();
       var row = document.getElementById('fc-row');
       if (row) {
-        row.addEventListener('mouseenter', function () {
-          stopAuto();
-          var f = document.getElementById('fc-prog-fill');
-          if (f) f.style.animationPlayState = 'paused';
-        });
-        row.addEventListener('mouseleave', function () {
-          var f = document.getElementById('fc-prog-fill');
-          if (f) f.style.animationPlayState = '';
-          startProg(); startAuto();
-        });
+        row.addEventListener('mouseenter', stopAuto);
+        row.addEventListener('mouseleave', startAuto);
       }
       var rt;
       window.addEventListener('resize', function () {
