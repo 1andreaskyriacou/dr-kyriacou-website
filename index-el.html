@@ -259,12 +259,34 @@
       display: block;
     }
     /* ===== Facts Carousel ===== */
-    .fc-section { padding: 28px 0 0; }
+    .hero-desc { margin-bottom: 12px; }
+    .hero-vitals-row { margin-top: 20px !important; }
+    .fc-section { padding: 10px 0 0; }
+    .fc-with-arrows { display: flex; align-items: center; gap: 10px; }
+    .fc-arrow {
+      flex-shrink: 0;
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      border: 1.5px solid var(--gold-dim);
+      background: none;
+      color: var(--gold);
+      font-size: 1.1rem;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+    .fc-arrow:hover { background: var(--gold); border-color: var(--gold); color: #0A2342; }
     .fc-row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 14px;
-      margin-top: 16px;
+      margin-top: 0;
+      flex: 1;
+      min-width: 0;
     }
     @media (max-width: 899px) { .fc-row { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 559px) { .fc-row { grid-template-columns: 1fr; } }
@@ -404,10 +426,14 @@
 
         <!-- Facts carousel -->
         <div class="fc-section">
-          <div class="fc-row" id="fc-row">
-            <article class="fc-slot" id="fc-slot-0"></article>
-            <article class="fc-slot" id="fc-slot-1"></article>
-            <article class="fc-slot" id="fc-slot-2"></article>
+          <div class="fc-with-arrows">
+            <button class="fc-arrow" id="fc-prev" aria-label="Προηγούμενα στοιχεία">&#10094;</button>
+            <div class="fc-row" id="fc-row">
+              <article class="fc-slot" id="fc-slot-0"></article>
+              <article class="fc-slot" id="fc-slot-1"></article>
+              <article class="fc-slot" id="fc-slot-2"></article>
+            </div>
+            <button class="fc-arrow" id="fc-next" aria-label="Επόμενα στοιχεία">&#10095;</button>
           </div>
           <div class="fc-dots" id="fc-dots" role="group" aria-label="Πλοήγηση καρουσέλ"></div>
         </div>
@@ -595,7 +621,7 @@
       { cat: 'ICD',                        icon: 'ti-device-heart', stat: '400 ανά εκ.',    num: null,                     text: 'ICD τοποθετούνται ετησίως στην Ευρώπη — 7πλάσια αύξηση σε 15 χρόνια',                                      link: 'patient-education-el.html#conduction-system-pacing' },
       { cat: 'ICD',                        icon: 'ti-device-heart', stat: '66%',            num: 66,     sfx: '%',  pfx: '', text: 'των ICD τοποθετούνται για πρωτογενή πρόληψη αιφνίδιου καρδιακού θανάτου',                                  link: 'patient-education-el.html#conduction-system-pacing' }
     ];
-    var INTERVAL = 3000;
+    var INTERVAL = 5000;
     var cur = 0, timer = null;
 
     function vis() { return window.innerWidth >= 900 ? 3 : window.innerWidth >= 560 ? 2 : 1; }
@@ -677,6 +703,10 @@
 
     function init() {
       buildDots(); render(0); startAuto();
+      var prev = document.getElementById('fc-prev');
+      var next = document.getElementById('fc-next');
+      if (prev) prev.addEventListener('click', function () { stopAuto(); render(cur - 1); startAuto(); });
+      if (next) next.addEventListener('click', function () { stopAuto(); render(cur + 1); startAuto(); });
       var row = document.getElementById('fc-row');
       if (row) {
         row.addEventListener('mouseenter', stopAuto);
