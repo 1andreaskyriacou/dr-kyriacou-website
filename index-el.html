@@ -259,9 +259,7 @@
       display: block;
     }
     /* ===== Facts Carousel ===== */
-    .hero-desc { margin-bottom: 12px; }
-    .hero-vitals-row { margin-top: 20px !important; }
-    .fc-section { padding: 10px 0 0; }
+    .fc-section { padding: 28px 0 0; }
     .fc-with-arrows { display: flex; align-items: center; gap: 10px; }
     .fc-arrow {
       flex-shrink: 0;
@@ -282,56 +280,52 @@
     .fc-arrow:hover { background: var(--gold); border-color: var(--gold); color: #0A2342; }
     .fc-row {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-top: 0;
+      grid-template-columns: 1fr;
+      gap: 10px;
       flex: 1;
       min-width: 0;
     }
-    @media (max-width: 899px) { .fc-row { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 559px) { .fc-row { grid-template-columns: 1fr; } }
     .fc-slot {
       background: var(--dark-3);
       border: 1px solid var(--border);
       border-radius: 6px;
-      padding: 14px 16px 12px;
+      padding: 9px 13px 8px;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 4px;
     }
-    .fc-slot.fc-out { opacity: 0; transform: translateY(6px); transition: opacity 0.28s ease, transform 0.28s ease; }
-    .fc-slot.fc-in { animation: fcIn 0.38s ease forwards; }
+    .fc-slot.fc-out { opacity: 0; transform: translateY(6px); transition: opacity 0.4s ease, transform 0.4s ease; }
+    .fc-slot.fc-in { animation: fcIn 0.8s ease forwards; }
     @keyframes fcIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-    .fc-icon { font-size: 1.25rem; color: var(--gold); line-height: 1; }
+    .fc-icon { font-size: 1rem; color: var(--gold); line-height: 1; }
     .fc-cat {
-      font-size: 0.61rem;
+      font-size: 0.59rem;
       font-weight: 700;
       letter-spacing: 0.13em;
       text-transform: uppercase;
       color: var(--gold);
     }
     .fc-stat {
-      font-size: clamp(1.35rem, 2.2vw, 1.65rem);
+      font-size: clamp(1.1rem, 1.6vw, 1.25rem);
       font-weight: 800;
       color: var(--text);
       line-height: 1;
       letter-spacing: -0.02em;
     }
     .fc-text {
-      font-size: 0.79rem;
+      font-size: 0.75rem;
       color: var(--text-muted);
-      line-height: 1.5;
+      line-height: 1.4;
       flex: 1;
     }
     .fc-link {
       display: inline-block;
       color: var(--gold);
-      font-size: 0.74rem;
+      font-size: 0.7rem;
       font-weight: 600;
       text-decoration: none;
       border-bottom: 1px solid transparent;
       transition: border-color 0.2s;
-      margin-top: 2px;
       align-self: flex-start;
     }
     .fc-link:hover { border-bottom-color: var(--gold); }
@@ -405,7 +399,7 @@
             </p>
           </div>
 
-          <!-- Right column: photo + profile buttons -->
+          <!-- Right column: photo + profile buttons + facts carousel -->
           <div>
             <div class="hero-photo-frame" role="img" aria-label="Δρ Ανδρέας Κυριάκου">
               <img src="a.kyriacou.jpg" alt="Δρ Ανδρέας Κυριάκου — Ειδικός Καρδιολόγος και Ηλεκτροφυσιολόγος" class="hero-photo" />
@@ -421,21 +415,20 @@
                 <span style="font-size:1.35em;margin-right:6px;vertical-align:middle;">💬</span>Δρ Ανδρέας Κυριάκου — Επαγγελματική Δήλωση
               </button>
             </div>
-          </div>
-        </div>
-
-        <!-- Facts carousel -->
-        <div class="fc-section">
-          <div class="fc-with-arrows">
-            <button class="fc-arrow" id="fc-prev" aria-label="Προηγούμενα στοιχεία">&#10094;</button>
-            <div class="fc-row" id="fc-row">
-              <article class="fc-slot" id="fc-slot-0"></article>
-              <article class="fc-slot" id="fc-slot-1"></article>
-              <article class="fc-slot" id="fc-slot-2"></article>
+            <!-- Facts carousel — fills gap below profile buttons -->
+            <div class="fc-section">
+              <div class="fc-with-arrows">
+                <button class="fc-arrow" id="fc-prev" aria-label="Προηγούμενα στοιχεία">&#10094;</button>
+                <div class="fc-row" id="fc-row">
+                  <article class="fc-slot" id="fc-slot-0"></article>
+                  <article class="fc-slot" id="fc-slot-1"></article>
+                  <article class="fc-slot" id="fc-slot-2"></article>
+                </div>
+                <button class="fc-arrow" id="fc-next" aria-label="Επόμενα στοιχεία">&#10095;</button>
+              </div>
+              <div class="fc-dots" id="fc-dots" role="group" aria-label="Πλοήγηση καρουσέλ"></div>
             </div>
-            <button class="fc-arrow" id="fc-next" aria-label="Επόμενα στοιχεία">&#10095;</button>
           </div>
-          <div class="fc-dots" id="fc-dots" role="group" aria-label="Πλοήγηση καρουσέλ"></div>
         </div>
 
         <!-- Heart/ECG panel + appointment button — centred below the main grid -->
@@ -624,7 +617,7 @@
     var INTERVAL = 5000;
     var cur = 0, timer = null;
 
-    function vis() { return window.innerWidth >= 900 ? 3 : window.innerWidth >= 560 ? 2 : 1; }
+    function vis() { return 2; }
     function pages(v) { return Math.ceil(FACTS.length / v); }
     function fmtN(n) { return n >= 10000 ? n.toLocaleString('el-GR') : String(n); }
 
@@ -694,8 +687,8 @@
         slots.forEach(function (s) { s.classList.remove('fc-out'); s.classList.add('fc-in'); });
         setTimeout(function () {
           document.querySelectorAll('.fc-slot').forEach(function (s) { s.classList.remove('fc-in'); });
-        }, 400);
-      }, 280);
+        }, 850);
+      }, 420);
     }
 
     function startAuto() { stopAuto(); timer = setInterval(advance, INTERVAL); }

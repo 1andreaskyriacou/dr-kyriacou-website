@@ -294,8 +294,8 @@
       flex-direction: column;
       gap: 4px;
     }
-    .fc-slot.fc-out { opacity: 0; transform: translateY(6px); transition: opacity 0.28s ease, transform 0.28s ease; }
-    .fc-slot.fc-in { animation: fcIn 0.38s ease forwards; }
+    .fc-slot.fc-out { opacity: 0; transform: translateY(6px); transition: opacity 0.4s ease, transform 0.4s ease; }
+    .fc-slot.fc-in { animation: fcIn 0.8s ease forwards; }
     @keyframes fcIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
     .fc-icon { font-size: 1rem; color: var(--gold); line-height: 1; }
     .fc-cat {
@@ -686,8 +686,8 @@
         slots.forEach(function (s) { s.classList.remove('fc-out'); s.classList.add('fc-in'); });
         setTimeout(function () {
           document.querySelectorAll('.fc-slot').forEach(function (s) { s.classList.remove('fc-in'); });
-        }, 400);
-      }, 280);
+        }, 850);
+      }, 420);
     }
 
     function startAuto() { stopAuto(); timer = setInterval(advance, INTERVAL); }
