@@ -281,7 +281,7 @@
     .fc-row {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 14px;
+      gap: 10px;
       flex: 1;
       min-width: 0;
     }
@@ -289,44 +289,43 @@
       background: var(--dark-3);
       border: 1px solid var(--border);
       border-radius: 6px;
-      padding: 14px 16px 12px;
+      padding: 9px 13px 8px;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 4px;
     }
     .fc-slot.fc-out { opacity: 0; transform: translateY(6px); transition: opacity 0.28s ease, transform 0.28s ease; }
     .fc-slot.fc-in { animation: fcIn 0.38s ease forwards; }
     @keyframes fcIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-    .fc-icon { font-size: 1.25rem; color: var(--gold); line-height: 1; }
+    .fc-icon { font-size: 1rem; color: var(--gold); line-height: 1; }
     .fc-cat {
-      font-size: 0.61rem;
+      font-size: 0.59rem;
       font-weight: 700;
       letter-spacing: 0.13em;
       text-transform: uppercase;
       color: var(--gold);
     }
     .fc-stat {
-      font-size: clamp(1.35rem, 2.2vw, 1.65rem);
+      font-size: clamp(1.1rem, 1.6vw, 1.25rem);
       font-weight: 800;
       color: var(--text);
       line-height: 1;
       letter-spacing: -0.02em;
     }
     .fc-text {
-      font-size: 0.79rem;
+      font-size: 0.75rem;
       color: var(--text-muted);
-      line-height: 1.5;
+      line-height: 1.4;
       flex: 1;
     }
     .fc-link {
       display: inline-block;
       color: var(--gold);
-      font-size: 0.74rem;
+      font-size: 0.7rem;
       font-weight: 600;
       text-decoration: none;
       border-bottom: 1px solid transparent;
       transition: border-color 0.2s;
-      margin-top: 2px;
       align-self: flex-start;
     }
     .fc-link:hover { border-bottom-color: var(--gold); }
@@ -617,7 +616,7 @@
     var INTERVAL = 5000;
     var cur = 0, timer = null;
 
-    function vis() { return 1; }
+    function vis() { return 2; }
     function pages(v) { return Math.ceil(FACTS.length / v); }
     function fmtN(n) { return n >= 10000 ? n.toLocaleString('en-GB') : String(n); }
 
