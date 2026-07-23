@@ -1087,7 +1087,7 @@
           <div class="clinician-resources-content">
             <h3>Ablation Resources</h3>
             <p class="clinician-resources-desc">Procedure walkthrough with interactive anatomy. Password required.</p>
-            <button class="clinician-resource-link" onclick="openAFAnimation()">
+            <button class="clinician-resource-link" id="afa-anim-btn">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
               AF Ablation Procedure &#8212; Simplified
               <svg class="clinician-resource-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
@@ -1282,6 +1282,16 @@
     var _clinTarget = null;
     function openClinicianResource(url) {
       _clinTarget = url;
+      document.getElementById('clinician-pw-subtitle').textContent = 'Enter the password to open this resource in a new tab.';
+      var inp = document.getElementById('clinician-pw-input');
+      inp.value = '';
+      document.getElementById('clinician-pw-error').style.display = 'none';
+      document.getElementById('clinician-pw-modal').classList.add('active');
+      setTimeout(function(){ inp.focus(); }, 60);
+    }
+    function openAFAnimation() {
+      _clinTarget = '__afa__';
+      document.getElementById('clinician-pw-subtitle').textContent = 'Enter the password to view this resource.';
       var inp = document.getElementById('clinician-pw-input');
       inp.value = '';
       document.getElementById('clinician-pw-error').style.display = 'none';
@@ -1294,8 +1304,13 @@
     }
     function submitClinicianPw() {
       if (document.getElementById('clinician-pw-input').value === 'escardio') {
-        window.open(_clinTarget, '_blank', 'noopener');
-        closeClinicianModal();
+        if (_clinTarget === '__afa__') {
+          closeClinicianModal();
+          window.afaOpen();
+        } else {
+          window.open(_clinTarget, '_blank', 'noopener');
+          closeClinicianModal();
+        }
       } else {
         document.getElementById('clinician-pw-error').style.display = 'block';
         document.getElementById('clinician-pw-input').value = '';
@@ -1303,13 +1318,21 @@
       }
     }
     document.addEventListener('keydown', function(e) {
-      if (!document.getElementById('clinician-pw-modal').classList.contains('active')) return;
-      if (e.key === 'Escape') closeClinicianModal();
-      if (e.key === 'Enter') submitClinicianPw();
+      if (document.getElementById('clinician-pw-modal').classList.contains('active')) {
+        if (e.key === 'Escape') closeClinicianModal();
+        if (e.key === 'Enter') submitClinicianPw();
+      }
+      if (document.getElementById('afa-modal').classList.contains('active') && e.key === 'Escape') {
+        window.afaClose();
+      }
     });
     document.getElementById('clinician-pw-modal').addEventListener('click', function(e) {
       if (e.target === this) closeClinicianModal();
     });
+    document.getElementById('afa-modal').addEventListener('click', function(e) {
+      if (e.target === this) window.afaClose();
+    });
+    document.getElementById('afa-anim-btn').addEventListener('click', openAFAnimation);
   </script>
 
   <script src="scripts.js"></script>
