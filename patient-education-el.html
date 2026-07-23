@@ -220,7 +220,7 @@
     }
     .afa-modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,0.6);z-index:1300;align-items:center;justify-content:center;padding:16px;box-sizing:border-box;overflow-y:auto;}
     .afa-modal-overlay.active{display:flex;}
-    .afa-modal-box{background:#fff;border-radius:14px;max-width:720px;width:100%;box-shadow:0 16px 56px rgba(0,0,0,0.28);position:relative;overflow:hidden;}
+    .afa-modal-box{background:#fff;border-radius:14px;max-width:560px;width:100%;box-shadow:0 16px 56px rgba(0,0,0,0.28);position:relative;max-height:90vh;overflow-y:auto;overflow-x:hidden;}
     .afa-modal-close{position:absolute;top:10px;right:12px;width:30px;height:30px;background:rgba(255,255,255,0.75);border:1px solid rgba(0,0,0,0.1);border-radius:50%;font-size:16px;line-height:1;cursor:pointer;color:#475569;z-index:10;display:flex;align-items:center;justify-content:center;transition:background 0.15s;}
     .afa-modal-close:hover{background:#fff;color:#1e293b;}
   </style>
@@ -1338,7 +1338,7 @@
   <script src="scripts.js"></script>
   <script>
 (function(){
-  var DURATION=13000;
+  var DURATION=15600;
   var KF=[[0,0],[0.28,0.75],[0.40,0.75],[0.54,0.89],[0.62,0.89],[0.78,1],[1,1]];
   function pw(t){for(var i=1;i<KF.length;i++){if(t<=KF[i][0]){var s=(t-KF[i-1][0])/(KF[i][0]-KF[i-1][0]);return KF[i-1][1]+s*(KF[i][1]-KF[i-1][1]);}}return 1;}
   var STEPS=[
