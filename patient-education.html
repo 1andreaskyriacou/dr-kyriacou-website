@@ -973,7 +973,7 @@
             <div style="background:#EEF2F7;padding:20px 24px 0;">
               <svg viewBox="0 0 680 540" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;">
                 <!-- 1. IVC -->
-                <path d="M112 500 C 132 414, 150 334, 170 284 C 184 250, 204 220, 228 204" stroke="#8FA3C8" stroke-width="28" fill="none" stroke-linecap="round"/>
+                <path d="M120 505 C 128 430, 142 340, 168 282 C 182 250, 204 220, 228 204" stroke="#8FA3C8" stroke-width="35" fill="none" stroke-linecap="round"/>
                 <!-- 2. Pulmonary veins behind heart -->
                 <path d="M340 140 C 322 100, 306 64, 296 26" stroke="#EFA7B7" stroke-width="16" fill="none" stroke-linecap="round" opacity="0.55"/>
                 <path d="M340 184 C 296 142, 258 100, 232 52" stroke="#EFA7B7" stroke-width="16" fill="none" stroke-linecap="round" opacity="0.55"/>
@@ -1007,11 +1007,11 @@
                 <circle id="afa-fossaHalo" cx="302" cy="172" r="9" fill="#C9A84C" opacity="0"/>
                 <circle id="afa-fossa" cx="302" cy="172" r="5" fill="#C9A84C" opacity="0"/>
                 <!-- 10. Catheter -->
-                <path id="afa-cathHalo" d="M112 494 C 132 412, 150 332, 170 282 C 184 248, 204 218, 228 202 C 248 190, 276 180, 296 175 L 308 174 C 322 168, 336 156, 344 148" stroke="#7C8AAE" stroke-width="9" opacity="0.5" fill="none" stroke-linecap="round"/>
-                <path id="afa-cath" d="M112 494 C 132 412, 150 332, 170 282 C 184 248, 204 218, 228 202 C 248 190, 276 180, 296 175 L 308 174 C 322 168, 336 156, 344 148" stroke="#16233F" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+                <path id="afa-cathHalo" d="M120 499 C 128 428, 142 340, 168 280 C 182 248, 204 218, 228 202 C 248 190, 276 180, 296 175 L 308 174 C 322 168, 336 156, 344 148" stroke="#7C8AAE" stroke-width="9" opacity="0.5" fill="none" stroke-linecap="round"/>
+                <path id="afa-cath" d="M120 499 C 128 428, 142 340, 168 280 C 182 248, 204 218, 228 202 C 248 190, 276 180, 296 175 L 308 174 C 322 168, 336 156, 344 148" stroke="#16233F" stroke-width="4.5" fill="none" stroke-linecap="round"/>
                 <!-- 11. Tip -->
-                <circle id="afa-tipGlow" cx="112" cy="494" r="11" fill="#C9A84C" opacity="0"/>
-                <circle id="afa-tip" cx="112" cy="494" r="5.5" fill="#C9A84C" opacity="0"/>
+                <circle id="afa-tipGlow" cx="120" cy="499" r="11" fill="#C9A84C" opacity="0"/>
+                <circle id="afa-tip" cx="120" cy="499" r="5.5" fill="#C9A84C" opacity="0"/>
                 <!-- 12. Chamber labels -->
                 <text x="243" y="150" font-size="12" text-anchor="middle" fill="#2A3550" font-family="Inter Tight,sans-serif">Right atrium</text>
                 <text x="246" y="352" font-size="12" text-anchor="middle" fill="#2A3550" font-family="Inter Tight,sans-serif">Right ventricle</text>
@@ -1047,7 +1047,7 @@
             <script>
 (function(){
   var DURATION=13000;
-  var KF=[[0,0],[0.28,0.34],[0.40,0.34],[0.54,0.62],[0.62,0.62],[0.78,1],[1,1]];
+  var KF=[[0,0],[0.28,0.75],[0.40,0.75],[0.54,0.89],[0.62,0.89],[0.78,1],[1,1]];
   function pw(t){for(var i=1;i<KF.length;i++){if(t<=KF[i][0]){var s=(t-KF[i-1][0])/(KF[i][0]-KF[i-1][0]);return KF[i-1][1]+s*(KF[i][1]-KF[i-1][1]);}}return 1;}
   var STEPS=[
     {t:0,    title:"Access via the femoral vein",  desc:"A fine catheter is passed into the vein at the top of the leg and advanced up the inferior vena cava towards the heart. No cuts to the chest are needed."},
