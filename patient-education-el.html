@@ -218,6 +218,11 @@
     @media (max-width: 640px) {
       .clinician-resources { flex-direction: column; padding: 1.5rem; gap: 1rem; }
     }
+    .afa-modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,0.6);z-index:1300;align-items:center;justify-content:center;padding:16px;box-sizing:border-box;overflow-y:auto;}
+    .afa-modal-overlay.active{display:flex;}
+    .afa-modal-box{background:#fff;border-radius:14px;max-width:720px;width:100%;box-shadow:0 16px 56px rgba(0,0,0,0.28);position:relative;overflow:hidden;}
+    .afa-modal-close{position:absolute;top:10px;right:12px;width:30px;height:30px;background:rgba(255,255,255,0.75);border:1px solid rgba(0,0,0,0.1);border-radius:50%;font-size:16px;line-height:1;cursor:pointer;color:#475569;z-index:10;display:flex;align-items:center;justify-content:center;transition:background 0.15s;}
+    .afa-modal-close:hover{background:#fff;color:#1e293b;}
   </style>
   <title>Ενημέρωση Ασθενών | Δρ Ανδρέας Κυριάκου</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -968,155 +973,6 @@
             </div>
           </article>
 
-          <!-- AF Ablation Walkthrough (Greek) -->
-          <article class="edu-card reveal" id="af-ablation" aria-label="Διαδικασία Κατάλυσης AF" style="grid-column:1/-1;">
-            <div style="background:#EEF2F7;padding:20px 24px 0;">
-              <svg viewBox="0 0 680 540" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;">
-                <!-- 1. IVC -->
-                <path d="M120 505 C 128 430, 142 340, 168 282 C 182 250, 204 220, 228 204" stroke="#8FA3C8" stroke-width="35" fill="none" stroke-linecap="round"/>
-                <!-- 2. Pulmonary veins behind heart -->
-                <path d="M340 140 C 322 100, 306 64, 296 26" stroke="#EFA7B7" stroke-width="16" fill="none" stroke-linecap="round" opacity="0.55"/>
-                <path d="M340 184 C 296 142, 258 100, 232 52" stroke="#EFA7B7" stroke-width="16" fill="none" stroke-linecap="round" opacity="0.55"/>
-                <path d="M402 136 C 440 124, 470 114, 498 104" stroke="#EFA7B7" stroke-width="16" fill="none" stroke-linecap="round" opacity="0.55"/>
-                <path d="M402 180 C 446 188, 476 200, 502 212" stroke="#EFA7B7" stroke-width="16" fill="none" stroke-linecap="round" opacity="0.55"/>
-                <!-- 3. Myocardial silhouette -->
-                <path d="M172 196 C 162 132, 196 88, 240 84 C 272 81, 294 96, 304 116 C 318 94, 352 82, 390 90 C 430 99, 452 142, 448 196 C 458 268, 448 346, 410 404 C 376 456, 336 480, 306 478 C 274 476, 236 450, 208 398 C 178 344, 168 258, 172 196 Z" fill="#E9C9C6" stroke="#9B5F6E" stroke-width="1.2"/>
-                <!-- 4. Chambers: RA, LA, RV, LV -->
-                <path d="M198 200 C 190 152, 208 116, 240 112 C 272 108, 298 130, 298 162 L 298 218 C 298 226, 292 230, 284 230 L 212 230 C 204 230, 199 216, 198 200 Z" fill="#A8B4DB" stroke="#5C6B8A" stroke-width="1"/>
-                <path d="M306 152 C 308 118, 336 100, 372 102 C 412 105, 434 142, 430 194 C 428 220, 420 232, 406 232 L 320 232 C 312 232, 306 224, 306 214 Z" fill="#EFA7B7" stroke="#9B5F6E" stroke-width="1"/>
-                <path d="M208 258 C 200 320, 220 390, 262 444 C 274 458, 286 454, 288 438 L 288 264 C 288 256, 282 252, 274 252 L 218 252 C 210 252, 208 254, 208 258 Z" fill="#A8B4DB" stroke="#5C6B8A" stroke-width="1"/>
-                <path d="M316 264 C 316 256, 324 252, 336 252 C 376 252, 398 268, 396 300 C 392 358, 366 412, 334 440 C 322 451, 310 444, 309 428 L 309 278 Z" fill="#EFA7B7" stroke="#9B5F6E" stroke-width="1"/>
-                <!-- 5. Vein openings -->
-                <ellipse cx="340" cy="140" rx="13" ry="11" fill="#C4828F" stroke="#8E4A58" stroke-width="1"/>
-                <ellipse cx="340" cy="184" rx="13" ry="11" fill="#C4828F" stroke="#8E4A58" stroke-width="1"/>
-                <ellipse cx="402" cy="136" rx="13" ry="11" fill="#C4828F" stroke="#8E4A58" stroke-width="1"/>
-                <ellipse cx="402" cy="180" rx="13" ry="11" fill="#C4828F" stroke="#8E4A58" stroke-width="1"/>
-                <!-- 6. Valve planes and leaflets -->
-                <line x1="206" y1="241" x2="288" y2="241" stroke="#F2E8D6" stroke-width="4" stroke-linecap="round"/>
-                <line x1="311" y1="241" x2="396" y2="241" stroke="#F2E8D6" stroke-width="4" stroke-linecap="round"/>
-                <line x1="216" y1="243" x2="238" y2="272" stroke="#F2E8D6" stroke-width="3" stroke-linecap="round"/>
-                <line x1="280" y1="243" x2="258" y2="272" stroke="#F2E8D6" stroke-width="3" stroke-linecap="round"/>
-                <line x1="320" y1="243" x2="342" y2="276" stroke="#F2E8D6" stroke-width="3" stroke-linecap="round"/>
-                <line x1="390" y1="243" x2="368" y2="276" stroke="#F2E8D6" stroke-width="3" stroke-linecap="round"/>
-                <!-- 7. Ablation rings -->
-                <ellipse id="afa-ring1" cx="340" cy="162" rx="25" ry="40" fill="none" stroke="#C9A84C" stroke-width="3" stroke-dasharray="4 4" opacity="0"/>
-                <ellipse id="afa-ring2" cx="402" cy="158" rx="25" ry="40" fill="none" stroke="#C9A84C" stroke-width="3" stroke-dasharray="4 4" opacity="0"/>
-                <!-- 8. Lesion group -->
-                <g id="afa-lesions"></g>
-                <!-- 9. Fossa markers -->
-                <circle id="afa-fossaHalo" cx="302" cy="172" r="9" fill="#C9A84C" opacity="0"/>
-                <circle id="afa-fossa" cx="302" cy="172" r="5" fill="#C9A84C" opacity="0"/>
-                <!-- 10. Catheter -->
-                <path id="afa-cathHalo" d="M120 499 C 128 428, 142 340, 168 280 C 182 248, 204 218, 228 202 C 248 190, 276 180, 296 175 L 308 174 C 322 168, 336 156, 344 148" stroke="#7C8AAE" stroke-width="9" opacity="0.5" fill="none" stroke-linecap="round"/>
-                <path id="afa-cath" d="M120 499 C 128 428, 142 340, 168 280 C 182 248, 204 218, 228 202 C 248 190, 276 180, 296 175 L 308 174 C 322 168, 336 156, 344 148" stroke="#16233F" stroke-width="4.5" fill="none" stroke-linecap="round"/>
-                <!-- 11. Tip -->
-                <circle id="afa-tipGlow" cx="120" cy="499" r="11" fill="#C9A84C" opacity="0"/>
-                <circle id="afa-tip" cx="120" cy="499" r="5.5" fill="#C9A84C" opacity="0"/>
-                <!-- 12. Chamber labels (Greek) -->
-                <text x="243" y="150" font-size="12" text-anchor="middle" fill="#2A3550" font-family="Inter Tight,sans-serif">Δεξιός κόλπος</text>
-                <text x="246" y="352" font-size="12" text-anchor="middle" fill="#2A3550" font-family="Inter Tight,sans-serif">Δεξιά κοιλία</text>
-                <text x="366" y="224" font-size="12" text-anchor="middle" fill="#6B2A38" font-family="Inter Tight,sans-serif">Αριστερός κόλπος</text>
-                <text x="350" y="348" font-size="12" text-anchor="middle" fill="#6B2A38" font-family="Inter Tight,sans-serif">Αριστερά κοιλία</text>
-                <!-- Leader lines (Greek) -->
-                <line x1="250" y1="62" x2="206" y2="42" stroke="#94a3b8" stroke-width="0.5" stroke-dasharray="3 3"/>
-                <text x="200" y="46" font-size="11" text-anchor="end" fill="#64748b" font-family="Inter Tight,sans-serif">Πνευμονικές φλέβες</text>
-                <line x1="415" y1="136" x2="500" y2="128" stroke="#94a3b8" stroke-width="0.5" stroke-dasharray="3 3"/>
-                <text x="506" y="132" font-size="11" text-anchor="start" fill="#64748b" font-family="Inter Tight,sans-serif">Στόμια φλεβών</text>
-                <line x1="500" y1="210" x2="514" y2="206" stroke="#94a3b8" stroke-width="0.5" stroke-dasharray="3 3"/>
-                <text x="520" y="210" font-size="11" text-anchor="start" fill="#64748b" font-family="Inter Tight,sans-serif">Πνευμονικές φλέβες</text>
-                <polyline points="302,236 302,262 496,262" stroke="#94a3b8" stroke-width="0.5" stroke-dasharray="3 3" fill="none"/>
-                <text x="502" y="266" font-size="11" text-anchor="start" fill="#64748b" font-family="Inter Tight,sans-serif">Μεσοκολπικό διάφραγμα</text>
-                <line x1="122" y1="466" x2="92" y2="478" stroke="#94a3b8" stroke-width="0.5" stroke-dasharray="3 3"/>
-                <text x="86" y="482" font-size="11" text-anchor="end" fill="#64748b" font-family="Inter Tight,sans-serif">Κάτω κοίλη φλέβα</text>
-              </svg>
-              <div style="display:flex;align-items:center;justify-content:center;gap:14px;padding:12px 0 16px;">
-                <div style="display:flex;gap:7px;">
-                  <span class="afa-dot" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#C9A84C;opacity:0.3;transition:opacity 0.3s;"></span>
-                  <span class="afa-dot" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#C9A84C;opacity:0.3;transition:opacity 0.3s;"></span>
-                  <span class="afa-dot" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#C9A84C;opacity:0.3;transition:opacity 0.3s;"></span>
-                  <span class="afa-dot" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#C9A84C;opacity:0.3;transition:opacity 0.3s;"></span>
-                  <span class="afa-dot" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#C9A84C;opacity:0.3;transition:opacity 0.3s;"></span>
-                </div>
-                <button id="afa-replay" style="background:none;border:1px solid rgba(10,35,66,0.18);border-radius:5px;padding:4px 11px;font-size:12px;font-family:inherit;color:#475569;cursor:pointer;transition:border-color 0.2s,color 0.2s;" onmouseover="this.style.borderColor='rgba(201,168,76,0.6)';this.style.color='#92752A';" onmouseout="this.style.borderColor='rgba(10,35,66,0.18)';this.style.color='#475569';">&#8635; Επανάληψη</button>
-              </div>
-            </div>
-            <div class="edu-card-body">
-              <h3 class="edu-card-title" id="afa-step-title">Πρόσβαση μέσω της μηριαίας φλέβας</h3>
-              <p class="edu-card-summary" id="afa-step-desc" style="margin-bottom:0;">Ένας λεπτός καθετήρας εισάγεται στη φλέβα στο επάνω μέρος του ποδιού και προωθείται μέσω της κάτω κοίλης φλέβας προς την καρδιά. Δεν απαιτούνται τομές στο στήθος.</p>
-            </div>
-            <script>
-(function(){
-  var DURATION=13000;
-  var KF=[[0,0],[0.28,0.75],[0.40,0.75],[0.54,0.89],[0.62,0.89],[0.78,1],[1,1]];
-  function pw(t){for(var i=1;i<KF.length;i++){if(t<=KF[i][0]){var s=(t-KF[i-1][0])/(KF[i][0]-KF[i-1][0]);return KF[i-1][1]+s*(KF[i][1]-KF[i-1][1]);}}return 1;}
-  var STEPS=[
-    {t:0,    title:"Πρόσβαση μέσω της μηριαίας φλέβας",  desc:"Ένας λεπτός καθετήρας εισάγεται στη φλέβα στο επάνω μέρος του ποδιού και προωθείται μέσω της κάτω κοίλης φλέβας προς την καρδιά. Δεν απαιτούνται τομές στο στήθος."},
-    {t:0.28, title:"Στον δεξιό κόλπο",                    desc:"Ο καθετήρας φτάνει στον δεξιό κόλπο. Γίνονται ηλεκτρικές καταγραφές από το εσωτερικό της καρδιάς για χαρτογράφηση της ηλεκτρικής δραστηριότητας."},
-    {t:0.46, title:"Διέλευση στην αριστερή πλευρά",       desc:"Γίνεται μια μικρή, ελεγχόμενη παρακέντηση μέσω του λεπτού τοιχώματος που χωρίζει τα δύο άνω διαμερίσματα, δίνοντας πρόσβαση στον αριστερό κόλπο. Αυτό σφραγίζεται φυσικά στη συνέχεια."},
-    {t:0.62, title:"Στον αριστερό κόλπο",                  desc:"Ο καθετήρας κατευθύνεται στα τέσσερα στόμια φλεβών στο οπίσθιο τοίχωμα του αριστερού κόλπου, όπου συνήθως δημιουργούνται τα παθολογικά ηλεκτρικά ερεθίσματα της κολπικής μαρμαρυγής."},
-    {t:0.78, title:"Απομόνωση πνευμονικών φλεβών",         desc:"Δημιουργείται ένας δακτύλιος μικρών βλαβών γύρω από κάθε ζεύγος στομίων φλεβών, ηλεκτρικά απομονώνοντας τις φλέβες ώστε τα ερεθίσματα να μην μπορούν πλέον να φτάσουν στον υπόλοιπο κόλπο."}
-  ];
-  var cath=document.getElementById('afa-cath');
-  var cathH=document.getElementById('afa-cathHalo');
-  var tip=document.getElementById('afa-tip');
-  var tipG=document.getElementById('afa-tipGlow');
-  var ring1=document.getElementById('afa-ring1');
-  var ring2=document.getElementById('afa-ring2');
-  var lG=document.getElementById('afa-lesions');
-  var fossaH=document.getElementById('afa-fossaHalo');
-  var fosEl=document.getElementById('afa-fossa');
-  var dots=document.querySelectorAll('.afa-dot');
-  var replay=document.getElementById('afa-replay');
-  var sTit=document.getElementById('afa-step-title');
-  var sDesc=document.getElementById('afa-step-desc');
-  var rings=[{cx:340,cy:162,rx:25,ry:40},{cx:402,cy:158,rx:25,ry:40}];
-  var lesions=[];
-  rings.forEach(function(r){for(var i=0;i<8;i++){var a=(i/8)*Math.PI*2;var c=document.createElementNS('http://www.w3.org/2000/svg','circle');c.setAttribute('cx',r.cx+r.rx*Math.cos(a));c.setAttribute('cy',r.cy+r.ry*Math.sin(a));c.setAttribute('r','0');c.setAttribute('fill','#C9A84C');lG.appendChild(c);lesions.push(c);}});
-  var LEN=cath.getTotalLength();
-  var startTS=null,raf=null,curStep=-1;
-  function setStep(i){if(i===curStep)return;curStep=i;sTit.textContent=STEPS[i].title;sDesc.textContent=STEPS[i].desc;dots.forEach(function(d,j){d.style.opacity=j<=i?'1':'0.3';});}
-  function frame(ts){
-    if(!startTS)startTS=ts;
-    var t=Math.min((ts-startTS)/DURATION,1);
-    var frac=pw(t);
-    var off=LEN*(1-frac);
-    cath.style.strokeDashoffset=off;cathH.style.strokeDashoffset=off;
-    var pt=cath.getPointAtLength(LEN*frac);
-    tip.setAttribute('cx',pt.x);tip.setAttribute('cy',pt.y);
-    tipG.setAttribute('cx',pt.x);tipG.setAttribute('cy',pt.y);
-    var tv=frac>0.005?1:0;
-    tip.setAttribute('opacity',tv);
-    tipG.setAttribute('opacity',tv*(0.4+0.3*Math.sin((ts-startTS)/300)));
-    var fOp=0,fR=9;
-    if(t>=0.44&&t<0.50){fOp=(t-0.44)/0.06;fR=9;}
-    else if(t>=0.50&&t<0.72){fOp=1;fR=6.5+5*(0.5+0.5*Math.sin((ts-startTS)/250));}
-    else if(t>=0.72&&t<0.80){fOp=1-(t-0.72)/0.08;fR=9;}
-    fossaH.setAttribute('opacity',fOp);fossaH.setAttribute('r',fR);fosEl.setAttribute('opacity',fOp);
-    var rOp=t>=0.76?Math.min((t-0.76)/0.05,1):0;
-    ring1.setAttribute('opacity',rOp);ring2.setAttribute('opacity',rOp);
-    if(t>=0.80){var lt=t-0.80;lesions.forEach(function(c,i){var s=i*0.0118;if(lt<s){c.setAttribute('r',0);return;}var p=Math.min((lt-s)/0.020,1);var r;if(p<0.7)r=(p/0.7)*5.5;else if(p<0.85)r=5.5+0.8*((p-0.7)/0.15);else r=5.5+0.8*(1-(p-0.85)/0.15);c.setAttribute('r',Math.max(0,r));});}
-    var si=0;for(var i=STEPS.length-1;i>=0;i--){if(t>=STEPS[i].t){si=i;break;}}
-    setStep(si);
-    if(t<1)raf=requestAnimationFrame(frame);
-    else{tip.setAttribute('opacity',0);tipG.setAttribute('opacity',0);}
-  }
-  function start(){
-    if(raf)cancelAnimationFrame(raf);
-    startTS=null;curStep=-1;
-    [cath,cathH].forEach(function(el){el.style.strokeDasharray=LEN;el.style.strokeDashoffset=LEN;});
-    tip.setAttribute('opacity',0);tipG.setAttribute('opacity',0);
-    fossaH.setAttribute('opacity',0);fosEl.setAttribute('opacity',0);
-    ring1.setAttribute('opacity',0);ring2.setAttribute('opacity',0);
-    lesions.forEach(function(c){c.setAttribute('r',0);});
-    setStep(0);raf=requestAnimationFrame(frame);
-  }
-  [cath,cathH].forEach(function(el){el.style.strokeDasharray=LEN;el.style.strokeDashoffset=LEN;});
-  replay.addEventListener('click',start);
-  start();
-})();
-            </script>
-          </article>
-
           <!-- Ventricular Tachycardia -->
           <article class="edu-card reveal" id="ventricular-tachycardia" aria-label="Ventricular Tachycardia">
             <div class="ecg-display" aria-hidden="true">
@@ -1223,6 +1079,22 @@
           </article>
         </div>
 
+        <!-- Ablation Resources -->
+        <div class="clinician-resources reveal" style="margin-bottom:1.5rem;">
+          <div class="clinician-resources-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <div class="clinician-resources-content">
+            <h3>Πόροι Κατάλυσης</h3>
+            <p class="clinician-resources-desc">Οπτικοποίηση διαδικασίας με διαδραστική ανατομία. Απαιτείται κωδικός πρόσβασης.</p>
+            <button class="clinician-resource-link" onclick="openAFAnimation()">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Διαδικασία Κατάλυσης AF &#8212; Απλοποιημένη
+              <svg class="clinician-resource-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+          </div>
+        </div>
+
         <!-- Clinician Decision Resources -->
         <div class="clinician-resources reveal">
           <div class="clinician-resources-icon" aria-hidden="true">
@@ -1292,6 +1164,74 @@
     </div>
   </footer>
 
+  <!-- AF Ablation Animation Modal -->
+  <div id="afa-modal" class="afa-modal-overlay" role="dialog" aria-modal="true" aria-label="Διαδικασία Κατάλυσης AF">
+    <div class="afa-modal-box">
+      <button class="afa-modal-close" onclick="window.afaClose()" aria-label="Κλείσιμο">&#215;</button>
+      <div style="background:#EEF2F7;padding:20px 24px 0;">
+        <svg viewBox="0 0 680 540" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;">
+          <path d="M120 505 C 128 430, 142 340, 168 282 C 182 250, 204 220, 228 204" stroke="#8FA3C8" stroke-width="35" fill="none" stroke-linecap="round"/>
+          <path d="M340 140 C 322 100, 306 64, 296 26" stroke="#EFA7B7" stroke-width="16" fill="none" stroke-linecap="round" opacity="0.55"/>
+          <path d="M340 184 C 296 142, 258 100, 232 52" stroke="#EFA7B7" stroke-width="16" fill="none" stroke-linecap="round" opacity="0.55"/>
+          <path d="M402 136 C 440 124, 470 114, 498 104" stroke="#EFA7B7" stroke-width="16" fill="none" stroke-linecap="round" opacity="0.55"/>
+          <path d="M402 180 C 446 188, 476 200, 502 212" stroke="#EFA7B7" stroke-width="16" fill="none" stroke-linecap="round" opacity="0.55"/>
+          <path d="M172 196 C 162 132, 196 88, 240 84 C 272 81, 294 96, 304 116 C 318 94, 352 82, 390 90 C 430 99, 452 142, 448 196 C 458 268, 448 346, 410 404 C 376 456, 336 480, 306 478 C 274 476, 236 450, 208 398 C 178 344, 168 258, 172 196 Z" fill="#E9C9C6" stroke="#9B5F6E" stroke-width="1.2"/>
+          <path d="M198 200 C 190 152, 208 116, 240 112 C 272 108, 298 130, 298 162 L 298 218 C 298 226, 292 230, 284 230 L 212 230 C 204 230, 199 216, 198 200 Z" fill="#A8B4DB" stroke="#5C6B8A" stroke-width="1"/>
+          <path d="M306 152 C 308 118, 336 100, 372 102 C 412 105, 434 142, 430 194 C 428 220, 420 232, 406 232 L 320 232 C 312 232, 306 224, 306 214 Z" fill="#EFA7B7" stroke="#9B5F6E" stroke-width="1"/>
+          <path d="M208 258 C 200 320, 220 390, 262 444 C 274 458, 286 454, 288 438 L 288 264 C 288 256, 282 252, 274 252 L 218 252 C 210 252, 208 254, 208 258 Z" fill="#A8B4DB" stroke="#5C6B8A" stroke-width="1"/>
+          <path d="M316 264 C 316 256, 324 252, 336 252 C 376 252, 398 268, 396 300 C 392 358, 366 412, 334 440 C 322 451, 310 444, 309 428 L 309 278 Z" fill="#EFA7B7" stroke="#9B5F6E" stroke-width="1"/>
+          <ellipse cx="340" cy="140" rx="13" ry="11" fill="#C4828F" stroke="#8E4A58" stroke-width="1"/>
+          <ellipse cx="340" cy="184" rx="13" ry="11" fill="#C4828F" stroke="#8E4A58" stroke-width="1"/>
+          <ellipse cx="402" cy="136" rx="13" ry="11" fill="#C4828F" stroke="#8E4A58" stroke-width="1"/>
+          <ellipse cx="402" cy="180" rx="13" ry="11" fill="#C4828F" stroke="#8E4A58" stroke-width="1"/>
+          <line x1="206" y1="241" x2="288" y2="241" stroke="#F2E8D6" stroke-width="4" stroke-linecap="round"/>
+          <line x1="311" y1="241" x2="396" y2="241" stroke="#F2E8D6" stroke-width="4" stroke-linecap="round"/>
+          <line x1="216" y1="243" x2="238" y2="272" stroke="#F2E8D6" stroke-width="3" stroke-linecap="round"/>
+          <line x1="280" y1="243" x2="258" y2="272" stroke="#F2E8D6" stroke-width="3" stroke-linecap="round"/>
+          <line x1="320" y1="243" x2="342" y2="276" stroke="#F2E8D6" stroke-width="3" stroke-linecap="round"/>
+          <line x1="390" y1="243" x2="368" y2="276" stroke="#F2E8D6" stroke-width="3" stroke-linecap="round"/>
+          <ellipse id="afa-ring1" cx="340" cy="162" rx="25" ry="40" fill="none" stroke="#C9A84C" stroke-width="3" stroke-dasharray="4 4" opacity="0"/>
+          <ellipse id="afa-ring2" cx="402" cy="158" rx="25" ry="40" fill="none" stroke="#C9A84C" stroke-width="3" stroke-dasharray="4 4" opacity="0"/>
+          <g id="afa-lesions"></g>
+          <circle id="afa-fossaHalo" cx="302" cy="172" r="9" fill="#C9A84C" opacity="0"/>
+          <circle id="afa-fossa" cx="302" cy="172" r="5" fill="#C9A84C" opacity="0"/>
+          <path id="afa-cathHalo" d="M120 499 C 128 428, 142 340, 168 280 C 182 248, 204 218, 228 202 C 248 190, 276 180, 296 175 L 308 174 C 322 168, 336 156, 344 148" stroke="#7C8AAE" stroke-width="9" opacity="0.5" fill="none" stroke-linecap="round"/>
+          <path id="afa-cath" d="M120 499 C 128 428, 142 340, 168 280 C 182 248, 204 218, 228 202 C 248 190, 276 180, 296 175 L 308 174 C 322 168, 336 156, 344 148" stroke="#16233F" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+          <circle id="afa-tipGlow" cx="120" cy="499" r="11" fill="#C9A84C" opacity="0"/>
+          <circle id="afa-tip" cx="120" cy="499" r="5.5" fill="#C9A84C" opacity="0"/>
+          <text x="243" y="150" font-size="12" text-anchor="middle" fill="#2A3550" font-family="Inter Tight,sans-serif">Δεξιός κόλπος</text>
+          <text x="246" y="352" font-size="12" text-anchor="middle" fill="#2A3550" font-family="Inter Tight,sans-serif">Δεξιά κοιλία</text>
+          <text x="366" y="224" font-size="12" text-anchor="middle" fill="#6B2A38" font-family="Inter Tight,sans-serif">Αριστερός κόλπος</text>
+          <text x="350" y="348" font-size="12" text-anchor="middle" fill="#6B2A38" font-family="Inter Tight,sans-serif">Αριστερά κοιλία</text>
+          <line x1="250" y1="62" x2="206" y2="42" stroke="#94a3b8" stroke-width="0.5" stroke-dasharray="3 3"/>
+          <text x="200" y="46" font-size="11" text-anchor="end" fill="#64748b" font-family="Inter Tight,sans-serif">Πνευμονικές φλέβες</text>
+          <line x1="415" y1="136" x2="500" y2="128" stroke="#94a3b8" stroke-width="0.5" stroke-dasharray="3 3"/>
+          <text x="506" y="132" font-size="11" text-anchor="start" fill="#64748b" font-family="Inter Tight,sans-serif">Στόμια φλεβών</text>
+          <line x1="500" y1="210" x2="514" y2="206" stroke="#94a3b8" stroke-width="0.5" stroke-dasharray="3 3"/>
+          <text x="520" y="210" font-size="11" text-anchor="start" fill="#64748b" font-family="Inter Tight,sans-serif">Πνευμονικές φλέβες</text>
+          <polyline points="302,236 302,262 496,262" stroke="#94a3b8" stroke-width="0.5" stroke-dasharray="3 3" fill="none"/>
+          <text x="502" y="266" font-size="11" text-anchor="start" fill="#64748b" font-family="Inter Tight,sans-serif">Μεσοκολπικό διάφραγμα</text>
+          <line x1="122" y1="466" x2="92" y2="478" stroke="#94a3b8" stroke-width="0.5" stroke-dasharray="3 3"/>
+          <text x="86" y="482" font-size="11" text-anchor="end" fill="#64748b" font-family="Inter Tight,sans-serif">Κάτω κοίλη φλέβα</text>
+        </svg>
+        <div style="display:flex;align-items:center;justify-content:center;gap:14px;padding:12px 0 16px;">
+          <div style="display:flex;gap:7px;">
+            <span class="afa-dot" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#C9A84C;opacity:0.3;transition:opacity 0.3s;"></span>
+            <span class="afa-dot" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#C9A84C;opacity:0.3;transition:opacity 0.3s;"></span>
+            <span class="afa-dot" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#C9A84C;opacity:0.3;transition:opacity 0.3s;"></span>
+            <span class="afa-dot" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#C9A84C;opacity:0.3;transition:opacity 0.3s;"></span>
+            <span class="afa-dot" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#C9A84C;opacity:0.3;transition:opacity 0.3s;"></span>
+          </div>
+          <button id="afa-replay" style="background:none;border:1px solid rgba(10,35,66,0.18);border-radius:5px;padding:4px 11px;font-size:12px;font-family:inherit;color:#475569;cursor:pointer;transition:border-color 0.2s,color 0.2s;" onmouseover="this.style.borderColor='rgba(201,168,76,0.6)';this.style.color='#92752A';" onmouseout="this.style.borderColor='rgba(10,35,66,0.18)';this.style.color='#475569';">&#8635; Επανάληψη</button>
+        </div>
+      </div>
+      <div style="padding:16px 24px 20px;">
+        <h3 id="afa-step-title" style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:500;color:#1e293b;margin:0 0 8px;line-height:1.3;"></h3>
+        <p id="afa-step-desc" style="font-size:13px;color:#64748b;margin:0;line-height:1.6;"></p>
+      </div>
+    </div>
+  </div>
+
   <!-- Clinician Decision Resources — password modal -->
   <div id="clinician-pw-modal" class="clinician-pw-overlay" role="dialog" aria-modal="true" aria-labelledby="clinician-pw-title">
     <div class="clinician-pw-box">
@@ -1299,7 +1239,7 @@
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         Περιορισμένη Πρόσβαση
       </p>
-      <p class="clinician-pw-subtitle">Εισάγετε τον κωδικό πρόσβασης για να ανοίξετε αυτό το εργαλείο σε νέα καρτέλα.</p>
+      <p id="clinician-pw-subtitle" class="clinician-pw-subtitle">Εισάγετε τον κωδικό πρόσβασης για να ανοίξετε αυτό το εργαλείο σε νέα καρτέλα.</p>
       <input type="password" id="clinician-pw-input" class="clinician-pw-input" placeholder="Κωδικός" autocomplete="off" />
       <p id="clinician-pw-error" class="clinician-pw-error">Λανθασμένος κωδικός. Παρακαλώ προσπαθήστε ξανά.</p>
       <div class="clinician-pw-actions">
@@ -1373,6 +1313,63 @@
   </script>
 
   <script src="scripts.js"></script>
+  <script>
+(function(){
+  var DURATION=13000;
+  var KF=[[0,0],[0.28,0.75],[0.40,0.75],[0.54,0.89],[0.62,0.89],[0.78,1],[1,1]];
+  function pw(t){for(var i=1;i<KF.length;i++){if(t<=KF[i][0]){var s=(t-KF[i-1][0])/(KF[i][0]-KF[i-1][0]);return KF[i-1][1]+s*(KF[i][1]-KF[i-1][1]);}}return 1;}
+  var STEPS=[
+    {t:0,    title:"Πρόσβαση μέσω της μηριαίας φλέβας",  desc:"Ένας λεπτός καθετήρας εισάγεται στη φλέβα στο επάνω μέρος του ποδιού και προωθείται μέσω της κάτω κοίλης φλέβας προς την καρδιά. Δεν απαιτούνται τομές στο στήθος."},
+    {t:0.28, title:"Στον δεξιό κόλπο",                    desc:"Ο καθετήρας φτάνει στον δεξιό κόλπο. Γίνονται ηλεκτρικές καταγραφές από το εσωτερικό της καρδιάς για χαρτογράφηση της ηλεκτρικής δραστηριότητας."},
+    {t:0.46, title:"Διέλευση στην αριστερή πλευρά",       desc:"Γίνεται μια μικρή, ελεγχόμενη παρακέντηση μέσω του λεπτού τοιχώματος που χωρίζει τα δύο άνω διαμερίσματα, δίνοντας πρόσβαση στον αριστερό κόλπο. Αυτό σφραγίζεται φυσικά στη συνέχεια."},
+    {t:0.62, title:"Στον αριστερό κόλπο",                  desc:"Ο καθετήρας κατευθύνεται στα τέσσερα στόμια φλεβών στο οπίσθιο τοίχωμα του αριστερού κόλπου, όπου συνήθως δημιουργούνται τα παθολογικά ηλεκτρικά ερεθίσματα της κολπικής μαρμαρυγής."},
+    {t:0.78, title:"Απομόνωση πνευμονικών φλεβών",         desc:"Δημιουργείται ένας δακτύλιος μικρών βλαβών γύρω από κάθε ζεύγος στομίων φλεβών, ηλεκτρικά απομονώνοντας τις φλέβες ώστε τα ερεθίσματα να μην μπορούν πλέον να φτάσουν στον υπόλοιπο κόλπο."}
+  ];
+  var cath,cathH,tip,tipG,ring1,ring2,lG,fossaH,fosEl,dots,replay,sTit,sDesc;
+  var lesions=[],LEN=0,initialized=false,startTS=null,raf=null,curStep=-1;
+  function init(){
+    if(initialized)return;
+    cath=document.getElementById('afa-cath');cathH=document.getElementById('afa-cathHalo');
+    tip=document.getElementById('afa-tip');tipG=document.getElementById('afa-tipGlow');
+    ring1=document.getElementById('afa-ring1');ring2=document.getElementById('afa-ring2');
+    lG=document.getElementById('afa-lesions');fossaH=document.getElementById('afa-fossaHalo');
+    fosEl=document.getElementById('afa-fossa');dots=document.querySelectorAll('.afa-dot');
+    replay=document.getElementById('afa-replay');sTit=document.getElementById('afa-step-title');sDesc=document.getElementById('afa-step-desc');
+    [{cx:340,cy:162,rx:25,ry:40},{cx:402,cy:158,rx:25,ry:40}].forEach(function(r){for(var i=0;i<8;i++){var a=(i/8)*Math.PI*2;var c=document.createElementNS('http://www.w3.org/2000/svg','circle');c.setAttribute('cx',r.cx+r.rx*Math.cos(a));c.setAttribute('cy',r.cy+r.ry*Math.sin(a));c.setAttribute('r','0');c.setAttribute('fill','#C9A84C');lG.appendChild(c);lesions.push(c);}});
+    LEN=cath.getTotalLength();
+    [cath,cathH].forEach(function(el){el.style.strokeDasharray=LEN;el.style.strokeDashoffset=LEN;});
+    replay.addEventListener('click',start);
+    initialized=true;
+  }
+  function setStep(i){if(i===curStep)return;curStep=i;sTit.textContent=STEPS[i].title;sDesc.textContent=STEPS[i].desc;dots.forEach(function(d,j){d.style.opacity=j<=i?'1':'0.3';});}
+  function frame(ts){
+    if(!startTS)startTS=ts;
+    var t=Math.min((ts-startTS)/DURATION,1);var frac=pw(t);var off=LEN*(1-frac);
+    cath.style.strokeDashoffset=off;cathH.style.strokeDashoffset=off;
+    var pt=cath.getPointAtLength(LEN*frac);
+    tip.setAttribute('cx',pt.x);tip.setAttribute('cy',pt.y);tipG.setAttribute('cx',pt.x);tipG.setAttribute('cy',pt.y);
+    var tv=frac>0.005?1:0;tip.setAttribute('opacity',tv);tipG.setAttribute('opacity',tv*(0.4+0.3*Math.sin((ts-startTS)/300)));
+    var fOp=0,fR=9;
+    if(t>=0.44&&t<0.50){fOp=(t-0.44)/0.06;fR=9;}
+    else if(t>=0.50&&t<0.72){fOp=1;fR=6.5+5*(0.5+0.5*Math.sin((ts-startTS)/250));}
+    else if(t>=0.72&&t<0.80){fOp=1-(t-0.72)/0.08;fR=9;}
+    fossaH.setAttribute('opacity',fOp);fossaH.setAttribute('r',fR);fosEl.setAttribute('opacity',fOp);
+    var rOp=t>=0.76?Math.min((t-0.76)/0.05,1):0;ring1.setAttribute('opacity',rOp);ring2.setAttribute('opacity',rOp);
+    if(t>=0.80){var lt=t-0.80;lesions.forEach(function(c,i){var s=i*0.0118;if(lt<s){c.setAttribute('r',0);return;}var p=Math.min((lt-s)/0.020,1);var r;if(p<0.7)r=(p/0.7)*5.5;else if(p<0.85)r=5.5+0.8*((p-0.7)/0.15);else r=5.5+0.8*(1-(p-0.85)/0.15);c.setAttribute('r',Math.max(0,r));});}
+    var si=0;for(var i=STEPS.length-1;i>=0;i--){if(t>=STEPS[i].t){si=i;break;}}setStep(si);
+    if(t<1)raf=requestAnimationFrame(frame);else{tip.setAttribute('opacity',0);tipG.setAttribute('opacity',0);}
+  }
+  function start(){
+    if(raf)cancelAnimationFrame(raf);startTS=null;curStep=-1;
+    [cath,cathH].forEach(function(el){el.style.strokeDasharray=LEN;el.style.strokeDashoffset=LEN;});
+    tip.setAttribute('opacity',0);tipG.setAttribute('opacity',0);fossaH.setAttribute('opacity',0);fosEl.setAttribute('opacity',0);
+    ring1.setAttribute('opacity',0);ring2.setAttribute('opacity',0);lesions.forEach(function(c){c.setAttribute('r',0);});
+    setStep(0);raf=requestAnimationFrame(frame);
+  }
+  window.afaOpen=function(){document.getElementById('afa-modal').classList.add('active');init();start();};
+  window.afaClose=function(){if(raf){cancelAnimationFrame(raf);raf=null;}document.getElementById('afa-modal').classList.remove('active');};
+})();
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/js/loaders/GLTFLoader.js"></script>
   <script src="heart3d.js"></script>
