@@ -968,6 +968,155 @@
             </div>
           </article>
 
+          <!-- AF Ablation Walkthrough -->
+          <article class="edu-card reveal" id="af-ablation" aria-label="AF Ablation Procedure Walkthrough" style="grid-column:1/-1;">
+            <div style="background:#EEF2F7;padding:20px 24px 0;">
+              <svg viewBox="0 0 680 540" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;">
+                <!-- 1. IVC -->
+                <path d="M112 500 C 132 414, 150 334, 170 284 C 184 250, 204 220, 228 204" stroke="#8FA3C8" stroke-width="28" fill="none" stroke-linecap="round"/>
+                <!-- 2. Pulmonary veins behind heart -->
+                <path d="M340 140 C 322 100, 306 64, 296 26" stroke="#EFA7B7" stroke-width="16" fill="none" stroke-linecap="round" opacity="0.55"/>
+                <path d="M340 184 C 296 142, 258 100, 232 52" stroke="#EFA7B7" stroke-width="16" fill="none" stroke-linecap="round" opacity="0.55"/>
+                <path d="M402 136 C 440 124, 470 114, 498 104" stroke="#EFA7B7" stroke-width="16" fill="none" stroke-linecap="round" opacity="0.55"/>
+                <path d="M402 180 C 446 188, 476 200, 502 212" stroke="#EFA7B7" stroke-width="16" fill="none" stroke-linecap="round" opacity="0.55"/>
+                <!-- 3. Myocardial silhouette -->
+                <path d="M172 196 C 162 132, 196 88, 240 84 C 272 81, 294 96, 304 116 C 318 94, 352 82, 390 90 C 430 99, 452 142, 448 196 C 458 268, 448 346, 410 404 C 376 456, 336 480, 306 478 C 274 476, 236 450, 208 398 C 178 344, 168 258, 172 196 Z" fill="#E9C9C6" stroke="#9B5F6E" stroke-width="1.2"/>
+                <!-- 4. Chambers: RA, LA, RV, LV -->
+                <path d="M198 200 C 190 152, 208 116, 240 112 C 272 108, 298 130, 298 162 L 298 218 C 298 226, 292 230, 284 230 L 212 230 C 204 230, 199 216, 198 200 Z" fill="#A8B4DB" stroke="#5C6B8A" stroke-width="1"/>
+                <path d="M306 152 C 308 118, 336 100, 372 102 C 412 105, 434 142, 430 194 C 428 220, 420 232, 406 232 L 320 232 C 312 232, 306 224, 306 214 Z" fill="#EFA7B7" stroke="#9B5F6E" stroke-width="1"/>
+                <path d="M208 258 C 200 320, 220 390, 262 444 C 274 458, 286 454, 288 438 L 288 264 C 288 256, 282 252, 274 252 L 218 252 C 210 252, 208 254, 208 258 Z" fill="#A8B4DB" stroke="#5C6B8A" stroke-width="1"/>
+                <path d="M316 264 C 316 256, 324 252, 336 252 C 376 252, 398 268, 396 300 C 392 358, 366 412, 334 440 C 322 451, 310 444, 309 428 L 309 278 Z" fill="#EFA7B7" stroke="#9B5F6E" stroke-width="1"/>
+                <!-- 5. Vein openings -->
+                <ellipse cx="340" cy="140" rx="13" ry="11" fill="#C4828F" stroke="#8E4A58" stroke-width="1"/>
+                <ellipse cx="340" cy="184" rx="13" ry="11" fill="#C4828F" stroke="#8E4A58" stroke-width="1"/>
+                <ellipse cx="402" cy="136" rx="13" ry="11" fill="#C4828F" stroke="#8E4A58" stroke-width="1"/>
+                <ellipse cx="402" cy="180" rx="13" ry="11" fill="#C4828F" stroke="#8E4A58" stroke-width="1"/>
+                <!-- 6. Valve planes and leaflets -->
+                <line x1="206" y1="241" x2="288" y2="241" stroke="#F2E8D6" stroke-width="4" stroke-linecap="round"/>
+                <line x1="311" y1="241" x2="396" y2="241" stroke="#F2E8D6" stroke-width="4" stroke-linecap="round"/>
+                <line x1="216" y1="243" x2="238" y2="272" stroke="#F2E8D6" stroke-width="3" stroke-linecap="round"/>
+                <line x1="280" y1="243" x2="258" y2="272" stroke="#F2E8D6" stroke-width="3" stroke-linecap="round"/>
+                <line x1="320" y1="243" x2="342" y2="276" stroke="#F2E8D6" stroke-width="3" stroke-linecap="round"/>
+                <line x1="390" y1="243" x2="368" y2="276" stroke="#F2E8D6" stroke-width="3" stroke-linecap="round"/>
+                <!-- 7. Ablation rings -->
+                <ellipse id="afa-ring1" cx="340" cy="162" rx="25" ry="40" fill="none" stroke="#C9A84C" stroke-width="3" stroke-dasharray="4 4" opacity="0"/>
+                <ellipse id="afa-ring2" cx="402" cy="158" rx="25" ry="40" fill="none" stroke="#C9A84C" stroke-width="3" stroke-dasharray="4 4" opacity="0"/>
+                <!-- 8. Lesion group -->
+                <g id="afa-lesions"></g>
+                <!-- 9. Fossa markers -->
+                <circle id="afa-fossaHalo" cx="302" cy="172" r="9" fill="#C9A84C" opacity="0"/>
+                <circle id="afa-fossa" cx="302" cy="172" r="5" fill="#C9A84C" opacity="0"/>
+                <!-- 10. Catheter -->
+                <path id="afa-cathHalo" d="M112 494 C 132 412, 150 332, 170 282 C 184 248, 204 218, 228 202 C 248 190, 276 180, 296 175 L 308 174 C 322 168, 336 156, 344 148" stroke="#7C8AAE" stroke-width="9" opacity="0.5" fill="none" stroke-linecap="round"/>
+                <path id="afa-cath" d="M112 494 C 132 412, 150 332, 170 282 C 184 248, 204 218, 228 202 C 248 190, 276 180, 296 175 L 308 174 C 322 168, 336 156, 344 148" stroke="#16233F" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+                <!-- 11. Tip -->
+                <circle id="afa-tipGlow" cx="112" cy="494" r="11" fill="#C9A84C" opacity="0"/>
+                <circle id="afa-tip" cx="112" cy="494" r="5.5" fill="#C9A84C" opacity="0"/>
+                <!-- 12. Chamber labels -->
+                <text x="243" y="150" font-size="12" text-anchor="middle" fill="#2A3550" font-family="Inter Tight,sans-serif">Right atrium</text>
+                <text x="246" y="352" font-size="12" text-anchor="middle" fill="#2A3550" font-family="Inter Tight,sans-serif">Right ventricle</text>
+                <text x="366" y="224" font-size="12" text-anchor="middle" fill="#6B2A38" font-family="Inter Tight,sans-serif">Left atrium</text>
+                <text x="350" y="348" font-size="12" text-anchor="middle" fill="#6B2A38" font-family="Inter Tight,sans-serif">Left ventricle</text>
+                <!-- Leader lines -->
+                <line x1="250" y1="62" x2="206" y2="42" stroke="#94a3b8" stroke-width="0.5" stroke-dasharray="3 3"/>
+                <text x="200" y="46" font-size="11" text-anchor="end" fill="#64748b" font-family="Inter Tight,sans-serif">Pulmonary veins</text>
+                <line x1="415" y1="136" x2="500" y2="128" stroke="#94a3b8" stroke-width="0.5" stroke-dasharray="3 3"/>
+                <text x="506" y="132" font-size="11" text-anchor="start" fill="#64748b" font-family="Inter Tight,sans-serif">Vein openings</text>
+                <line x1="500" y1="210" x2="514" y2="206" stroke="#94a3b8" stroke-width="0.5" stroke-dasharray="3 3"/>
+                <text x="520" y="210" font-size="11" text-anchor="start" fill="#64748b" font-family="Inter Tight,sans-serif">Pulmonary veins</text>
+                <polyline points="302,236 302,262 496,262" stroke="#94a3b8" stroke-width="0.5" stroke-dasharray="3 3" fill="none"/>
+                <text x="502" y="266" font-size="11" text-anchor="start" fill="#64748b" font-family="Inter Tight,sans-serif">Interatrial septum</text>
+                <line x1="122" y1="466" x2="92" y2="478" stroke="#94a3b8" stroke-width="0.5" stroke-dasharray="3 3"/>
+                <text x="86" y="482" font-size="11" text-anchor="end" fill="#64748b" font-family="Inter Tight,sans-serif">Inferior vena cava</text>
+              </svg>
+              <div style="display:flex;align-items:center;justify-content:center;gap:14px;padding:12px 0 16px;">
+                <div style="display:flex;gap:7px;">
+                  <span class="afa-dot" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#C9A84C;opacity:0.3;transition:opacity 0.3s;"></span>
+                  <span class="afa-dot" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#C9A84C;opacity:0.3;transition:opacity 0.3s;"></span>
+                  <span class="afa-dot" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#C9A84C;opacity:0.3;transition:opacity 0.3s;"></span>
+                  <span class="afa-dot" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#C9A84C;opacity:0.3;transition:opacity 0.3s;"></span>
+                  <span class="afa-dot" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#C9A84C;opacity:0.3;transition:opacity 0.3s;"></span>
+                </div>
+                <button id="afa-replay" style="background:none;border:1px solid rgba(10,35,66,0.18);border-radius:5px;padding:4px 11px;font-size:12px;font-family:inherit;color:#475569;cursor:pointer;transition:border-color 0.2s,color 0.2s;" onmouseover="this.style.borderColor='rgba(201,168,76,0.6)';this.style.color='#92752A';" onmouseout="this.style.borderColor='rgba(10,35,66,0.18)';this.style.color='#475569';">&#8635; Replay</button>
+              </div>
+            </div>
+            <div class="edu-card-body">
+              <h3 class="edu-card-title" id="afa-step-title">Access via the femoral vein</h3>
+              <p class="edu-card-summary" id="afa-step-desc" style="margin-bottom:0;">A fine catheter is passed into the vein at the top of the leg and advanced up the inferior vena cava towards the heart. No cuts to the chest are needed.</p>
+            </div>
+            <script>
+(function(){
+  var DURATION=13000;
+  var KF=[[0,0],[0.28,0.34],[0.40,0.34],[0.54,0.62],[0.62,0.62],[0.78,1],[1,1]];
+  function pw(t){for(var i=1;i<KF.length;i++){if(t<=KF[i][0]){var s=(t-KF[i-1][0])/(KF[i][0]-KF[i-1][0]);return KF[i-1][1]+s*(KF[i][1]-KF[i-1][1]);}}return 1;}
+  var STEPS=[
+    {t:0,    title:"Access via the femoral vein",  desc:"A fine catheter is passed into the vein at the top of the leg and advanced up the inferior vena cava towards the heart. No cuts to the chest are needed."},
+    {t:0.28, title:"Into the right atrium",         desc:"The catheter reaches the right atrium. Recordings are taken from inside the heart to map its electrical activity."},
+    {t:0.46, title:"Crossing to the left side",     desc:"A small, controlled puncture is made through the thin wall dividing the two upper chambers, giving access to the left atrium. It seals naturally afterwards."},
+    {t:0.62, title:"Into the left atrium",           desc:"The catheter is guided to the four vein openings on the back wall of the left atrium, where the abnormal electrical triggers of atrial fibrillation usually arise."},
+    {t:0.78, title:"Pulmonary vein isolation",       desc:"A ring of small lesions is created around each pair of vein openings, electrically isolating the veins so the triggers can no longer reach the rest of the atrium."}
+  ];
+  var cath=document.getElementById('afa-cath');
+  var cathH=document.getElementById('afa-cathHalo');
+  var tip=document.getElementById('afa-tip');
+  var tipG=document.getElementById('afa-tipGlow');
+  var ring1=document.getElementById('afa-ring1');
+  var ring2=document.getElementById('afa-ring2');
+  var lG=document.getElementById('afa-lesions');
+  var fossaH=document.getElementById('afa-fossaHalo');
+  var fosEl=document.getElementById('afa-fossa');
+  var dots=document.querySelectorAll('.afa-dot');
+  var replay=document.getElementById('afa-replay');
+  var sTit=document.getElementById('afa-step-title');
+  var sDesc=document.getElementById('afa-step-desc');
+  var rings=[{cx:340,cy:162,rx:25,ry:40},{cx:402,cy:158,rx:25,ry:40}];
+  var lesions=[];
+  rings.forEach(function(r){for(var i=0;i<8;i++){var a=(i/8)*Math.PI*2;var c=document.createElementNS('http://www.w3.org/2000/svg','circle');c.setAttribute('cx',r.cx+r.rx*Math.cos(a));c.setAttribute('cy',r.cy+r.ry*Math.sin(a));c.setAttribute('r','0');c.setAttribute('fill','#C9A84C');lG.appendChild(c);lesions.push(c);}});
+  var LEN=cath.getTotalLength();
+  var startTS=null,raf=null,curStep=-1;
+  function setStep(i){if(i===curStep)return;curStep=i;sTit.textContent=STEPS[i].title;sDesc.textContent=STEPS[i].desc;dots.forEach(function(d,j){d.style.opacity=j<=i?'1':'0.3';});}
+  function frame(ts){
+    if(!startTS)startTS=ts;
+    var t=Math.min((ts-startTS)/DURATION,1);
+    var frac=pw(t);
+    var off=LEN*(1-frac);
+    cath.style.strokeDashoffset=off;cathH.style.strokeDashoffset=off;
+    var pt=cath.getPointAtLength(LEN*frac);
+    tip.setAttribute('cx',pt.x);tip.setAttribute('cy',pt.y);
+    tipG.setAttribute('cx',pt.x);tipG.setAttribute('cy',pt.y);
+    var tv=frac>0.005?1:0;
+    tip.setAttribute('opacity',tv);
+    tipG.setAttribute('opacity',tv*(0.4+0.3*Math.sin((ts-startTS)/300)));
+    var fOp=0,fR=9;
+    if(t>=0.44&&t<0.50){fOp=(t-0.44)/0.06;fR=9;}
+    else if(t>=0.50&&t<0.72){fOp=1;fR=6.5+5*(0.5+0.5*Math.sin((ts-startTS)/250));}
+    else if(t>=0.72&&t<0.80){fOp=1-(t-0.72)/0.08;fR=9;}
+    fossaH.setAttribute('opacity',fOp);fossaH.setAttribute('r',fR);fosEl.setAttribute('opacity',fOp);
+    var rOp=t>=0.76?Math.min((t-0.76)/0.05,1):0;
+    ring1.setAttribute('opacity',rOp);ring2.setAttribute('opacity',rOp);
+    if(t>=0.80){var lt=t-0.80;lesions.forEach(function(c,i){var s=i*0.0118;if(lt<s){c.setAttribute('r',0);return;}var p=Math.min((lt-s)/0.020,1);var r;if(p<0.7)r=(p/0.7)*5.5;else if(p<0.85)r=5.5+0.8*((p-0.7)/0.15);else r=5.5+0.8*(1-(p-0.85)/0.15);c.setAttribute('r',Math.max(0,r));});}
+    var si=0;for(var i=STEPS.length-1;i>=0;i--){if(t>=STEPS[i].t){si=i;break;}}
+    setStep(si);
+    if(t<1)raf=requestAnimationFrame(frame);
+    else{tip.setAttribute('opacity',0);tipG.setAttribute('opacity',0);}
+  }
+  function start(){
+    if(raf)cancelAnimationFrame(raf);
+    startTS=null;curStep=-1;
+    [cath,cathH].forEach(function(el){el.style.strokeDasharray=LEN;el.style.strokeDashoffset=LEN;});
+    tip.setAttribute('opacity',0);tipG.setAttribute('opacity',0);
+    fossaH.setAttribute('opacity',0);fosEl.setAttribute('opacity',0);
+    ring1.setAttribute('opacity',0);ring2.setAttribute('opacity',0);
+    lesions.forEach(function(c){c.setAttribute('r',0);});
+    setStep(0);raf=requestAnimationFrame(frame);
+  }
+  [cath,cathH].forEach(function(el){el.style.strokeDasharray=LEN;el.style.strokeDashoffset=LEN;});
+  replay.addEventListener('click',start);
+  start();
+})();
+            </script>
+          </article>
+
           <!-- Ventricular Tachycardia -->
           <article class="edu-card reveal" id="ventricular-tachycardia" aria-label="Ventricular Tachycardia">
             <div class="ecg-display" aria-hidden="true">
