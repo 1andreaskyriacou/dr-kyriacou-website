@@ -1170,23 +1170,35 @@
       <button class="afa-modal-close" onclick="window.afaClose()" aria-label="Close">&#215;</button>
       <div style="background:#EEF2F7;padding:12px 24px 0;">
         <svg viewBox="0 0 680 540" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;max-height:52vh;display:block;">
-          <path d="M210 505 C 212 418, 213 326, 214 246 C 215 226, 217 212, 218 206" stroke="#8FA3C8" stroke-width="35" fill="none" stroke-linecap="round"/>
-          <path d="M335 145 C 316 104, 300 64, 290 26" stroke="#EFA7B7" stroke-width="20" fill="none" stroke-linecap="round" opacity="0.55"/>
-          <path d="M335 182 C 300 178, 266 172, 238 162" stroke="#EFA7B7" stroke-width="20" fill="none" stroke-linecap="round" opacity="0.55"/>
-          <path d="M420 142 C 450 126, 472 116, 496 106" stroke="#EFA7B7" stroke-width="20" fill="none" stroke-linecap="round" opacity="0.55"/>
-          <path d="M420 178 C 450 190, 472 200, 496 210" stroke="#EFA7B7" stroke-width="20" fill="none" stroke-linecap="round" opacity="0.55"/>
+          <defs>
+            <clipPath id="afa-lumen">
+              <rect x="158" y="240" width="37" height="268"/>
+              <rect x="155" y="193" width="72" height="53"/>
+              <path d="M198 200 C 190 152, 208 116, 240 112 C 272 108, 298 130, 298 162 L 298 218 C 298 226, 292 230, 284 230 L 212 230 C 204 230, 199 216, 198 200 Z"/>
+              <rect x="292" y="157" width="22" height="26"/>
+              <path d="M306 152 C 308 118, 336 100, 372 102 C 412 105, 434 142, 430 194 C 428 220, 420 232, 406 232 L 320 232 C 312 232, 306 224, 306 214 Z"/>
+            </clipPath>
+          </defs>
+          <path d="M175 505 C 176 418, 177 328, 177 250 C 185 232, 196 218, 205 218" stroke="#8FA3C8" stroke-width="35" fill="none" stroke-linecap="round"/>
+          <path d="M335 145 C 316 104, 300 64, 290 26" stroke="#EFA7B7" stroke-width="24" fill="none" stroke-linecap="round" opacity="0.55"/>
+          <path d="M335 182 C 342 152, 354 116, 364 88" stroke="#EFA7B7" stroke-width="24" fill="none" stroke-linecap="round" opacity="0.55"/>
+          <path d="M395 142 C 418 124, 450 112, 476 100" stroke="#EFA7B7" stroke-width="24" fill="none" stroke-linecap="round" opacity="0.55"/>
+          <path d="M395 178 C 418 192, 450 204, 476 214" stroke="#EFA7B7" stroke-width="24" fill="none" stroke-linecap="round" opacity="0.55"/>
           <path d="M172 196 C 162 132, 196 88, 240 84 C 272 81, 294 96, 304 116 C 318 94, 352 82, 390 90 C 430 99, 452 142, 448 196 C 458 268, 448 346, 410 404 C 376 456, 336 480, 306 478 C 274 476, 236 450, 208 398 C 178 344, 168 258, 172 196 Z" fill="#E9C9C6" stroke="#9B5F6E" stroke-width="1.2"/>
           <path d="M198 200 C 190 152, 208 116, 240 112 C 272 108, 298 130, 298 162 L 298 218 C 298 226, 292 230, 284 230 L 212 230 C 204 230, 199 216, 198 200 Z" fill="#A8B4DB" stroke="none"/>
           <path d="M198 200 C 190 152, 208 116, 240 112 C 272 108, 298 130, 298 162 L 298 218 C 298 226, 292 230, 284 230 L 218 230" fill="none" stroke="#5C6B8A" stroke-width="1"/>
+          <ellipse cx="205" cy="225" rx="13" ry="9" fill="#7A9ABE" stroke="#5C6B8A" stroke-width="1.2"/>
           <path d="M306 152 C 308 118, 336 100, 372 102 C 412 105, 434 142, 430 194 C 428 220, 420 232, 406 232 L 320 232 C 312 232, 306 224, 306 214 Z" fill="#EFA7B7" stroke="#9B5F6E" stroke-width="1"/>
+          <rect x="298" y="112" width="8" height="120" fill="#D4A8B0" stroke="none"/>
+          <ellipse cx="302" cy="172" rx="5" ry="9" fill="#ECC0C8" stroke="#C07080" stroke-width="0.8"/>
           <!-- RV: smaller crescentic chamber -->
           <path d="M212 258 C 206 316, 222 380, 258 430 C 268 442, 280 438, 282 424 L 282 264 C 282 256, 277 252, 270 252 L 220 252 C 214 252, 212 254, 212 258 Z" fill="#A8B4DB" stroke="#5C6B8A" stroke-width="1"/>
           <!-- LV: flat valve-plane roof, wider deeper cavity -->
           <path d="M313 252 L 392 252 C 400 292, 396 344, 372 396 C 352 440, 332 462, 316 462 C 310 462, 308 456, 308 444 L 308 262 C 308 254, 309 252, 313 252 Z" fill="#EFA7B7" stroke="#9B5F6E" stroke-width="1"/>
-          <ellipse cx="335" cy="145" rx="16" ry="14" fill="#C4828F" stroke="#8E4A58" stroke-width="1"/>
-          <ellipse cx="335" cy="182" rx="16" ry="14" fill="#C4828F" stroke="#8E4A58" stroke-width="1"/>
-          <ellipse cx="420" cy="142" rx="16" ry="14" fill="#C4828F" stroke="#8E4A58" stroke-width="1"/>
-          <ellipse cx="420" cy="178" rx="16" ry="14" fill="#C4828F" stroke="#8E4A58" stroke-width="1"/>
+          <ellipse cx="335" cy="145" rx="19" ry="17" fill="#C4828F" stroke="#8E4A58" stroke-width="1"/>
+          <ellipse cx="335" cy="182" rx="19" ry="17" fill="#C4828F" stroke="#8E4A58" stroke-width="1"/>
+          <ellipse cx="395" cy="142" rx="19" ry="17" fill="#C4828F" stroke="#8E4A58" stroke-width="1"/>
+          <ellipse cx="395" cy="178" rx="19" ry="17" fill="#C4828F" stroke="#8E4A58" stroke-width="1"/>
           <!-- AV passages: blood-coloured bridges through valve openings -->
           <path d="M212 228 L 284 228 L 283 254 L 212 254 Z" fill="#A8B4DB"/>
           <path d="M313 230 L 407 230 L 392 254 L 313 254 Z" fill="#EFA7B7"/>
@@ -1203,31 +1215,31 @@
           <ellipse cx="282" cy="252" rx="4" ry="3" fill="#D9C9A8"/>
           <ellipse cx="313" cy="252" rx="4" ry="3" fill="#D9C9A8"/>
           <ellipse cx="392" cy="252" rx="4" ry="3" fill="#D9C9A8"/>
-          <ellipse id="afa-ring1" cx="335" cy="163" rx="24" ry="44" fill="none" stroke="#C9A84C" stroke-width="3" stroke-dasharray="4 4" opacity="0"/>
-          <ellipse id="afa-ring2" cx="420" cy="160" rx="24" ry="44" fill="none" stroke="#C9A84C" stroke-width="3" stroke-dasharray="4 4" opacity="0"/>
+          <ellipse id="afa-ring1" cx="335" cy="163" rx="27" ry="48" fill="none" stroke="#C9A84C" stroke-width="3" stroke-dasharray="4 4" opacity="0"/>
+          <ellipse id="afa-ring2" cx="395" cy="160" rx="27" ry="48" fill="none" stroke="#C9A84C" stroke-width="3" stroke-dasharray="4 4" opacity="0"/>
           <text id="afa-rlabel1" x="335" y="166" font-size="9" text-anchor="middle" fill="#92752A" font-family="Inter Tight,sans-serif" opacity="0">R. PVs</text>
-          <text id="afa-rlabel2" x="420" y="163" font-size="9" text-anchor="middle" fill="#92752A" font-family="Inter Tight,sans-serif" opacity="0">L. PVs</text>
+          <text id="afa-rlabel2" x="395" y="163" font-size="9" text-anchor="middle" fill="#92752A" font-family="Inter Tight,sans-serif" opacity="0">L. PVs</text>
           <g id="afa-lesions"></g>
           <circle id="afa-fossaHalo" cx="302" cy="172" r="9" fill="#C9A84C" opacity="0"/>
           <circle id="afa-fossa" cx="302" cy="172" r="5" fill="#C9A84C" opacity="0"/>
-          <path id="afa-cathHalo" d="M210 499 C 212 418, 213 326, 214 246 C 215 226, 217 212, 218 206 C 238 194, 268 180, 296 174 L 308 174 C 313 170, 316 163, 310 163" stroke="#7C8AAE" stroke-width="9" opacity="0.5" fill="none" stroke-linecap="round"/>
-          <path id="afa-cath" d="M210 499 C 212 418, 213 326, 214 246 C 215 226, 217 212, 218 206 C 238 194, 268 180, 296 174 L 308 174 C 313 170, 316 163, 310 163" stroke="#16233F" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+          <path id="afa-cathHalo" clip-path="url(#afa-lumen)" d="M175 499 C 176 418, 177 328, 177 250 C 185 232, 196 218, 205 218 C 228 206, 262 186, 296 174 L 308 174 C 313 170, 316 163, 310 163" stroke="#7C8AAE" stroke-width="9" opacity="0.5" fill="none" stroke-linecap="round"/>
+          <path id="afa-cath" clip-path="url(#afa-lumen)" d="M175 499 C 176 418, 177 328, 177 250 C 185 232, 196 218, 205 218 C 228 206, 262 186, 296 174 L 308 174 C 313 170, 316 163, 310 163" stroke="#16233F" stroke-width="4.5" fill="none" stroke-linecap="round"/>
           <circle id="afa-tipGlow" cx="120" cy="499" r="11" fill="#C9A84C" opacity="0"/>
           <circle id="afa-tip" cx="120" cy="499" r="5.5" fill="#C9A84C" opacity="0"/>
           <text x="243" y="150" font-size="15" text-anchor="middle" fill="#2A3550" font-family="Inter Tight,sans-serif">Right atrium</text>
           <text x="246" y="352" font-size="15" text-anchor="middle" fill="#2A3550" font-family="Inter Tight,sans-serif">Right ventricle</text>
           <text x="366" y="224" font-size="15" text-anchor="middle" fill="#6B2A38" font-family="Inter Tight,sans-serif">Left atrium</text>
           <text x="350" y="348" font-size="15" text-anchor="middle" fill="#6B2A38" font-family="Inter Tight,sans-serif">Left ventricle</text>
-          <line x1="246" y1="58" x2="206" y2="42" stroke="#94a3b8" stroke-width="0.5" stroke-dasharray="3 3"/>
-          <text x="200" y="46" font-size="15" text-anchor="end" fill="#64748b" font-family="Inter Tight,sans-serif">Pulmonary veins</text>
-          <line x1="436" y1="142" x2="500" y2="128" stroke="#94a3b8" stroke-width="0.5" stroke-dasharray="3 3"/>
+          <line x1="326" y1="62" x2="214" y2="44" stroke="#94a3b8" stroke-width="0.5" stroke-dasharray="3 3"/>
+          <text x="208" y="48" font-size="15" text-anchor="end" fill="#64748b" font-family="Inter Tight,sans-serif">Pulmonary veins</text>
+          <line x1="414" y1="142" x2="500" y2="128" stroke="#94a3b8" stroke-width="0.5" stroke-dasharray="3 3"/>
           <text x="506" y="132" font-size="15" text-anchor="start" fill="#64748b" font-family="Inter Tight,sans-serif">Vein openings</text>
-          <line x1="494" y1="208" x2="514" y2="206" stroke="#94a3b8" stroke-width="0.5" stroke-dasharray="3 3"/>
+          <line x1="474" y1="212" x2="514" y2="206" stroke="#94a3b8" stroke-width="0.5" stroke-dasharray="3 3"/>
           <text x="520" y="210" font-size="15" text-anchor="start" fill="#64748b" font-family="Inter Tight,sans-serif">Pulmonary veins</text>
-          <polyline points="302,236 302,262 496,262" stroke="#94a3b8" stroke-width="0.5" stroke-dasharray="3 3" fill="none"/>
-          <text x="502" y="266" font-size="15" text-anchor="start" fill="#64748b" font-family="Inter Tight,sans-serif">Interatrial septum</text>
-          <line x1="210" y1="503" x2="172" y2="513" stroke="#94a3b8" stroke-width="0.5" stroke-dasharray="3 3"/>
-          <text x="166" y="518" font-size="15" text-anchor="end" fill="#64748b" font-family="Inter Tight,sans-serif">Inferior vena cava</text>
+          <polyline points="306,175 306,262 500,262" stroke="#94a3b8" stroke-width="0.5" stroke-dasharray="3 3" fill="none"/>
+          <text x="506" y="266" font-size="15" text-anchor="start" fill="#64748b" font-family="Inter Tight,sans-serif">Interatrial septum</text>
+          <line x1="177" y1="503" x2="148" y2="513" stroke="#94a3b8" stroke-width="0.5" stroke-dasharray="3 3"/>
+          <text x="142" y="518" font-size="15" text-anchor="end" fill="#64748b" font-family="Inter Tight,sans-serif">Inferior vena cava</text>
         </svg>
         <div style="display:flex;align-items:center;justify-content:center;gap:14px;padding:8px 0 10px;">
           <div style="display:flex;gap:7px;">
@@ -1377,7 +1389,7 @@
     replay=document.getElementById('afa-replay');ppBtn=document.getElementById('afa-playpause');
     sTit=document.getElementById('afa-step-title');sDesc=document.getElementById('afa-step-desc');
     rLabel1=document.getElementById('afa-rlabel1');rLabel2=document.getElementById('afa-rlabel2');
-    [{cx:335,cy:163,rx:24,ry:44},{cx:420,cy:160,rx:24,ry:44}].forEach(function(r){for(var i=0;i<8;i++){var a=(i/8)*Math.PI*2;var c=document.createElementNS('http://www.w3.org/2000/svg','circle');c.setAttribute('cx',r.cx+r.rx*Math.cos(a));c.setAttribute('cy',r.cy+r.ry*Math.sin(a));c.setAttribute('r','0');c.setAttribute('fill','#C9A84C');lG.appendChild(c);lesions.push(c);}});
+    [{cx:335,cy:163,rx:27,ry:48},{cx:395,cy:160,rx:27,ry:48}].forEach(function(r){for(var i=0;i<8;i++){var a=(i/8)*Math.PI*2;var c=document.createElementNS('http://www.w3.org/2000/svg','circle');c.setAttribute('cx',r.cx+r.rx*Math.cos(a));c.setAttribute('cy',r.cy+r.ry*Math.sin(a));c.setAttribute('r','0');c.setAttribute('fill','#C9A84C');lG.appendChild(c);lesions.push(c);}});
     LEN=cath.getTotalLength();
     [cath,cathH].forEach(function(el){el.style.strokeDasharray=LEN;el.style.strokeDashoffset=LEN;});
     replay.addEventListener('click',start);
